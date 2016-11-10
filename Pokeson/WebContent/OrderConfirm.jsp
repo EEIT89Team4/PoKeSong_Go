@@ -55,8 +55,8 @@ function reconfirmOrder() {
       </c:if>
       </TR>
       <TR>
-         <TD colspan='3' style="text-align:left;  border-style: ridge;"><span style="width:100px;color:#00BBFF;font-weight:bold;">收貨人姓名：</span>
-           <Input style="background:#DDDDDD;" size="60" type="text" 
+         <TD colspan='3' style="text-align:left;  border-style: ridge;"><span style="width:50px;color:#00BBFF;font-weight:bold;">收貨人姓名：</span>
+           <Input style="background:#DDDDDD;" size="30" type="text" 
                       name="ShippingName" value="${MemberVO.member_name}"><span style="color:red ;font-size:10px">${errorMsgs.shippingNameError}</span>
          </TD>
       </TR>

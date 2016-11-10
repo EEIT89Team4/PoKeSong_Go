@@ -15,6 +15,10 @@
 font-size:16px;
 text-align:center;
 }
+th{
+text-align:center;
+color:	#00BBFF;
+}
 #orderDetail tr td{
 text-align:center;
 }
@@ -26,11 +30,12 @@ text-align:center;
 <div id="page">
 	<div id="content">
         <!-- 內容寫這 -->	
-        <center>	
+        <center>
+        <h2>訂單明細   </h2>	
 		<TABLE border="1" bordercolor="blue"  id="orderDetail">
-	<tr height='50'>
-		<th align="center" colspan="7" ><h3>${MemberVO.member_name}的訂單明細   </h3></th>
-	</tr>
+<!-- 	<tr height='50'> -->
+<!-- 		<th align="center" colspan="7" ></th> -->
+<!-- 	</tr> -->
 	<CENTER>
 	<tr height='36'>
 		<th width="300px" align="center">產品名稱</th>
@@ -53,7 +58,7 @@ text-align:center;
 
 		
 		
-	<h4><a href="OrderList.jsp">回上一頁</a>&nbsp;&nbsp;<a href="productindex.jsp">回首頁</a></h4>	
+	<h4><a href="OrderList.jsp">回上一頁</a>&nbsp;&nbsp;|<a href="productindex.jsp">&nbsp;&nbsp;  回首頁</a></h4>	
 	</center>	
 		 <!-- 結束 -->
 	</div>

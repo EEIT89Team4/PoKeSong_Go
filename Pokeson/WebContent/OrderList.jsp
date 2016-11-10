@@ -10,6 +10,13 @@ font-size:16px;
 }
 th{
 text-align:center;
+color:	#00BBFF;
+}
+#table{
+width:1000px;
+}
+#content{
+margin-left:-35px;
 }
 </style>
 </head>
@@ -23,7 +30,7 @@ text-align:center;
         <!-- 內容寫這 -->		
 		<center id="orderlist">
     <h3>${MemberVO.member_name}的訂購紀錄</h3>
-	<table border="2" bordercolor="blue" style="background:#EFEFFB;">
+	<table border="2" bordercolor="blue" style="background:#EFEFFB;" id="table">
 
 		<tr height='36' >
 			<th>訂單編號</th>
@@ -34,7 +41,7 @@ text-align:center;
 			<th>收貨人姓名</th>
 			<th>收貨人電話</th>
 			<th>收貨人地址</th>
-			<th>小計金額</th>
+			<th style="width:100px">小計金額</th>
 			<th>使用紅利</th>
 			<th>運費</th>
 			<th>總金額</th>
