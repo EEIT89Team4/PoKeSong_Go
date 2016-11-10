@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="product.ProductVO" table="product">
+
+		<id name="product_no" column="product_no">
+			<generator class="identity" />
+		</id>
+
+		<property name="class_no" column="class_no" />
+		<property name="classdetail_no" column="classdetail_no" />
+		<property name="product_price" column="product_price" />
+		<property name="unit" column="unit" />
+		<property name="supplier_name" column="supplier_name" />
+		<property name="product_name" column="product_name" />
+		<property name="product_quantity" column="product_quantity" />
+		<property name="saleaccount_quantity" column="saleaccount_quantity" />
+		<property name="weight" column="weight" />
+		<property name="deadline" column="deadline" />
+		<property name="deadlineday" column="deadlineday" />
+		<property name="pictrue" column="pictrue" type="binary" />
+		<property name="product_alertquantity" column="product_alertquantity" />
+		<property name="product_description" column="product_description" />
+
+<set name="myfavorites" table="myfavorite" lazy="false" cascade="all" inverse="true" order-by="product_no asc">
+<key><column name="product_no"></column></key>
+<one-to-many class="myfavorite.MyFavoriteVO"/>
+</set>
+
+
+	</class>
+</hibernate-mapping>
