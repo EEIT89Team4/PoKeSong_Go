@@ -43,8 +43,12 @@ height:100px
                 		var product_no=$(this).attr("id");
 //                 		alert(product_no);
                 	$(this).parents("tr").remove();	
-                	$.get("/testGoogle/MyFavoriteServlet",{product_no:product_no,member_no:member,myfavoriteaction:"delete"},function(data){
-                		sweetAlert("刪除成功", "", "success");
+                	$.get("MyFavoriteServlet",{product_no:product_no,member_no:member,myfavoriteaction:"delete"},function(data){
+//                 		alert(data);
+//                 		if(data.equals("deleteOK")){
+                			
+//                 		sweetAlert("刪除成功", "", "success");
+//                 		}
                 	})
                 	})
 	});

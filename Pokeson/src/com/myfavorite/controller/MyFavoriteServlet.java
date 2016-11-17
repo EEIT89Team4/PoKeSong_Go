@@ -1,6 +1,7 @@
 package com.myfavorite.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,8 @@ public class MyFavoriteServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		PrintWriter out = resp.getWriter();
 		Map<String, String> errorMsgs = new HashMap<String, String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		String action = req.getParameter("myfavoriteaction");
@@ -116,6 +119,9 @@ public class MyFavoriteServlet extends HttpServlet {
 					myfavoriteVO.setProductVO(productVO);
 					myFavoriteDAO.delete(myfavoriteVO);
 					System.out.println("刪除我的最愛成功,產品編號："+product+"會員編號："+member);
+					String deleteOK="deleteOK";
+					
+					out.println(deleteOK);
 					// List<MyFavoriteVO> list =
 					// myFavoriteDAO.getMyFavoriteById(myfavoriteVO);
 					// for(MyFavoriteVO myfavorite: list){

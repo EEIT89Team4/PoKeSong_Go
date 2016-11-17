@@ -1,68 +1,64 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=BIG5">
-<title>Insert title here</title>
-<script src="js/jquery-3.1.1.min.js"></script> 
-<script src="js/jquery-1.9.1.js"></script> 
-<script src="js/jquery-3.1.1.js"></script> 
+<!-- <script src="js/jquery-3.1.1.min.js"></script>  -->
+<!-- <script src="js/jquery-1.9.1.js"></script>  -->
+<!-- <script src="js/jquery-3.1.1.js"></script>  -->
 <script type="text/javascript">
 $(function(){
-	// ¥ı¨ú±o¥²­nªº¤¸¯À¨Ã¥Î jQuery ¥]¸Ë
-	// ¦A¨Ó¨ú±o $block ªº°ª«×¤Î³]©w°Êµe®É¶¡
+	// å…ˆå–å¾—å¿…è¦çš„å…ƒç´ ä¸¦ç”¨ jQuery åŒ…è£
+	// å†ä¾†å–å¾— $block çš„é«˜åº¦åŠè¨­å®šå‹•ç•«æ™‚é–“
 	var $block = $('#abgneBlock'),
 		$slides = $('ul.list', $block),
 		_width = $block.width(),
 		$li = $('li', $slides),
 		_animateSpeed = 600,
-		// ¥[¤J­p®É¾¹, ½ü¼½®É¶¡¤Î±±¨î¶}Ãö
+		// åŠ å…¥è¨ˆæ™‚å™¨, è¼ªæ’­æ™‚é–“åŠæ§åˆ¶é–‹é—œ
 		timer, _showSpeed = 3000, _stop = false;
  
-	// ²£¥Í li ¿ï¶µ
+	// ç”¢ç”Ÿ li é¸é …
 	var _str = '';
 	for(var i=0, j=$li.length;i<j;i++){
-		// ¨C¤@­Ó li ³£¦³¦Û¤vªº className = playerControl_¸¹½X
+		// æ¯ä¸€å€‹ li éƒ½æœ‰è‡ªå·±çš„ className = playerControl_è™Ÿç¢¼
 		_str += '<li class="playerControl_' + (i+1) + '"></li>';
 	}
  
-	// ²£¥Í ul ¨Ã§â li ¿ï¶µ¥[¨ì¨ä¤¤
+	// ç”¢ç”Ÿ ul ä¸¦æŠŠ li é¸é …åŠ åˆ°å…¶ä¸­
 	var $playerControl = $('<ul class="playerControl"></ul>').html(_str).appendTo($slides.parent()).css('left', function(){
-		// §â .playerControl ²¾¨ì¸m¤¤ªº¦ì¸m
+		// æŠŠ .playerControl ç§»åˆ°ç½®ä¸­çš„ä½ç½®
 		return (_width - $(this).width()) / 2;
 	});
  
-	// À° li ¥[¤W click ¨Æ¥ó
+	// å¹« li åŠ ä¸Š click äº‹ä»¶
 	var $playerControlLi = $playerControl.find('li').click(function(){
 		var $this = $(this);
 		$this.addClass('current').siblings('.current').removeClass('current');
  
 		clearTimeout(timer);
-		// ²¾°Ê¦ì¸m¨ì¬Û¹ïÀ³ªº¸¹½X
+		// ç§»å‹•ä½ç½®åˆ°ç›¸å°æ‡‰çš„è™Ÿç¢¼
 		$slides.stop().animate({
 			left: _width * $this.index() * -1
 		}, _animateSpeed, function(){
-			// ·í¼s§i²¾°Ê¨ì¥¿½T¦ì¸m«á, ¨Ì§PÂ_¨Ó±Ò°Ê­p®É¾¹
+			// ç•¶å»£å‘Šç§»å‹•åˆ°æ­£ç¢ºä½ç½®å¾Œ, ä¾åˆ¤æ–·ä¾†å•Ÿå‹•è¨ˆæ™‚å™¨
 			if(!_stop) timer = setTimeout(move, _showSpeed);
 		});
  
 		return false;
 	}).eq(0).click().end();
  
-	// ¦pªG·Æ¹«²¾¤J $block ®É
+	// å¦‚æœæ»‘é¼ ç§»å…¥ $block æ™‚
 	$block.hover(function(){
-		// Ãö³¬¶}Ãö¤Î­p®É¾¹
+		// é—œé–‰é–‹é—œåŠè¨ˆæ™‚å™¨
 		_stop = true;
 		clearTimeout(timer);
 	}, function(){
-		// ¦pªG·Æ¹«²¾¥X $block ®É
-		// ¶}±Ò¶}Ãö¤Î­p®É¾¹
+		// å¦‚æœæ»‘é¼ ç§»å‡º $block æ™‚
+		// é–‹å•Ÿé–‹é—œåŠè¨ˆæ™‚å™¨
 		_stop = false;
 		timer = setTimeout(move, _showSpeed);
 	});
  
-	// ­p®É¾¹¨Ï¥Î
+	// è¨ˆæ™‚å™¨ä½¿ç”¨
 	function move(){
 		var _index = $('.current').index();
 		$playerControlLi.eq((_index + 1) % $playerControlLi.length).click();
@@ -125,11 +121,10 @@ $(function(){
 <body>
 	<div id="abgneBlock">
 		<ul class="list">
-			<li><a target="_blank" href="#"><img src="images/img09.jpg"></a></li>
+			<li><a target="_blank" href="#"><img src="images/cola.jpg"></a></li>
 			<li><a target="_blank" href="#"><img src="images/img10.jpg"></a></li>
 			<li><a target="_blank" href="#"><img src="images/img11.jpg"></a></li>
 			<li><a target="_blank" href="#"><img src="images/img12.jpg"></a></li>
 		</ul>
 	</div>
 </body>
-</html>

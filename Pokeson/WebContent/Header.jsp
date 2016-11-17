@@ -1,21 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>PoKeSon</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Vegetable by TEMPLATED</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/productindex.js"></script>
 <script src="js/sweetalert.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<script src="js/Popup.js"></script>
 <style>
 #membermenu {
    margin: auto; 
@@ -262,4 +255,4 @@ function to_myfavorite(){document.location.href="${pageContext.servletContext.co
 <form style="display:inline;" name="form_into" method="post" action="/product/mycar1"><input type="hidden" name="fr1" value="/"></form></div>
 <!-- end #footer -->
 </body>
-</html>
+

@@ -58,7 +58,15 @@ public class MemberService {
 		}
 		return flag;
 	}
-	
+	//-------------------11/15更新---------------------------
+	public void updateGooglePhone(int member_no, String phone,String mail,String name){
+		dao.updateGooglePhone(member_no, phone,mail,name);
+	}
+	public void updateGoogleAddress(int member_no, String address,String mail,String name){
+		dao.updateGoogleAddress(member_no, address,mail,name);
+	}
+	//-------------------11/15更新---------------------------
+
 	public boolean googleExist(String member_GoogleId){
 		List<MemberVO> list = service.getAll();
 		boolean flag = true;

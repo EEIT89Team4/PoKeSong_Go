@@ -24,6 +24,11 @@ public class ProductService {
 		 productdao.updateQuantity(product_no,product_quantity);
 
 	}
+	public void updateSaleaccount_quantity(int product_no,int saleaccount_quantity) {
+		 ProductDAO productdao = new ProductDAO();
+		 productdao.updateSaleaccount_quantity(product_no,saleaccount_quantity);
+
+	}
 
 	public void delete(Integer product_no) {
 		ProductDAO productdao = new ProductDAO();
@@ -39,6 +44,14 @@ public class ProductService {
 	public List<ProductVO> getAllProduct() {
 		ProductDAO productdao = new ProductDAO();
 		 return productdao.getAllProduct();
+	}
+	public List<ProductVO> getHotProduct() {
+		ProductDAO productdao = new ProductDAO();
+		 return productdao.getHotProduct();
+	}
+	public List<ProductVO> getNewProduct() {
+		ProductDAO productdao = new ProductDAO();
+		 return productdao.getNewProduct();
 	}
 	public static void main(String[] args){
 		//UPDATE

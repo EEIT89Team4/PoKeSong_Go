@@ -54,6 +54,22 @@ public class ProductDAO {
 		}
 
 	}
+	
+	public void updateSaleaccount_quantity(int product_no,int saleaccount_quantity) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Query query = session.createQuery("update ProductVO set saleaccount_quantity=? where product_no=?");
+			query.setParameter(0, saleaccount_quantity);
+			query.setParameter(1, product_no);
+			query.executeUpdate();
+			tx.commit();
+		} catch (RuntimeException ex) {
+			tx.rollback();
+		}
+
+	}
 
 	public void delete(Integer product_no) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -92,6 +108,44 @@ public class ProductDAO {
 			tx = session.beginTransaction();
 			Query query = session.createQuery("from ProductVO order by product_no");
 			productlist = query.list();
+			tx.commit();
+		} catch (RuntimeException e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
+		return productlist;
+
+	}
+	public List<ProductVO> getHotProduct() {
+		List<ProductVO> productlist = null;
+		Transaction tx = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from ProductVO order by saleaccount_quantity desc");
+//			Query query = session.createSQLQuery("SELECT TOP (5) saleaccount_quantity FROM product order by saleaccount_quantity desc");
+			
+			productlist = query.list();
+			
+			tx.commit();
+		} catch (RuntimeException e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
+		return productlist;
+
+	}
+	public List<ProductVO> getNewProduct() {
+		List<ProductVO> productlist = null;
+		Transaction tx = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from ProductVO order by product_no desc");
+//			Query query = session.createSQLQuery("SELECT TOP (5) saleaccount_quantity FROM product order by saleaccount_quantity desc");
+			
+			productlist = query.list();
+			
 			tx.commit();
 		} catch (RuntimeException e) {
 			tx.rollback();
@@ -166,5 +220,12 @@ public class ProductDAO {
 //			String abc = productlist.getSupplier_name();
 //			System.out.println(abc);
 //		}
+		// getHotProduct
+		ProductDAO productdao = new ProductDAO();
+			List<ProductVO> list = productdao.getHotProduct();
+			for (ProductVO productlist : list) {
+				int abc = productlist.getProduct_no();
+				System.out.println(abc);
+			}
 	}
 }

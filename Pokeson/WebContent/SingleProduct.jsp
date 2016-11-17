@@ -8,8 +8,9 @@
 <title>【PoKeSon】${oneproduct.product_name}</title>
 <script src="js/jquery-1.9.1.js"></script>
 <!-- <script src="js/productindex.js"></script> -->
-<script src="js/sweetalert.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+<!-- <script src="js/sweetalert.min.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="css/sweetalert.css"> -->
+<script src="js/Popup.js"></script>
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
@@ -117,10 +118,12 @@ $(".addfavorite1").click(function(){
 	var count=$('select[name="count"]').val();
 	$.get("getCartNumber",{"productno":tempno,"count":count,"status":"Insert"},function(data){
 		if(data==0){
-			sweetAlert("加入購物車失敗，超過庫存量", "", "error");
+			alert("加入購物車失敗，超過庫存量");
+// 			sweetAlert("加入購物車失敗，超過庫存量", "", "error");
 		}
 		else{
-			sweetAlert("加入購物車成功", "", "success");
+			alert("加入購物車成功");
+// 			sweetAlert("加入購物車成功", "", "success");
 			$("#buycount_all_f").html(data);} //購物車後數字
 		
 	})

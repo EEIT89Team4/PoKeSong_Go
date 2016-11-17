@@ -14,6 +14,51 @@ import org.hibernate.Session;
 import hibernate.util.HibernateUtil;
 
 public class MemberDAO implements Member_Interface{
+	@Override
+	public void updateGooglePhone(int member_no,String phone,String email,String name) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			System.out.println(phone+",,,,,,,,,,,,,,,,,,,"+member_no+",,,,,,,,"+email+",,,,,,,,"+name);
+//			Query query = session.createQuery("update MemberVO set member_phone=? where member_no=?");
+//			query.setParameter(0,phone);
+//			query.setParameter(1, member_no);
+//			
+//			query.executeUpdate();
+			Query query = session.createQuery("update MemberVO set member_phone=? member_Email=? member_name=? where member_no=?");
+			query.setParameter(0, phone);
+			query.setParameter(1, email);
+			query.setParameter(2, name);
+			query.setParameter(3, member_no);
+			query.executeUpdate();
+			System.out.println("99999999999999999999999999999999999999999");
+			session.getTransaction().commit();
+			System.out.println("fffffffffffffffffffffffffffffffffffffffffffffff");
+		} catch (RuntimeException e) {
+			session.getTransaction().rollback();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public void updateGoogleAddress(int member_no,String address,String email,String name) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("update MemberVO set member_address=?,member_Email=?,member_name=? where member_no=?");
+			query.setParameter(0, address);
+			query.setParameter(1, email);
+			query.setParameter(2, name);
+			query.setParameter(3, member_no);
+			query.executeUpdate();
+			session.getTransaction().commit();
+		} catch (RuntimeException e) {
+			session.getTransaction().rollback();
+			throw e;
+		}		
+	}
+
 	private static final String GET_ALL_STMT = "from MemberVO order by member_no ";
 	//private static final String GET_NO = "form MemberVO where member_id";
 
@@ -22,7 +67,7 @@ public class MemberDAO implements Member_Interface{
 		MemberVO mbr= new MemberVO();
 		//加密
 		final MessageDigest md = MessageDigest.getInstance("MD5");
-	
+	     dao.updateGooglePhone(133, "0928123456","sggggg@gmail.com","梁鈞翔");
 		//新增測試
 //		mbr.setMember_name("小熊維尼");
 //		mbr.setMember_id("winne");

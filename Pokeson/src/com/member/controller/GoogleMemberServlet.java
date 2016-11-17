@@ -26,11 +26,13 @@ public class GoogleMemberServlet extends HttpServlet {
                 req.setCharacterEncoding("UTF-8");
                 
                 HttpSession session=req.getSession();
+                String action=req.getParameter("action");
+                String action1=(String) req.getAttribute("action");
+                String member_GoogleId=(String) req.getAttribute("id");
+                if("sign".equals(action1)){
                 try{
                 String member_Email=(String) req.getAttribute("email");
-                String member_GoogleId=(String) req.getAttribute("id");
                 String member_name=(String) req.getAttribute("name");
-//                System.out.println(member_name+"---------------------------");
                 
 		MemberService mbrSvc = new MemberService();
 		if(mbrSvc.googleExist(member_GoogleId)){
@@ -64,6 +66,8 @@ public class GoogleMemberServlet extends HttpServlet {
 				mbr.setMember_gender(mbrVO.getMember_gender());
 				mbr.setMember_Email(mbrVO.getMember_Email());
 				mbr.setMember_bonus(mbrVO.getMember_bonus());
+				mbr.setMember_GoogleId(member_GoogleId);
+//				mbr.set(member_GoogleId);//狀態未改-------------------------------------@@@@
 				session.setAttribute("MemberVO", mbr);
 				session.setAttribute("mbr", mbr);
 				RequestDispatcher rd = req.getRequestDispatcher("/productindex.jsp");
@@ -74,7 +78,37 @@ public class GoogleMemberServlet extends HttpServlet {
 		RequestDispatcher rd = req.getRequestDispatcher("/productindex.jsp");
 		rd.forward(req, resp);
 	}
-	
+                }
+                if("UPDATA".equals(action)){
+                	try{
+                		String address=req.getParameter("Address");
+                		String phone=req.getParameter("Phone");
+                		System.out.println(phone+"1111111111111111111111111111111111111111111");
+                		MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO");
+//                		String member_Email=(String) req.getAttribute("email");
+//                		String member_GoogleId=(String) req.getAttribute("id");
+//                		String member_name=(String) req.getAttribute("name");
+                		MemberService mbrSvc = new MemberService();
+                		mbrSvc.updateMbr(memberVO.getMember_no(), memberVO.getMember_name(), memberVO.getMember_id(), memberVO.getMember_password(), phone, address, memberVO.getMember_gender(), memberVO.getMember_Email(), memberVO.getMember_birthday(), memberVO.getMember_bonus(), memberVO.getMember_GoogleId());
+                	}catch(Exception e){
+                		System.out.println("XXXXXXX");
+                	}
+                }
+//                if("UPDATAphone".equals(action)){
+//                	try{
+//                		String phone=req.getParameter("Phone");
+//                		System.out.println(phone+"1111111111111111111111111111111111");
+//                		MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO");
+////                		String member_Email=(String) req.getAttribute("email");
+////                		String member_GoogleId=(String) req.getAttribute("id");
+////                		String member_name=(String) req.getAttribute("name");
+//                		MemberService mbrSvc = new MemberService();
+//                		mbrSvc.updateGooglePhone(memberVO.getMember_no(), phone,memberVO.getMember_Email(),memberVO.getMember_name());
+//                	}catch(Exception e){
+//                		System.out.println("XXXXXXX");
+//                	}
+//                }
+                
 	}
 
 }

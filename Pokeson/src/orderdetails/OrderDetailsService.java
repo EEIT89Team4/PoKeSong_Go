@@ -67,8 +67,8 @@ public class OrderDetailsService {
 		         orderdetailsVO.setOrderproduct_quantity(orderproduct_quantity);
 		return orderdetailsVO;
 	}
-//	public List<OrderDetailsVO> getAll() {
-//		OrderDetailsDAO ordertdetailsdao = new OrderDetailsDAO();
-//		 return dao.getAll();
-//	}
+	public List<OrderDetailsVO> getAll() {
+		OrderDetailsDAO ordertdetailsdao = new OrderDetailsDAO();
+		 return dao.getAll();
+	}
 }

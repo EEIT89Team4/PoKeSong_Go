@@ -8,15 +8,21 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Vegetable by TEMPLATED</title>
-<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<title>PoKeSon</title>
+<script src="js/jquery-1.9.1.js"></script>
+<!-- <script src="js/productindex.js"></script> -->
+<!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
+<!-- <link href="style.css" rel="stylesheet" type="text/css" media="screen" /> -->
+<!-- <script src="js/sweetalert.min.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="css/sweetalert.css"> -->
 <style>
-
 </style>
 </head>
-<body>
 <jsp:include page="Header.jsp"/>
+<body>
+
 <div id="page">
+<center>
 	<div id="content">
 		<div class="post">
 			<div >
@@ -24,28 +30,35 @@
 		</div>
 	
 		</div>
-		<hr>
+<!-- 		<hr> -->
 		<div class="post">
-			<h2 class="title"><a href="#">熱門商品</a></h2>
-			<p class="meta"><span class="date">May 13, 2011</span><span class="posted">Posted by <a href="#">Someone</a></span></p>
-			<div style="clear: both;">&nbsp;</div>
-			<div class="entry">
-				<p>Sed lacus. Donec lectus. Nullam pretium nibh ut turpis. Nam bibendum. In nulla tortor, elementum vel, tempor at, varius non, purus. Mauris vitae nisl nec metus placerat consectetuer. Donec ipsum. Proin imperdiet est. Phasellus <a href="#">dapibus semper urna</a>. Pellentesque ornare, orci in consectetuer hendrerit, urna elit eleifend nunc, ut consectetuer nisl felis ac diam. Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem.  Mauris quam enim, molestie in, rhoncus ut, lobortis a, est.</p>
+			<h2 class="title">熱門商品<span><img src="images/hot.jpg" style="width:70px;height:50px"/></span></h2>
+			<div class="hotproduct">
+			<jsp:include page="HotProduct.jsp"/>
 			</div>
-			<p><a href="#" class="more">Read More</a><a href="#" class="comments">Comments</a></p>
 		</div>
+<!-- 		<hr> -->
 		<div class="post">
-			<h2 class="title"><a href="#">Consecteteur hendrerit </a></h2>
-			<p class="meta"><span class="date">May 10, 2011</span><span class="posted">Posted by <a href="#">Someone</a></span></p>
-			<div style="clear: both;">&nbsp;</div>
-			<div class="entry">
-				<p>Sed lacus. Donec lectus. Nullam pretium nibh ut turpis. Nam bibendum. In nulla tortor, elementum vel, tempor at, varius non, purus. Mauris vitae nisl nec metus placerat consectetuer. Donec ipsum. Proin imperdiet est. Phasellus <a href="#">dapibus semper urna</a>. Pellentesque ornare, orci in consectetuer hendrerit, urna elit eleifend nunc, ut consectetuer nisl felis ac diam. Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem.  Mauris quam enim, molestie in, rhoncus ut, lobortis a, est.</p>
+			<h2 class="title">新進商品<span><img src="images/new.jpg" style="width:50px;height:50px"/></span></h2>
+			<div class="newproduct">
+			<jsp:include page="NewProduct.jsp"/>
 			</div>
-			<p><a href="#" class="more">Read More</a><a href="#" class="comments">Comments</a></p>
 		</div>
+		
 		<div style="clear: both;">&nbsp;</div>
 	</div>
 
 	<jsp:include page="footer.jsp"/>
+	</center>
+	</div>
+<!-- 	<script type="text/javascript" src="js/jquery.min.js"></script> -->
+		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+		<!-- the jScrollPane script -->
+		<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+		<script type="text/javascript" src="js/jquery.contentcarousel.js"></script>
+		<script type="text/javascript">
+			$('#ca-container').contentcarousel();
+			$('#ca-containernew').contentcarousel();
+		</script>
 </body>
 </html>

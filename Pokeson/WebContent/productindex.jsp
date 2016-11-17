@@ -9,6 +9,7 @@
 <script src="js/jquery.jqpagination.min.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/heroic-features.css" rel="stylesheet">
+<script src="js/Popup.js"></script>
 <body>
 <jsp:include page="Header.jsp"/>
 <div id="page">
@@ -58,7 +59,7 @@
 // 						alert(product_no);
 						$(this).parents("tr").remove();
 						$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
-							sweetAlert("新增至我的最愛", "", "success");
+							alert('新增至我的最愛成功');
 						})
 					}
 				)});

@@ -34,7 +34,9 @@
 		var tempno=$(this).attr("id");
 		$.get("getCartNumber",{"productno":tempno,"count":"1","status":"Insert"},function(data){
 			if(data==0){
-				sweetAlert("加入購物車失敗，超過庫存量", "", "error");
+				
+				alert("加入購物車失敗，超過庫存量");
+//				sweetAlert("加入購物車失敗，超過庫存量", "", "error");
 			}
 			else{
 				$('img[src="/Pokeson/getImage?productid='+tempno+'"]').animate({
@@ -63,7 +65,8 @@
 		alert(count);
 		$.get("getCartNumber",{"productno":tempno,"count":count},function(data){
 			if(data.match("0")){
-				sweetAlert("加入購物車失敗，超過庫存量", "", "error");
+				alert("加入購物車失敗，超過庫存量");
+//				sweetAlert("加入購物車失敗，超過庫存量", "", "error");
 			}
 			else{$("#buycount_all_f").html(data);} //購物車後數字
 			

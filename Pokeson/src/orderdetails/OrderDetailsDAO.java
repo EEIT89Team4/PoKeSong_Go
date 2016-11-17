@@ -15,7 +15,7 @@ import orderdetails.*;
 import hibernate.util.HibernateUtil;
 
 public class OrderDetailsDAO implements OrderDetailsDAO_interface{
-	private static final String GET_ALL_STMT = "from OrderDetailsVO order by product_no";
+	private static final String GET_ALL_STMT = "from OrderDetailsVO order by orderproduct_quantity";
 	@Override
 	public void insert(OrderDetailsVO orderdetailsVO) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -98,21 +98,22 @@ public class OrderDetailsDAO implements OrderDetailsDAO_interface{
 //		return orderdetails;
 //	}
 
-//	@Override
-//	public List<OrderDetailsVO> getAll() {
-//		List<OrderDetailsVO> list = null;
-//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//		try {
-//			session.beginTransaction();
-//			Query query = session.createQuery(GET_ALL_STMT);
-//			list = query.list();
-//			session.getTransaction().commit();
-//		} catch (RuntimeException ex) {
-//			session.getTransaction().rollback();
-//			throw ex;
-//		}
-//		return list;
-//	}
+	@Override
+	public List<OrderDetailsVO> getAll() {
+		List<OrderDetailsVO> list = null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(GET_ALL_STMT);
+//			Query query = session.createQuery("select orderproduct_quantity from OrderDetailsVO");
+			list = query.list();
+			session.getTransaction().commit();
+		} catch (RuntimeException ex) {
+			session.getTransaction().rollback();
+			throw ex;
+		}
+		return list;
+	}
 
 	
 
@@ -128,6 +129,14 @@ public class OrderDetailsDAO implements OrderDetailsDAO_interface{
 //		service.delete(3040, 16100105);
 		//FindOrder_no
 //		List<OrderDetailsVO> orderDetailsVO=service.getOneOrderlist(16100105);
+//		for(OrderDetailsVO orderDetails:orderDetailsVO ){
+//			System.out.println(orderDetails.getOrderlistVO().getOrder_no());
+//			System.out.println(orderDetails.getProductVO().getProduct_no());
+//			System.out.println(orderDetails.getOrderproduct_quantity());
+//			
+//		}
+		//FindOrder_no
+//		List<OrderDetailsVO> orderDetailsVO=service.getAll();
 //		for(OrderDetailsVO orderDetails:orderDetailsVO ){
 //			System.out.println(orderDetails.getOrderlistVO().getOrder_no());
 //			System.out.println(orderDetails.getProductVO().getProduct_no());

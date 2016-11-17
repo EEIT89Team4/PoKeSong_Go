@@ -38,6 +38,9 @@ public class checkOutItem extends HttpServlet {
 		}
 		String subtotal=req.getParameter("subtotal"); //小計總金額
 		String alltotal=req.getParameter("alltotal"); //扣除紅利金額
+		System.out.println(subtotal);
+//		System.out.println(subtotal);
+		System.out.println(alltotal);
 //		double st=Double.parseDouble(subtotal);
 		int st=Integer.parseInt(subtotal);        //*
 //		double at=Double.parseDouble(alltotal);

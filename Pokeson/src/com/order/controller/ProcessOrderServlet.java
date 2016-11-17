@@ -42,7 +42,7 @@ public class ProcessOrderServlet extends HttpServlet {
             		req.setAttribute("errorMsgs", errorMsgs);
                      try {
 		String finalDecision = req.getParameter("finalDecision");
-		System.out.println(finalDecision);
+//		System.out.println(finalDecision);
 		HttpSession session = req.getSession();
 		if (session == null) {   // 使用逾時
 			resp.sendRedirect(getServletContext().getContextPath() + "/productindex.jsp"  );
@@ -65,6 +65,7 @@ public class ProcessOrderServlet extends HttpServlet {
 			resp.sendRedirect("productindex.jsp");
 			return;  // 一定要記得 return 
 		}
+		else if(finalDecision.equals("ORDER")){
 		int member_no=mb.getMember_no();            //會員編號
 		String member_name = mb.getMember_name();   //會員姓名
 		String member_phone = mb.getMember_phone();   //會員電話
@@ -109,7 +110,19 @@ public class ProcessOrderServlet extends HttpServlet {
         int ft=Integer.parseInt(freight);
 		String total=req.getParameter("total");          //總金額
 		int tl=Integer.parseInt(total);
+		String alltotal=req.getParameter("alltotal");          //總金額
+		int al=Integer.parseInt(alltotal);
 		String orderstate="備貨中";          //訂單狀態
+		session.setAttribute("subtotal", subtotal);
+		session.setAttribute("usebouns", usebouns);
+		session.setAttribute("freight", freight);
+		session.setAttribute("alltotal", alltotal);
+		session.setAttribute("ShippingName", shippingName);
+		session.setAttribute("ShippingPhone", shippingPhone);
+		session.setAttribute("ShippingAddress", shippingAddress);
+//		System.out.println(shippingPhone);
+//		System.out.println(al);
+//		System.out.println(tl);
 		if (!errorMsgs.isEmpty()) {
 			RequestDispatcher rd = req.getRequestDispatcher("OrderConfirm.jsp");
 			rd.forward(req, resp);
@@ -120,9 +133,6 @@ public class ProcessOrderServlet extends HttpServlet {
 		OrderlistVO orderlistVO=orderlistService.addOrderlist(member_no, member_name, member_phone, member_address, today, shippingName, shippingPhone, shippingAddress, sl, us, tl, ft, orderstate);
 				orderlistService.insertOrderlist(orderlistVO);
 				Integer order_no=orderlistService.findInsertOrder_no();
-				
-	
-		
 		Set<OrderDetailsVO> items = new HashSet<OrderDetailsVO>(); 
 		Map<Integer, List<ProductVO>> cart = sc.getAllProduct();
 		Set<Integer> set = cart.keySet();
@@ -135,19 +145,33 @@ public class ProcessOrderServlet extends HttpServlet {
 			int class_no = oib.iterator().next().getClass_no();
 			int orderproduct_quantity=oib.size();
 			orderDetailsService.addOrderDetails(product_no, order_no, orderproduct_quantity);
+			//將購物車內的商品數量取出 扣除庫存數量
 			int product_quantity1=productService.getProductById(product_no).getProduct_quantity();
 			int product_quantity=product_quantity1 - orderproduct_quantity;
-			productService.updateQuantity(product_no, product_quantity);;
-			
+			productService.updateQuantity(product_no, product_quantity);
+			//取出原本銷售數量  增加銷售數量
+			int saleaccount_quantity1=productService.getProductById(product_no).getSaleaccount_quantity();
+			int saleaccount_quantity=saleaccount_quantity1+orderproduct_quantity;
+			productService.updateSaleaccount_quantity(product_no, saleaccount_quantity);
 		}
+		
 		session.removeAttribute("mycart");
+		session.removeAttribute("subtotal");
+		session.removeAttribute("usebouns");
+		session.removeAttribute("freight");
+		session.removeAttribute("alltotal");
+		session.removeAttribute("ShippingName");
+		session.removeAttribute("ShippingPhone");
+		session.removeAttribute("ShippingAddress");
 		resp.sendRedirect("productindex.jsp");
+		}
                      } catch(Exception e) {
                     	 errorMsgs.put("ordererror", "訂購失敗");
                     	 RequestDispatcher rd = req.getRequestDispatcher("/productindex.jsp");
                     	 rd.forward(req, resp);
 			e.printStackTrace();
 		} 
+                     
 	}
 
 	}

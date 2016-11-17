@@ -43,7 +43,7 @@ ul, ol {
 
 a {
 	text-decoration: none;
-	color: #000000;
+/* 	color: #000000; */
 }
 
 a:hover {
@@ -145,7 +145,7 @@ a:hover {
 /* Menu */
 #headcolor{
 	width: auto;
-	height:40px;
+	height:20px;
 	background-color: #666666;
 	padding: 10px;
 	margin: 0;
@@ -228,7 +228,7 @@ a:hover {
 }
 
 .post {
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 .post-bgtop {
@@ -421,7 +421,7 @@ a:hover {
 	width: 960px;
 	height: 60px;
 	margin: 0px auto;
-	padding: 0px 0px 0px 20px;
+	padding: 0px 0px 0px 325px;
 }
 
 #footer-menu ul {

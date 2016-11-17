@@ -81,17 +81,18 @@ public class textLogin extends HttpServlet {
 						  try {
 							   
 							   JSONObject jo1 = new JSONObject(sbLines1.toString());
-							    System.out.println(jo1);
+//							    System.out.println(jo1);
 							   
 							   String email=jo1.getString("email");
 							   
 							   String id=jo1.getString("id"); 
 							   
 							   String name=jo1.getString("name");
-//							  System.out.println(email+","+id+","+name); 
+//							  System.out.println(email+","+id+","+name);
 							    req.setAttribute("email",email);
 							    req.setAttribute("id",id);
 							    req.setAttribute("name",name);
+							    req.setAttribute("action","sign");
 							    RequestDispatcher rd = req.getRequestDispatcher("/googlesign");
 							    rd.forward(req, resp);
 							  } catch (JSONException e) {
@@ -103,7 +104,8 @@ public class textLogin extends HttpServlet {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("登入失敗");
+			RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
+		    rd.forward(req, resp);
 		}
 
 	}

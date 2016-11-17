@@ -10,5 +10,5 @@ public interface OrderDetailsDAO_interface {
 	public void delete(OrderDetailsVO orderdetailsVO);
 //	public List<OrderDetailsVO> findByPrimaryKey(OrderDetailsVO orderdetailsVO);
 	public List<OrderDetailsVO> findByOrder_no(OrderDetailsVO orderdetailsVO);
-//	public List<OrderDetailsVO> getAll();
+	public List<OrderDetailsVO> getAll();
 }
