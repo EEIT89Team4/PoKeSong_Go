@@ -13,10 +13,11 @@
 		<title>修改會員資料</title>
 		<style >
 			fieldset{
-				float:right;
+/* 				float:right; */
 				width:550px;
 				margin-top:50px;
 				margin:0px auto;
+				border:2px solid #ACD6FF;
 				border-radius:10px;		
 				text-align: left
 			}
@@ -24,17 +25,20 @@
 				float:left;
 				width:8em;
 				font-weight:bold;
-				margin-top:10px;
+/* 				margin-top:10px; */
 				margin-bottom:2px;
 				margin-right:10px;
 				text-align: right;
 			}
 		 	.fieldWidth { 
-		 	    margin-top:10px; 
+/* 		 	    margin-top:10px;  */
 		 		margin-bottom: 2px; 
 		 		width: 200px; 
 		 		font-size:18px; 
 		 	} 
+		 	font{
+		 	margin-top:20px;
+		 	}
 		</style>
 		<script src="js/jquery-3.1.1.min.js"></script>
 		
@@ -51,6 +55,7 @@
       <div class="header clearfix">
         <h3 class="text-muted">親愛的 ${mbr.member_name} 你好!!</h3>
       </div>
+      <center>
 		<ul class="nav nav-tabs">
 		  
 		  <li role="presentation"><a href="MemberServlet?action=getMbr&member_no=${mbr.member_no}">修改會員資料</a></li>
@@ -63,7 +68,7 @@
 			<fieldset >
 				<div >
 					<label for="no">會員編號:</label>
-					<font >${mbr.member_no}</font>
+					<font margin-top="10px">${mbr.member_no}</font>
 					<hr>
 					
 					<label for="name">姓名:</label>
@@ -73,7 +78,7 @@
 					<hr>
 					<c:if test="${empty mbr.member_GoogleId}">
 					<label for="account">帳號:</label>
-					<font>${mbr.member_id}</font>	
+					<font  margin-top="10px">${mbr.member_id}</font>	
 					<hr>
 					</c:if>		
 					
@@ -128,7 +133,7 @@
 						<option value="金門縣" >金門縣</option>
 						<option value="連江縣" >連江縣</option>
 					</select>
-					<input type="text" id="address" name="address" value="<%=mbr.getMember_address().substring(3)%>" class="fieldWidth">
+					<input type="text" id="address" name="address" value="<%=mbr.getMember_address().substring(3)%>" class="fieldWidth" style="width:320px;">
 					<span id="spanAddress" style="color:red"></span>
 					<br><font color="red" size="-1">${errorMsgs.ErrCityEmpty}  ${errorMsgs.ErrAdderssEmpty}  ${errorMsgs.ErrAddressFormat}</font>				
 					<hr>
@@ -150,7 +155,7 @@
 		</form>        
       </div>
 
-
+</center>
     </div> <!-- /container -->
 <!------------------------------------------  Modal ------------------------------------------------>
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

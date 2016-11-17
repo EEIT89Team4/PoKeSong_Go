@@ -36,12 +36,12 @@
 .sub {
   position:absolute;  
   cursor: pointer;
-  background-color:#00BBFF;
+  background-color:#00AA55;
   color: white;
   font-family: 微軟正黑體;
 /*   text-align: center; */
   font-weight: bold;
-  width: 200px;
+  width: 170px;
   z-index:11;
 }
 .sub ul {
@@ -51,8 +51,8 @@
 }
 
 .sub li {
-  font-size: 16px;
-  width:220px;
+  font-size: 20px;
+  width:150px;
   color:white;
   list-style-type: none;
   padding-right:80px;
@@ -233,7 +233,7 @@ color:white;
     </script>
 	
 <div id="membermenu" style="position:fixed;top:260px;right:20px;font-size:9pt;"><div class="main"><div style="padding:0px 0px 0px 0px;font-size:11pt;font-family:微軟正黑體;color:white;z-index:20"><div style="width:100px;height:100px;cursor:pointer;background:url(images/membermenu1.png);background-repeat:no-repeat;text-align:center;"">會員專區</div></div></div>
-					<div class="sub" style="left:-60px;top:100px">
+					<div class="sub" style="left:-70px;top:100px">
                     <ul id="memberzone">
                     <c:if test="${empty mbr}">
                     	<li><a href="#" name="myBtn">修改會員資料</a></li>

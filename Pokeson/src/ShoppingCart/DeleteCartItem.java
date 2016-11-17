@@ -23,12 +23,12 @@ public class DeleteCartItem extends HttpServlet {
 		int newcount= cart.delProduct(product_no);
 		PrintWriter out = response.getWriter();
 		out.print(newcount);
-		if(newcount==0){
-//			session.setAttribute("mycart.productMap.size()", "0");
-			session.removeAttribute("mycart");
-			RequestDispatcher rd = request.getRequestDispatcher("/ShowCartContent.jsp");
-			rd.forward(request, response);
-		}
+//		if(newcount==0){
+////			session.setAttribute("mycart.productMap.size()", "0");
+//			session.removeAttribute("mycart");
+//			RequestDispatcher rd = request.getRequestDispatcher("/ShowCartContent.jsp");
+//			rd.forward(request, response);
+//		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -59,7 +59,7 @@ font-size:14px;
 		<H1 id="noproduct">親愛的${MemberVO.member_name}  ， 您尚未選購任何商品</H1>
 	</c:if>
 	<div id="tablediv">
-	<div id="show">
+	<div id="showCart1">
 		<c:if test="${not empty mycart}">
 			<table id="carttable" class="table">
 			
@@ -177,23 +177,52 @@ font-size:14px;
 
 <!--   ------------------------------------刪除購物車商品-------------------------------------------- 	 -->
 <script>
+$(function(){	
+var mybons=$('#mybonus').text();
 $('.cartbtn').click(function(){
+    
 	var num = $(this).attr("name");
+	
+	var subtotalcar=$('#subtotal').text();//總小計
+	var productTotalMoney=$(this).parent().prev().text();//刪除商品的金額
+     var newtotalcar=(new Number(subtotalcar)-new Number(productTotalMoney));
+     
+     $('input[name="subtotal"]').empty().val(newtotalcar);
+  $('#subtotal').empty().text(newtotalcar);
+  $('#alltotal').empty().text(newtotalcar);
+  $('#member_bonus').empty();
+  if(mybons>newtotalcar){
+  	for(var i=0;i<newtotalcar+1;i++){
+  		var opt=$('<option></option>').val(i).text(i);
+  		$('#member_bonus').append(opt);
+  	}
+  }else if(mybons<newtotalcar){
+  	var b = new Number(mybons);
+  	var c=b+1;
+  	for(var j=0;j<c;j++){
+  		var opt=$('<option></option>').val(j).text(j);
+  		$('#member_bonus').append(opt);
+  	}
+  }
 	$.get("deleteCartItem",{"CartItem":num},function(data){
 		$('#cartsapn').empty().html(data);
-		
-		if(data==0){
-// 			var tt=$('#show');
-// 			tt.empty().after("<h1>親愛的${MemberVO.member_name}  ， 您尚未選購任何商品</h1>");
+		if(data=="0"){
+			var tt=$('#tablediv');
+			tt.empty().append("<h1>親愛的${MemberVO.member_name}  ， 您尚未選購任何商品</h1>");
+			$("#buycount_all_f").html(data);
 // 			var page=document.getElementById("page");
 // 			page.removeChild(document.getElementById("tablediv"));
 		}
-		else if(data!=0){
-			location.replace("ShowCartContent.jsp");
+		else if(data!="0"){
+// 			location.replace("ShowCartContent.jsp");
+			$("#buycount_all_f").html(data);//購物車後數字
+			
 		}
 	});
-// 	location.replace("ShowCartContent.jsp");
 	$(this).parent().parent().remove();
+  	})
+// 	location.replace("ShowCartContent.jsp");
+	
 });
 </script>
 <!--   ----------------------------------------結束-------------------------------------------------- 	 -->
