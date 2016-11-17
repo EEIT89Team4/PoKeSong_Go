@@ -18,6 +18,7 @@
 		<property name="member_birthday" column="member_birthday"/>
 		<property name="member_bonus" column="member_bonus"/>
 		<property name="member_GoogleId" column="member_GoogleId"/>
+		<property name="member_state" column="member_state"/>
 		
 	</class>
 </hibernate-mapping>

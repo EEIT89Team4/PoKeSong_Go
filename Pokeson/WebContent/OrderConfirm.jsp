@@ -47,7 +47,7 @@ function cancelOrder() {
 	
 
 function reconfirmOrder() {
-	if($('input[name="bought"]').prop("checked")){
+	if($('input[id="boughtCar"]').prop("checked")||$('input[id="boughtCash"]').prop("checked")){
    if($('#checkOrderRlue').prop("checked")){
 	   confirm("確定送出此份訂單 ?",function(aa){
 		   if(aa){
@@ -139,7 +139,7 @@ function reconfirmOrder() {
       </TR>
             <TR>
          <TD colspan='3' style="text-align:left; border-style: ridge;"><span style="width:150px;color:#00BBFF;font-weight:bold;"> 付款方式：</span>
-          <input type="radio" name="bought" value="boughtCash">貨到付款
+          <input type="radio" id="boughtCash" name="bought" value="boughtCash">貨到付款
           <input type="radio" id="boughtCar" name="bought" value="boughtCar">線上刷卡
          </TD>
       </TR>

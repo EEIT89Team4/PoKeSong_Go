@@ -44,6 +44,15 @@ font-size:14px;
 </head>
 <body>
 <jsp:include page="Header.jsp"/>
+<c:if test="${empty mbr}">
+		<c:set var="target" value="${pageContext.request.servletPath}" scope="session" />
+		<script>
+			$(document).ready(function() {
+				$("#myModal").modal({backdrop : false});
+				$("#myModal").modal('show');
+			});
+		</script>
+	</c:if>
 <div id="page">
 	<div id="content">
         <c:if test="${empty mycart}">
@@ -225,7 +234,6 @@ $('.CompareSel').change(function(){
             		$('#member_bonus').append(opt);
             	}
             }else if(mybons<subtotal){
-            	alert(mybons);
             	var b = new Number(mybons);
             	var c=b+1;
             	for(var j=0;j<c;j++){

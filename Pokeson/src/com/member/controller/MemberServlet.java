@@ -7,11 +7,13 @@ import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import member.MailService;
 import member.MemberService;
 import member.MemberVO;
 
@@ -38,6 +40,10 @@ public class MemberServlet extends HttpServlet {
 		// String requestURI = (String) session.getAttribute("requestURI");
 
 		if ("insert".equals(action)) { // 接收addMbr.jsp的資料，新增部分
+			String servletPath = (String) session.getAttribute("target");
+			String contextPath = request.getContextPath();
+			String uri = contextPath + servletPath;
+			
 			Map<String, String> errorMsgs = new HashMap<String, String>();// 用Map在jsp比較好取出來用
 			request.setAttribute("errorMsgs", errorMsgs);
 			String member_id = null;
@@ -121,7 +127,7 @@ public class MemberServlet extends HttpServlet {
 				if (member_Email == null || member_Email.trim().length() == 0) {
 					errorMsgs.put("ErrEmailEmpty", "請輸入Email");
 				}
-				String userEamilReg = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$";
+				String userEamilReg = "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})*$";
 				// 地址欄不可空白，只能中文數字 varchar100
 				String city = request.getParameter("city");
 				String address = request.getParameter("address");
@@ -139,60 +145,46 @@ public class MemberServlet extends HttpServlet {
 
 				Integer member_bonus = new Integer(request.getParameter("member_bonus"));
 				String member_GoogleId = "";
+				String member_state = "一般會員";
+				
 				MemberVO mbr = new MemberVO();
-
+                
 				// 如果有錯誤，回到原頁
 				if (!errorMsgs.isEmpty()) {
-					if ("member_id".equals(check)) {
-						if (mbrSvc.exist(member_id)) {
-							errorMsgs.put("ErrId", "此帳號已經有人使用");
-							String str1 = "帳號已存在";
-							out.write(str1);
-						} else {
-							String str1 = "帳號不存在";
-							out.write(str1);
-						}
-					} else {
-						request.setAttribute("mbr", mbr);
+					
 						RequestDispatcher errorView = request.getRequestDispatcher("/addMbr.jsp");
 						errorView.forward(request, response);
 						return;
-					}
 				}
 					/******************* 2.永續層存取(開始新增) *****************/
-					// MemberService mbrSvc = new MemberService(); //與驗證帳號重複
 					mbr = mbrSvc.addMbr(member_name, member_id, member_password2, member_phone, member_address,
-							member_gender, member_Email, member_birthday, member_bonus, member_GoogleId);
-					session.setAttribute("mbr", mbr);
+							member_gender, member_Email, member_birthday, member_bonus, member_GoogleId,member_state);
+					out.write("success");
+					// 寄送驗證信給新加入會員
+					MailService mail = new MailService();
+					mail.sendMail(member_Email);
+//					session.setAttribute("mbr", mbr);
 					/******************** 3.轉交 ********************/
 //					RequestDispatcher rd = request.getRequestDispatcher("/mbrZone.jsp");
 //					rd.forward(request, response);
-					response.sendRedirect("/Pokeson/index.jsp");
+//					response.sendRedirect("/Pokeson/index.jsp");
 					// 其他錯誤處理				
 			} catch (Exception e) {
-				if ("member_id".equals(check)) {
-					if (mbrSvc.exist(member_id)) {
-						errorMsgs.put("ErrId", "此帳號已經有人使用");
-						String str1 = "帳號已存在";
-						out.write(str1);
-					} else {
-						String str1 = "帳號不存在";
-						out.write(str1);
-					}
-				} else {
-					errorMsgs.put("errOthers", e.getMessage());
-					RequestDispatcher errorView = request.getRequestDispatcher("/addMbr.jsp");
-					errorView.forward(request, response);
-				}
+				errorMsgs.put("errOthers", e.getMessage());
+				RequestDispatcher errorView = request.getRequestDispatcher("/addMbr.jsp");
+				errorView.forward(request, response);
 			}
 
 		}
 
 		if ("login".equals(action)) { // 接收來自login.jsp的
 			String servletPath = (String) session.getAttribute("target");
-			System.out.println(servletPath + "---------------");
+
+			String contextPath = request.getContextPath();
+
+			String uri = contextPath + servletPath;
 			Map<String, String> errorMsgs = new HashMap<String, String>();
-			request.setAttribute("errorMsgs", errorMsgs);
+			request.setAttribute("errorLogin", errorMsgs);
 
 			try {
 				// 帳號欄不可空白不可重複，只能是英數_，varchar20
@@ -208,7 +200,7 @@ public class MemberServlet extends HttpServlet {
 				String randomWords = (String) request.getSession().getAttribute("randomWords");
 				// System.out.println(randomWords);
 				String identity = request.getParameter("identity").toUpperCase();
-				System.out.print(identity);
+//				System.out.print(identity);
 				if (identity == null || identity.trim().length() == 0) {
 					errorMsgs.put("ErrIdentityEmpty", "請輸入驗證碼");
 				}
@@ -230,13 +222,49 @@ public class MemberServlet extends HttpServlet {
 				if (!mbrSvc.loginCheck(member_id, member_password)) {
 					errorMsgs.put("Err", "帳號或密碼錯誤");
 				}
+				/******************* remember me *****************/
+				String rm = request.getParameter("rm");
+				// System.out.println(rm+"is remeberme");
+				Cookie cookieUser = null;
+				Cookie cookiePwd = null;
+				Cookie cookieRm = null;
 
+				// 1.先new cookie物件 2.給生命長度(秒) 3.setPath(uri)
+				if (rm != null) {
+					cookieUser = new Cookie("user", member_id);
+					cookieUser.setMaxAge(30 * 60 * 60); // 給cookie存活時間
+					cookieUser.setPath(request.getContextPath());
+
+					cookiePwd = new Cookie("password", member_password);
+					cookiePwd.setMaxAge(30 * 60 * 60);
+					cookiePwd.setPath(request.getContextPath());
+
+					cookieRm = new Cookie("rm", "true");
+					cookieRm.setMaxAge(30 * 60 * 60);
+					cookieRm.setPath(request.getContextPath());
+
+				} else {
+					cookieUser = new Cookie("user", member_id);
+					cookieUser.setMaxAge(0); // 給cookie存活時間
+					cookieUser.setPath(request.getContextPath());
+
+					cookiePwd = new Cookie("password", member_password);
+					cookiePwd.setMaxAge(0);
+					cookiePwd.setPath(request.getContextPath());
+
+					cookieRm = new Cookie("rm", "false");
+					cookieRm.setMaxAge(30 * 60 * 60);
+					cookieRm.setPath(request.getContextPath());
+				}
+				response.addCookie(cookieUser);
+				response.addCookie(cookiePwd);
+				response.addCookie(cookieRm);
 				/******************* 2.永續層存取(開始新增) *****************/
 				MemberVO mbr = new MemberVO();
 				mbr = mbrSvc.getOneById(member_id);
 
 				if (!errorMsgs.isEmpty()) { // 如果有錯
-					request.setAttribute("mbr", mbr);
+//					request.setAttribute("mbr", mbr);
 					RequestDispatcher errorView = request.getRequestDispatcher("/productindex.jsp");
 					errorView.forward(request, response);
 					return;
@@ -245,7 +273,12 @@ public class MemberServlet extends HttpServlet {
 				/******************** 3.轉交 ********************/
 				session.setAttribute("mbr", mbr);
                 session.setAttribute("MemberVO", mbr);
-				response.sendRedirect(servletPath);
+                if (servletPath != null) {
+					session.removeAttribute("target");
+					response.sendRedirect(uri);
+				} else {
+					response.sendRedirect(uri);
+				}
 			} catch (Exception e) {
 				errorMsgs.put("errOthers", e.getMessage());
 				RequestDispatcher errorView = request.getRequestDispatcher("/productindex.jsp");
@@ -267,29 +300,34 @@ public class MemberServlet extends HttpServlet {
 				rd.forward(request, response);
 			} catch (Exception e) {
 				errorMsgs.put("errorOthers", e.getMessage());
-				RequestDispatcher errorView = request.getRequestDispatcher("/member.jsp");
+				RequestDispatcher errorView = request.getRequestDispatcher("/update.jsp");
 				errorView.forward(request, response);
 			}
 		}
 		if ("update".equals(action)) {
+			String servletPath = (String) session.getAttribute("target");
+
+			String contextPath = request.getContextPath();
+
+			String uri = contextPath + servletPath;
 			Map<String, String> errorMsgs = new HashMap<String, String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 			try {
 				/************* 1.接收請求參數，輸入格式錯誤處理 ************/
 				Integer member_no = new Integer(request.getParameter("member_no"));
-				String member_name = request.getParameter("member_name");
 				// System.out.println(member_no);
 
+				String member_name = request.getParameter("member_name");
 				// 姓名欄不可空白中文共二到五位數 varchar10
 				// System.out.println(member_name); //測試用
 				if (member_name == null || member_name.trim().length() == 0) {
 					errorMsgs.put("ErrNameEmpty", "請輸入姓名");
+				} else {
+					String userNameReg = "^[\\u4E00-\\u9FA5]{2,10}$"; // 倒斜線要兩條
+					if (!(member_name.trim().matches(userNameReg))) { // matches專門用在regex
+						errorMsgs.put("ErrNameFormat", "姓名格式錯誤");
+					}
 				}
-				String userNameReg = "^[\\u4E00-\\u9FA5]{2,10}$"; // 倒斜線要兩條
-				if (!(member_name.trim().matches(userNameReg))) { // matches專門用在regex
-					errorMsgs.put("ErrNameFormat", "姓名格式錯誤");
-				}
-
 				// 帳號欄不可空白不可重複，只能是英數_，varchar20
 				String member_id = request.getParameter("member_id");
 
@@ -297,12 +335,12 @@ public class MemberServlet extends HttpServlet {
 				String member_password = request.getParameter("member_password1");
 				if (member_password == null || member_password.trim().length() == 0) {
 					errorMsgs.put("ErrPasswordEmpty", "請輸入密碼");
+				} else {
+					String userPswdReg = "^[A-Za-z0-9]{6,40}$";
+					if (!member_password.trim().matches(userPswdReg)) {
+						errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
+					}
 				}
-				String userPswdReg = "^[A-Za-z0-9]{6,20}$";
-				if (!member_password.trim().matches(userPswdReg)) {
-					errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
-				}
-
 				// 密碼欄2用來驗證是否有輸入錯誤
 				String member_password2 = request.getParameter("member_password2");
 				if (!member_password.equals(member_password2)) {
@@ -323,47 +361,63 @@ public class MemberServlet extends HttpServlet {
 				String member_phone = request.getParameter("member_phone");
 				if (member_phone == null || member_phone.trim().length() == 0) {
 					errorMsgs.put("ErrPhoneEmpty", "請輸入電話");
+				} else {
+					String userPhoneReg = "^[0-9]{8,10}$";
+					if (!member_phone.trim().matches(userPhoneReg)) {
+						errorMsgs.put("ErrPhoneFormat", "電話格式錯誤");
+					}
 				}
-				String userPhoneReg = "^[0-9]{8,10}$";
-				if (!member_phone.trim().matches(userPhoneReg)) {
-					errorMsgs.put("ErrPhoneFormat", "電話格式錯誤");
-				}
-
 				// Email欄不可空白，varchar50
 				String member_Email = request.getParameter("member_Email");
-				System.out.println(member_Email);
+//				System.out.println(member_Email);
 				if (member_Email == null || member_Email.trim().length() == 0) {
 					errorMsgs.put("ErrEmailEmpty", "請輸入Email");
+				} else {
+					// String userEmail = "^.+@.+\..{2,4}$"; // \.無法辨識
+					String userEamilReg = "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})*$";
+					if (!member_Email.trim().matches(userEamilReg)) {
+						errorMsgs.put("ErrEmailFormat", "email格式錯誤");
+					}
 				}
-				// String userEmail = "^.+@.+\..{2,4}$"; // \.無法辨識
-				String userEamilReg = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$";
 
 				// 地址欄不可空白，只能中文數字 varchar100
 				String city = request.getParameter("city");
-				System.out.println(city);
+//				System.out.println(city);
 				String address = request.getParameter("address");
-				System.out.println(address);
+//				System.out.println(address);
 				if (city.equals("請選擇")) {
 					errorMsgs.put("ErrCityEmpty", "請選擇縣市");
 				}
 				if (address == null || address.trim().length() == 0) {
 					errorMsgs.put("ErrAdderssEmpty", "請輸入地址");
 				}
-				String userAddressReg = "^[(0-9)(\u4e00-\u9fa5)]+$";
-				if (!address.trim().matches(userAddressReg)) {
-					errorMsgs.put("ErrAddressFormat", "地址格式錯誤");
-				}
+
 				String member_address = city + address;
 				// 紅利
 				Integer member_bonus = new Integer(request.getParameter("member_bonus"));
+				
 				String member_GoogleId = "";
+				
+				String member_state = request.getParameter("member_state");
+				System.out.println(member_state);
+				
 				MemberVO mbr = new MemberVO();
-
+				mbr.setMember_no(member_no);
+				mbr.setMember_name(member_name);
+				mbr.setMember_id(member_id);
+				mbr.setMember_password(member_password);
+				mbr.setMember_phone(member_phone);
+				mbr.setMember_address(member_address);
+				mbr.setMember_gender(member_gender);
+				mbr.setMember_Email(member_Email);
+				mbr.setMember_birthday(member_birthday);
+				mbr.setMember_bonus(member_bonus);
+				mbr.setMember_GoogleId(member_GoogleId);
 				// 如果有錯誤，回到原頁
 				if (!errorMsgs.isEmpty()) {
 
 					request.setAttribute("mbr", mbr);
-					RequestDispatcher errorView = request.getRequestDispatcher("/update.jsp");
+					RequestDispatcher errorView = request.getRequestDispatcher(servletPath);
 					errorView.forward(request, response);
 					return;
 				}
@@ -371,17 +425,103 @@ public class MemberServlet extends HttpServlet {
 				/******************* 2.永續層存取(開始新增) *****************/
 				MemberService mbrSvc = new MemberService(); // 與驗證帳號重複
 				mbr = mbrSvc.updateMbr(member_no, member_name, member_id, member_password2, member_phone,
-						member_address, member_gender, member_Email, member_birthday, member_bonus, member_GoogleId);
+						member_address, member_gender, member_Email, member_birthday, member_bonus, member_GoogleId,member_state);
 
 				/******************** 3.轉交 ********************/
 				session.setAttribute("mbr", mbr);
-				RequestDispatcher rd = request.getRequestDispatcher("/mbrZone.jsp");
-				rd.forward(request, response);
+				out.write("success");
+//				RequestDispatcher rd = request.getRequestDispatcher("/mbrZone.jsp");
+//				rd.forward(request, response);
 
 				// 其他錯誤處理
 			} catch (Exception e) {
 				errorMsgs.put("errOthers", e.getMessage());
 				RequestDispatcher errorView = request.getRequestDispatcher("/update.jsp");
+				errorView.forward(request, response);
+			}
+		}
+		
+		if ("forgetPwd".equals(action)) {
+			String servletPath = (String) session.getAttribute("target");
+//			System.out.println(servletPath);
+			String contextPath = request.getContextPath();
+			String uri = contextPath + servletPath;
+			Map<String, String> errorMsgs = new HashMap<String, String>();
+			request.setAttribute("errorMsgs", errorMsgs);
+			try {
+				// Email
+				String member_Email = request.getParameter("member_Email");
+				// System.out.println("ppppppppppppppppppppp");
+
+				if (member_Email == null || member_Email.trim().length() == 0) {
+					errorMsgs.put("ErrEmailEmpty", "請輸入Email");
+				} else {
+					// String userEmail = "^.+@.+\..{2,4}$"; // \.無法辨識
+					String userEamilReg = "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})*$";
+					if (!member_Email.trim().matches(userEamilReg)) {
+						errorMsgs.put("ErrEmailFormat", "email格式錯誤");
+					}
+				}
+				// 檢驗Email是否存在
+				MemberService mbrSvc = new MemberService();
+				if (!mbrSvc.emailCheck(member_Email)) {
+//					System.out.println(!(mbrSvc.emailCheck(member_Email)));
+					errorMsgs.put("ErrEmail", "email不存在");
+				}
+
+				// 驗證碼
+				String randomWords = (String) request.getSession().getAttribute("randomWords");
+
+				String identity = request.getParameter("identity").toUpperCase();
+				if (identity == null || identity.trim().length() == 0) {
+					errorMsgs.put("ErrIdentityEmpty", "請輸入驗證碼");
+				} else {
+					if (!identity.equals(randomWords)) {
+						errorMsgs.put("ErrIdentity", "驗證碼錯誤");
+					}
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher errorView = request.getRequestDispatcher(servletPath);
+					System.out.println("ppppppppppppppppppppp");
+					errorView.forward(request, response);
+					return;
+				}
+				/*********************** 2. ************************/
+				// 寄信到會員信箱
+				 MailService ms = new MailService();
+				 ms.resetPwd(member_Email);
+				 out.write("success");
+				System.out.println("zzzzzzzzzzzzzzzzzzzzz");
+//				if (servletPath != null) {
+//					session.removeAttribute("target");
+//					response.sendRedirect("/Pokeson/index.jsp");
+//				} else {
+//					response.sendRedirect("/Pokeson/index.jsp");
+//				}			
+			} catch (Exception e) {
+				errorMsgs.put("errOthers", e.getMessage());
+				RequestDispatcher errorView = request.getRequestDispatcher(servletPath);
+				errorView.forward(request, response);
+			}
+		}
+		
+		if ("getMbrByEmail".equals(action)) {
+			Map<String, String> errorMsgs = new HashMap<String, String>();
+			request.setAttribute("errorMsgs", errorMsgs);
+			try {
+				String member_Email = new String(Base64.getDecoder().decode(request.getParameter("member_Email")));
+				System.out.println(member_Email);
+				
+				MemberService mbrSvc = new MemberService();
+				MemberVO mbr = mbrSvc.getOneByEmail(member_Email);
+				
+				request.setAttribute("mbr", mbr);
+				RequestDispatcher rd = request.getRequestDispatcher("/resetPwd.jsp");
+				rd.forward(request, response);
+				return;
+			} catch (Exception e) {
+				errorMsgs.put("errorOthers", e.getMessage());
+				RequestDispatcher errorView = request.getRequestDispatcher("/index.jsp");
 				errorView.forward(request, response);
 			}
 		}

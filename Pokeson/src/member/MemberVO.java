@@ -15,11 +15,17 @@ public class MemberVO implements Serializable{
 	private Date member_birthday;
 	private Integer member_bonus;
 	private String member_GoogleId;
+	private String member_state;
 	
 	
 	
 	
-	
+	public String getMember_state() {
+		return member_state;
+	}
+	public void setMember_state(String member_state) {
+		this.member_state = member_state;
+	}
 	public String getMember_GoogleId() {
 		return member_GoogleId;
 	}

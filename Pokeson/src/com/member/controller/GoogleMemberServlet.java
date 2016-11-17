@@ -33,10 +33,10 @@ public class GoogleMemberServlet extends HttpServlet {
                 try{
                 String member_Email=(String) req.getAttribute("email");
                 String member_name=(String) req.getAttribute("name");
-                
+                String member_state="一般會員";
 		MemberService mbrSvc = new MemberService();
 		if(mbrSvc.googleExist(member_GoogleId)){
-			mbrSvc.addGoogleMbr(member_name, member_Email, member_GoogleId);
+			mbrSvc.addGoogleMbr(member_name, member_Email, member_GoogleId,member_state);
 			System.out.println("INSRT OK");
 			List<MemberVO> list=mbrSvc.getGoogleOneByNo(member_GoogleId);
 //			for(MemberVO memberVO:list){
@@ -67,7 +67,7 @@ public class GoogleMemberServlet extends HttpServlet {
 				mbr.setMember_Email(mbrVO.getMember_Email());
 				mbr.setMember_bonus(mbrVO.getMember_bonus());
 				mbr.setMember_GoogleId(member_GoogleId);
-//				mbr.set(member_GoogleId);//狀態未改-------------------------------------@@@@
+				mbr.setMember_state(mbrVO.getMember_state());
 				session.setAttribute("MemberVO", mbr);
 				session.setAttribute("mbr", mbr);
 				RequestDispatcher rd = req.getRequestDispatcher("/productindex.jsp");
@@ -83,13 +83,12 @@ public class GoogleMemberServlet extends HttpServlet {
                 	try{
                 		String address=req.getParameter("Address");
                 		String phone=req.getParameter("Phone");
-                		System.out.println(phone+"1111111111111111111111111111111111111111111");
                 		MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO");
 //                		String member_Email=(String) req.getAttribute("email");
 //                		String member_GoogleId=(String) req.getAttribute("id");
 //                		String member_name=(String) req.getAttribute("name");
                 		MemberService mbrSvc = new MemberService();
-                		mbrSvc.updateMbr(memberVO.getMember_no(), memberVO.getMember_name(), memberVO.getMember_id(), memberVO.getMember_password(), phone, address, memberVO.getMember_gender(), memberVO.getMember_Email(), memberVO.getMember_birthday(), memberVO.getMember_bonus(), memberVO.getMember_GoogleId());
+                		mbrSvc.updateMbr(memberVO.getMember_no(), memberVO.getMember_name(), memberVO.getMember_id(), memberVO.getMember_password(), phone, address, memberVO.getMember_gender(), memberVO.getMember_Email(), memberVO.getMember_birthday(), memberVO.getMember_bonus(), memberVO.getMember_GoogleId(),memberVO.getMember_state());
                 	}catch(Exception e){
                 		System.out.println("XXXXXXX");
                 	}

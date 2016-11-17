@@ -19,7 +19,6 @@ public class MemberDAO implements Member_Interface{
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			System.out.println(phone+",,,,,,,,,,,,,,,,,,,"+member_no+",,,,,,,,"+email+",,,,,,,,"+name);
 //			Query query = session.createQuery("update MemberVO set member_phone=? where member_no=?");
 //			query.setParameter(0,phone);
 //			query.setParameter(1, member_no);
@@ -179,7 +178,6 @@ public class MemberDAO implements Member_Interface{
 
 		try {
 			session.beginTransaction();
-			System.out.println("11111111111111111111111111");
 			session.saveOrUpdate(memberVO);
 			session.getTransaction().commit();
 		} catch (RuntimeException e) {
@@ -264,6 +262,26 @@ public class MemberDAO implements Member_Interface{
 			
 			Query query = session.createQuery("from MemberVO where member_id=?");
 			query.setParameter(0, member_id);		
+			
+			list=query.list();
+			member=list.get(0);
+			session.getTransaction().commit();
+		}catch(RuntimeException e){
+			session.getTransaction().rollback();
+			throw e;
+		}		
+		return member;
+	}
+	
+	public MemberVO findByEmail(String member_Email){
+		List<MemberVO> list=null;
+		MemberVO member=null;
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try{
+			session.beginTransaction();
+			
+			Query query = session.createQuery("from MemberVO where member_Email=?");
+			query.setParameter(0, member_Email);		
 			
 			list=query.list();
 			member=list.get(0);
