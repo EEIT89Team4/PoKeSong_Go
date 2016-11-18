@@ -51,6 +51,17 @@ public class MemberService {
 			}
 			return flag;
 		}
+		//驗證會員是否為黑名單
+				public boolean blacklist(String member_id){
+					boolean black = false;
+					List<MemberVO> list = service.getAll();
+					for (MemberVO mbr : list) {
+						if (mbr.getMember_id()!=null && mbr.getMember_id().equals(member_id) && mbr.getMember_state().equals("黑名單")) {
+							black=true;
+						}
+					}
+					return black;
+				}
 		
 		// 驗證帳號密碼是否正確
 		public boolean loginCheck(String member_id, String member_password) {

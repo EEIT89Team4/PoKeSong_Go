@@ -108,13 +108,28 @@ color:white;
 				</c:if>
 			</tr>
 		</table>
+		
 		<c:if test="${not empty errorLogin}">
+		<c:choose>
+		<c:when test="${not empty errorLogin.ErrState }">
+			<script>
+				$(document).ready(function() {
+// 					$("#myModal").modal({backdrop : false});
+// 					$("#myModal").remove();
+					alert("會員狀態異常,無法登入");
+				});
+			</script>
+			</c:when>
+		
+		<c:otherwise>
 			<script>
 				$(document).ready(function() {
 					$("#myModal").modal({backdrop : false});
 					$("#myModal").modal('show');
 				});
 			</script>
+			</c:otherwise>
+			</c:choose>
 		</c:if>
 	</div>
 	</div>
@@ -162,7 +177,7 @@ color:white;
 							<div class="form-group">
 								<label for="usrname"><h3> 帳號</h3></label> 
 								<input type="text" class="form-control" id="usrname" name="member_id" value="${sessionScope.user}"placeholder="Enter id">
-								<br><font color="red" size="-1">${errorLogin.ErrIdEmpty}  ${errorLogin.ErrIdFormat}  ${errorLogin.ErrId}</font>
+								<br><font color="red" size="-1">${errorLogin.ErrIdEmpty}  ${errorLogin.ErrIdFormat}  ${errorLogin.ErrId} </font>
 							</div>
 							<div class="form-group">
 								<label for="psw"><h3>密碼</h3></label> 

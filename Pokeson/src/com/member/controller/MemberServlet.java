@@ -219,8 +219,13 @@ public class MemberServlet extends HttpServlet {
 				if (!member_password.trim().matches(userPswdReg)) {
 					errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
 				}
-				if (!mbrSvc.loginCheck(member_id, member_password)) {
-					errorMsgs.put("Err", "帳號或密碼錯誤");
+				//驗證會員是否為黑名單並登入
+				if(!mbrSvc.blacklist(member_id)){
+					if (!mbrSvc.loginCheck(member_id, member_password)) {
+						errorMsgs.put("Err", "帳號或密碼錯誤");
+					}
+				}else{
+					errorMsgs.put("ErrState", "會員狀態異常");
 				}
 				/******************* remember me *****************/
 				String rm = request.getParameter("rm");
@@ -312,8 +317,13 @@ public class MemberServlet extends HttpServlet {
 			String uri = contextPath + servletPath;
 			Map<String, String> errorMsgs = new HashMap<String, String>();
 			request.setAttribute("errorMsgs", errorMsgs);
+			
+			MemberVO mbr = new MemberVO();
 			try {
 				/************* 1.接收請求參數，輸入格式錯誤處理 ************/
+				String member_GoogleId = request.getParameter("member_GoogleId");
+				System.out.println(member_GoogleId);
+				
 				Integer member_no = new Integer(request.getParameter("member_no"));
 				// System.out.println(member_no);
 
@@ -330,43 +340,7 @@ public class MemberServlet extends HttpServlet {
 				}
 				// 帳號欄不可空白不可重複，只能是英數_，varchar20
 				String member_id = request.getParameter("member_id");
-
-				// 密碼欄不可空白，只能是英(大小寫)數_，varchar20
-				String member_password = request.getParameter("member_password1");
-				if (member_password == null || member_password.trim().length() == 0) {
-					errorMsgs.put("ErrPasswordEmpty", "請輸入密碼");
-				} else {
-					String userPswdReg = "^[A-Za-z0-9]{6,40}$";
-					if (!member_password.trim().matches(userPswdReg)) {
-						errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
-					}
-				}
-				// 密碼欄2用來驗證是否有輸入錯誤
-				String member_password2 = request.getParameter("member_password2");
-				if (!member_password.equals(member_password2)) {
-					errorMsgs.put("ErrPassword", "請確認密碼");
-				}
-
-				// 生日不可空白
-				java.sql.Date member_birthday = null;
-				try {
-					member_birthday = java.sql.Date.valueOf(request.getParameter("member_birthday").trim());
-				} catch (IllegalArgumentException e) {
-					errorMsgs.put("ErrDateEmpty", "請輸入日期");
-				}
-				// 性別不可空白
-				String member_gender = request.getParameter("member_gender");
-
-				// 電話欄不可空白，只能輸入數字varchar10
-				String member_phone = request.getParameter("member_phone");
-				if (member_phone == null || member_phone.trim().length() == 0) {
-					errorMsgs.put("ErrPhoneEmpty", "請輸入電話");
-				} else {
-					String userPhoneReg = "^[0-9]{8,10}$";
-					if (!member_phone.trim().matches(userPhoneReg)) {
-						errorMsgs.put("ErrPhoneFormat", "電話格式錯誤");
-					}
-				}
+				
 				// Email欄不可空白，varchar50
 				String member_Email = request.getParameter("member_Email");
 //				System.out.println(member_Email);
@@ -379,43 +353,104 @@ public class MemberServlet extends HttpServlet {
 						errorMsgs.put("ErrEmailFormat", "email格式錯誤");
 					}
 				}
-
-				// 地址欄不可空白，只能中文數字 varchar100
-				String city = request.getParameter("city");
-//				System.out.println(city);
-				String address = request.getParameter("address");
-//				System.out.println(address);
-				if (city.equals("請選擇")) {
-					errorMsgs.put("ErrCityEmpty", "請選擇縣市");
-				}
-				if (address == null || address.trim().length() == 0) {
-					errorMsgs.put("ErrAdderssEmpty", "請輸入地址");
-				}
-
-				String member_address = city + address;
-				// 紅利
-				Integer member_bonus = new Integer(request.getParameter("member_bonus"));
 				
-				String member_GoogleId = "";
-				
+				//會員狀態
 				String member_state = request.getParameter("member_state");
 				System.out.println(member_state);
 				
-				MemberVO mbr = new MemberVO();
-				mbr.setMember_no(member_no);
-				mbr.setMember_name(member_name);
-				mbr.setMember_id(member_id);
-				mbr.setMember_password(member_password);
-				mbr.setMember_phone(member_phone);
-				mbr.setMember_address(member_address);
-				mbr.setMember_gender(member_gender);
-				mbr.setMember_Email(member_Email);
-				mbr.setMember_birthday(member_birthday);
-				mbr.setMember_bonus(member_bonus);
-				mbr.setMember_GoogleId(member_GoogleId);
+				String member_password = request.getParameter("member_password1");
+				
+				String member_password2 = request.getParameter("member_password2");
+				
+				java.sql.Date member_birthday = null;
+				
+				String member_gender = request.getParameter("member_gender");
+
+				String member_phone = request.getParameter("member_phone");
+				
+				String city = request.getParameter("city");
+
+				String address = request.getParameter("address");
+				
+				String member_address = city + address;
+				
+				Integer member_bonus = new Integer(request.getParameter("member_bonus"));
+
+				//如果沒有google帳號，以下值不可為空值
+				if(member_GoogleId==null){
+					// 密碼欄不可空白，只能是英(大小寫)數_，varchar20
+					if (member_password == null || member_password.trim().length() == 0) {
+						errorMsgs.put("ErrPasswordEmpty", "請輸入密碼");
+					} else {
+						String userPswdReg = "^[A-Za-z0-9]{6,40}$";
+						if (!member_password.trim().matches(userPswdReg)) {
+							errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
+						}
+					}
+					// 密碼欄2用來驗證是否有輸入錯誤
+					if (!member_password.equals(member_password2)) {
+						errorMsgs.put("ErrPassword", "請確認密碼");
+					}
+	
+					// 生日不可空白
+					try {
+						member_birthday = java.sql.Date.valueOf(request.getParameter("member_birthday").trim());
+					} catch (IllegalArgumentException e) {
+						errorMsgs.put("ErrDateEmpty", "請輸入日期");
+					}
+
+	
+					// 電話欄不可空白，只能輸入數字varchar10
+					if (member_phone == null || member_phone.trim().length() == 0) {
+						errorMsgs.put("ErrPhoneEmpty", "請輸入電話");
+					} else {
+						String userPhoneReg = "^[0-9]{8,10}$";
+						if (!member_phone.trim().matches(userPhoneReg)) {
+							errorMsgs.put("ErrPhoneFormat", "電話格式錯誤");
+						}
+					}
+	
+					// 地址欄不可空白，只能中文數字 varchar100
+					if (city.equals("請選擇")) {
+						errorMsgs.put("ErrCityEmpty", "請選擇縣市");
+					}
+					if (address == null || address.trim().length() == 0) {
+						errorMsgs.put("ErrAdderssEmpty", "請輸入地址");
+					}
+
+					//如果有google帳號，以下值可為空值
+				}else{	
+					// 生日不可空白
+					try {
+						member_birthday = java.sql.Date.valueOf(request.getParameter("member_birthday").trim());
+					} catch (IllegalArgumentException e) {
+						errorMsgs.put("ErrDateEmpty", "請輸入日期");
+					}
+	
+					// 電話欄不可空白，只能輸入數字varchar10
+					if (member_phone !="") {
+						String userPhoneReg = "^[0-9]{8,10}$";
+						if (!member_phone.trim().matches(userPhoneReg)) {
+							errorMsgs.put("ErrPhoneFormat", "電話格式錯誤");
+						}
+					}
+
+				}
+					mbr.setMember_no(member_no);
+					mbr.setMember_name(member_name);
+					mbr.setMember_id(member_id);
+					mbr.setMember_password(member_password);
+					mbr.setMember_phone(member_phone);
+					mbr.setMember_address(member_address);
+					mbr.setMember_gender(member_gender);
+					mbr.setMember_Email(member_Email);
+					mbr.setMember_birthday(member_birthday);
+					mbr.setMember_bonus(member_bonus);
+					mbr.setMember_GoogleId(member_GoogleId);
+				
 				// 如果有錯誤，回到原頁
 				if (!errorMsgs.isEmpty()) {
-
+					System.out.println(errorMsgs);
 					request.setAttribute("mbr", mbr);
 					RequestDispatcher errorView = request.getRequestDispatcher(servletPath);
 					errorView.forward(request, response);
@@ -430,11 +465,9 @@ public class MemberServlet extends HttpServlet {
 				/******************** 3.轉交 ********************/
 				session.setAttribute("mbr", mbr);
 				out.write("success");
-//				RequestDispatcher rd = request.getRequestDispatcher("/mbrZone.jsp");
-//				rd.forward(request, response);
 
 				// 其他錯誤處理
-			} catch (Exception e) {
+			}catch (Exception e) {
 				errorMsgs.put("errOthers", e.getMessage());
 				RequestDispatcher errorView = request.getRequestDispatcher("/update.jsp");
 				errorView.forward(request, response);
