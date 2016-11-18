@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="productclassdao" class="com.productclass.model.ProductClassDAO" scope="page" />
 <head>
 <link href="css/bootstrap.css" rel="stylesheet">
 <script src="js/jquery-1.9.1.js"></script>
@@ -9,6 +10,27 @@
 <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 <script src="js/Popup.js"></script>
+<!-- Pagination -->
+<link rel="stylesheet" type="text/css" href="pagination/themes/material/easyui.css">
+<link rel="stylesheet" type="text/css" href="pagination/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="pagination/demo.css">
+<link rel="stylesheet" type="text/css" href="pagination/layout.css">
+<script type="text/javascript" src="pagination/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="pagination/easyui-lang-zh_TW.js"></script>
+<!-- Dropdown Menu 引用  註:須引用bootstrap -->
+<script src="dropdown/dropdown.js"></script>
+<link rel="stylesheet" href="dropdown/dropdown.css">
+<!-- popicon -->
+<link rel="stylesheet" href="css/popicon.css">
+
+<!-- 最近流覽商品 -->
+<link rel="stylesheet" type="text/css" href="history/history.css">
+
+<!-- 貨到通知 coding -->
+<script type="text/javascript" src="js/notify.js"></script>
+
+
+
 <style>
 #membermenu {
    margin: auto; 
@@ -140,23 +162,85 @@ color:white;
 </div>
 <!-- end #header -->
 <div id="wrapper">
-	<div id="menu">
-		<ul>
-			<li class="current_page_item"><a href="#">電子產品</a></li>
-			<li><a href="#">生活家電</a></li>
-			<li><a href="#">零食餅乾</a></li>
-			<li><a href="#">生鮮食品</a></li>
-<!-- 			<li><a href="#">居家生活</a></li> -->
-		</ul>
+	<!-- dropdown menu  -->
+	<div style="display: inline-block">
+		<button id="dropbtn" class="dropbtn">
+			<span id="dropicon" class="glyphicon glyphicon-align-justify"></span>
+			全站分類
+		</button>
 	</div>
-	<!-- end #menu -->
-	<div id="search" >
-		<form method="get" action="#">
+	<!--搜尋  -->
+	<div id="search">
+		<form method="get" action="searchPage">
 			<div>
-				<input type="text" name="s" id="search-text" value="" />
+				<input type="text" name="search" placeholder="請輸入商品關鍵字" id="search-text" value="">
+				<span>
+					<button id="vocalsearch" type="button">
+					<span class="glyphicon glyphicon-bullhorn">
+					</span>
+					</button>
+				</span>
 			</div>
+			
+			<div id="search-submit">
+				<button style="width:100%" type="button">
+					<span>
+					<img id="submitimg" src="images/search.png">
+					</span>
+					</button>
+			</div>
+			
 		</form>
 	</div>
+
+	<!--搜尋  -->
+	<!--分類選單  -->
+	<div class="dropdown-content">
+			<c:forEach var="productclassitem" items="${productclassdao.all}">
+				<a
+					href="${pageContext.servletContext.contextPath}/classProduct?classno=${productclassitem.class_no}&class=${productclassitem.class_name}"
+					value="${productclassitem.class_no}">${productclassitem.class_name}</a>
+				<br>
+			</c:forEach>			
+	</div>
+	
+	<!--子分類選單  -->
+	<!--搜尋coding(導向搜尋專有頁面)-->
+			<script>	
+			$(function(){
+				$('#search-submit').click(function(){
+					EleText = $('#search-text').val().trim();
+// 					alert(EleText);
+					if(EleText == "" || EleText == null){
+						alert("請輸入搜尋關鍵字")
+					}else{
+						//預設搜尋後顯示為第1頁，每頁顯示10筆
+						window.location.assign("${pageContext.servletContext.contextPath}/searchPage?search="+EleText+"&searchPage=1&searchSize=10");	
+					}
+				});
+			})
+			</script>
+<!-- 	------------------------------------------		 -->
+	<div id="rl" class="right-list">
+	
+<!-- 			<ul class="right-ul"> -->
+<!-- 				<li><h3> -->
+<!-- 						<a href="#筆記型電腦">筆記型電腦</a> -->
+<!-- 					</h3></li> -->
+<!-- 				<li><a href="#">子分類</a></li> -->
+<!-- 				<li><a href="#">子分類</a></li> -->
+<!-- 			</ul> -->
+
+<!-- 			<ul class="right-ul"> -->
+<!-- 				<li><h3> -->
+<!-- 						<a href="#平板電腦">平板電腦</a> -->
+<!-- 					</h3></li> -->
+<!-- 				<li><a href="#">子分類</a></li> -->
+<!-- 				<li><a href="#">子分類</a></li> -->
+<!-- 				<li><a href="#">子分類</a></li> -->
+<!-- 			</ul> -->
+		</div>	
+	
 </div>
 <!---------------------------------------登入彈跳視窗--------------------------->
 		<div class="modal fade" id="myModal" role="dialog">
@@ -263,12 +347,106 @@ color:white;
 	                </c:if>
 <!--                   <li></li> -->
                     </ul></div></div>
+<!------------------------------------ myfavorite ---------------------------->
     	
 <div id="myfavorite" style="position:fixed;top:160px;right:15px;z-index:9;font-size:9pt;"  ><div style="width:100px;height:100px;cursor:pointer;background:url(images/myfavorite.png);background-repeat:no-repeat;text-align:center;" onclick="to_myfavorite();">
 <div style="padding:24px 0px 0px 0px;font-size:11pt;font-family:微軟正黑體;color:white">我的最愛</div>
 </div></div>	
-<div id="chkout" style="position:fixed;top:50px;right:15px;z-index:10;font-size:9pt;"><div style="width:100px;height:100px;cursor:pointer;background:url(images/ShoppingCart.png);background-repeat:no-repeat;text-align:center;" onclick="to_mycar1();"><div style="padding:2px 0px 0px 0px;font-size:11pt;font-family:微軟正黑體;color:white">結 帳</div><div style="font-weight:bold;color:yellow;font-family:arial;margin-top:15px;margin-right:-55px"><span id="buycount_all_f" style="font-size:18pt;">${mycart.productMap.size()}</span></div></div>
-<!-- shopping car -->
+
+<!------------------------------------ myfavorite ---------------------------->
+
+<!------------------------------------ shopping car ---------------------------->
+
+<div id="chkout" style="position:fixed;top:50px;right:15px;z-index:10;font-size:9pt;">
+<div style="width:100px;height:100px;cursor:pointer;background:url(images/ShoppingCart.png);background-repeat:no-repeat;text-align:center;" onclick="to_mycar1();">
+<div style="padding:2px 0px 0px 0px;font-size:11pt;font-family:微軟正黑體;color:white">結 帳</div>
+<div style="font-weight:bold;color:yellow;font-family:arial;margin-top:15px;margin-right:-55px"><span id="buycount_all_f" style="font-size:18pt;">${mycart.productMap.size()}</span></div></div></div>
+
+<!------------------------------------ shopping car ---------------------------->
+
+<!------------------------------------ 瀏覽紀錄---------------------------------->
+		
+		
+		<div id="slider_scroll">
+		 	<div id="slider_tab">
+			    <span>最</span>
+			    <span>近</span>
+			    <span>瀏</span>
+			    <span>覽</span>
+			    <span>商</span>
+			    <span>品</span>
+			</div>
+			<div id="slider_content">
+				
+		    	<div  id="history" class="container" style="width:100%">
+		    	
+		    	<c:forEach var="proHistory" items="${proHistory}" varStatus='x'>
+		    		<c:if test='${x.first}'>
+		    			<div id="historyfirst" style="margin-top:20px;width:100%">
+			    			<a href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${proHistory.product_no}">
+					    	<div class="thumbnail">
+							<img src="${pageContext.servletContext.contextPath}/getImage?productid=${proHistory.product_no}" />
+							<div class="caption">
+								<h6>${proHistory.product_name}</h6>
+								<p>售價:${proHistory.product_price}</p>
+							</div>
+							</div>
+							</a>	
+				    	</div>
+		    		</c:if>
+		    		
+		    	<c:if test='${x.count>1}'>
+		    		
+			    	<div style="margin:30px 0px;width:100%">
+			    	
+			    	<a href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${proHistory.product_no}">
+			    	<div class="thumbnail">
+					<img src="${pageContext.servletContext.contextPath}/getImage?productid=${proHistory.product_no}" />
+					<div class="caption">
+						<h6>${proHistory.product_name}</h6>
+						<p>售價:${proHistory.product_price}</p>
+						</div>
+					</div>
+			    	</a>
+			    	</div> 	
+		    	</c:if>
+		    			
+		    	</c:forEach>
+		    	
+		    	</div>
+			</div>
+		</div>
+		
+		<!-- 側邊固定slider code -->
+<script>
+$(function(){
+	var w = $("#slider_content").width();
+	
+	
+	if(document.getElementById("historyfirst")!=null){
+		$("#slider_tab").css("display","block");	
+	}
+	
+	$('#slider_content').css('height', ($(window).height() - 20) + 'px' ); //將區塊自動撐滿畫面高度
+	
+	$("#slider_tab").mouseover(function(){ //滑鼠滑入時
+		if ($("#slider_scroll").css('left') == '-'+w+'px')
+		{
+			$("#slider_scroll").animate({ left:'0px' }, 600 ,'swing');
+		}
+	});
+	
+	//滑鼠離開後
+	$("#slider_content").mouseleave(function(){
+		$("#slider_scroll").animate( { left:'-'+w+'px' }, 600 ,'swing');	
+	});	
+});
+
+
+</script>
+<!------------------------------------ 瀏覽紀錄---------------------------------->
+
+		
 <input type="hidden" name="mbr" id="mbr" value="${mbr}"/>
 <input type="hidden" name="mbr_no" id="mbr_no" value="${MemberVO.member_no}"/>
 <script>

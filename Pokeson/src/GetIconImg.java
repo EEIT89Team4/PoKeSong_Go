@@ -22,7 +22,7 @@ public class GetIconImg extends HttpServlet {
 		byte datas [] =  new byte[512];
 		int count=0;
 		try {
-			is = getServletContext().getResourceAsStream("/Image/favicon-20161019032600349.ico");
+			is = getServletContext().getResourceAsStream("/images/favicon.ico");
 			os=response.getOutputStream();
 			
 			while((count=is.read(datas))!=-1){

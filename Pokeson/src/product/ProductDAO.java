@@ -2,14 +2,18 @@ package product;
 
 import java.util.List;
 
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+
 
 import hibernate.util.HibernateUtil;
 
@@ -155,25 +159,276 @@ public class ProductDAO {
 
 	}
 
-	public List<ProductVO> getSomeProduct(String searchtext) {
-		List<ProductVO> productlist = null;
-		Transaction tx = null;
-		try {
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-			tx = session.beginTransaction();
-			Criteria criteria = session.createCriteria(ProductVO.class);
-			criteria.add(Restrictions.disjunction()
-			        .add(Restrictions.like("supplier_name", "%" + searchtext + "%"))
-			        .add(Restrictions.like("product_description", "%" + searchtext + "%"))
-			        .add(Restrictions.like("product_name", "%" + searchtext + "%")));
-			productlist = criteria.list();
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			e.printStackTrace();
+	//for productPage:呈現所有產品並分頁-----------------------------------------------
+		public List<ProductVO> getFirstMaxResults(int firstResult,int maxResult) {
+			List<ProductVO> productlist = null;
+			Transaction tx = null;
+			
+			try {
+				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				tx = session.beginTransaction();
+				Query query = session.createQuery("from ProductVO");
+				query.setFirstResult(firstResult);
+				query.setMaxResults(maxResult);
+				productlist = query.list();
+				tx.commit();
+			} catch (RuntimeException e) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return productlist;
 		}
-		return productlist;
-	}
+		
+		//for searchPage:呈現搜尋頁面的所有產品-----------------------------------------------
+		public List<ProductVO> getAllSearch(String searchtext,String[] advs,String ordertype) {
+			List<ProductVO> productlist = null;
+			Transaction tx = null;
+			try {
+				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				tx = session.beginTransaction();
+				Criteria criteria = session.createCriteria(ProductVO.class);
+				if(advs!=null){//判斷是否有條件
+						Disjunction or = Restrictions.disjunction();
+						for(String adv : advs){
+							or.add(Restrictions.eq("supplier_name",adv));
+						}
+						criteria.add(or);
+				}
+				criteria.add(Restrictions.disjunction()
+				        .add(Restrictions.like("supplier_name", "%" + searchtext + "%"))
+				        .add(Restrictions.like("product_description", "%" + searchtext + "%"))
+				        .add(Restrictions.like("product_name", "%" + searchtext + "%")));
+				if(ordertype!=null){ //判斷是否有排序
+					if(ordertype.equals("asc")){
+						System.out.println("ordertype=由低到高");
+						criteria.addOrder(Order.asc("product_price"));
+					}
+					if(ordertype.equals("desc")){
+						System.out.println("ordertype=由高到低");
+						criteria.addOrder(Order.desc("product_price"));
+					}
+				}
+				productlist = criteria.list();
+				tx.commit();
+			} catch (RuntimeException e) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return productlist;
+		}
+		
+		//for searchPage:呈現搜尋頁面的所有產品並分頁-----------------------------------------------
+			public List<ProductVO> getSearchPage(String searchtext,int firstResult
+					,int maxResult,String[] advs,String ordertype) {
+				List<ProductVO> productlist = null;
+				Transaction tx = null;
+				try {
+					Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+					tx = session.beginTransaction();
+					Criteria criteria = session.createCriteria(ProductVO.class);
+					if(advs!=null){//判斷是否有條件
+						Disjunction or = Restrictions.disjunction();
+						for(String adv : advs){
+							or.add(Restrictions.eq("supplier_name",adv));
+						}
+						criteria.add(or);
+					}
+					criteria.add(Restrictions.disjunction()
+				        .add(Restrictions.like("supplier_name", "%" + searchtext + "%"))
+				        .add(Restrictions.like("product_description", "%" + searchtext + "%"))
+				        .add(Restrictions.like("product_name", "%" + searchtext + "%")));
+					if(ordertype!=null){ //判斷是否有排序
+						if(ordertype.equals("asc")){
+							System.out.println("ordertype="+ordertype);
+							criteria.addOrder(Order.asc("product_price"));
+						}
+						if(ordertype.equals("desc")){
+							System.out.println("ordertype="+ordertype);
+							criteria.addOrder(Order.desc("product_price"));
+						}
+					}
+					//將最後的資料做分頁
+					criteria.setFirstResult(firstResult);
+					criteria.setMaxResults(maxResult);
+					productlist = criteria.list();
+					tx.commit();
+				} catch (RuntimeException e) {
+					tx.rollback();
+					e.printStackTrace();
+				}
+				return productlist;
+			}
+
+		//for classProductPage:呈現該分類的所有產品-----------------------------------------------
+		public List<ProductVO> getAllByClassNo(int class_no) {
+			List<ProductVO> productlist = null;
+			Transaction tx = null;
+			try {
+				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				tx = session.beginTransaction();
+				Query query = session.createQuery("from ProductVO where productClassVO.class_no="+class_no);
+				productlist = query.list();
+				tx.commit();
+			} catch (RuntimeException e) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return productlist;
+		}
+
+		//for classProductPage:呈現該分類的所有產品並分頁------------------------------------------
+		public List<ProductVO> getClassPage(int class_no,int firstResult,int maxResult,String ordertype) {
+			List<ProductVO> productlist = null;
+			Transaction tx = null;
+			Query query=null;
+			try {
+				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				tx = session.beginTransaction();
+					if(ordertype.equals("asc")){
+						System.out.println("ordertype="+ordertype);
+						query = session.createQuery
+								("from ProductVO where productClassVO.class_no="+class_no +
+										"order by product_price ASC");
+					}
+					else if(ordertype.equals("desc")){
+						System.out.println("ordertype="+ordertype);
+						query = session.createQuery
+								("from ProductVO where productClassVO.class_no="+class_no +
+										"order by product_price DESC");
+					}else{
+						query = session.createQuery("from ProductVO where productClassVO.class_no="+class_no);
+					}
+				query.setFirstResult(firstResult);
+				query.setMaxResults(maxResult);
+				productlist = query.list();
+				tx.commit();
+			} catch (RuntimeException e) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return productlist;
+		}
+		
+		//for detailProductPage:呈現該細部分類的所有產品-----------------------------------------------
+		public List<ProductVO> getAllByClassDetailNo(int classdetail_no) {
+			List<ProductVO> productlist = null;
+			Transaction tx = null;
+			try {
+				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				tx = session.beginTransaction();
+				Query query = session.createQuery("from ProductVO where classdetail_no="+classdetail_no);
+				productlist = query.list();
+				tx.commit();
+			} catch (RuntimeException e) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+			return productlist;
+		}
+		
+		//for detailProductPage:呈現該細部分類的所有產品並分頁-------------------------------------------
+		public List<ProductVO> getDetailPage(int classdetail_no,int firstResult,int maxResult,String ordertype) {
+			List<ProductVO> productlist = null;
+			Transaction tx = null;
+			Query query=null;
+			try {
+				Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+				tx = session.beginTransaction();
+					if(ordertype.equals("asc")){
+						System.out.println("ordertype="+ordertype);
+						query = session.createQuery
+								("from ProductVO where classdetail_no="+classdetail_no +
+										"order by product_price ASC");
+					}
+					else if(ordertype.equals("desc")){
+						System.out.println("ordertype="+ordertype);
+						query = session.createQuery
+								("from ProductVO where classdetail_no="+classdetail_no +
+										"order by product_price DESC");
+					}else{
+						query = session.createQuery("from ProductVO where classdetail_no="+classdetail_no);
+					}
+				query.setFirstResult(firstResult);
+				query.setMaxResults(maxResult);
+				productlist = query.list();
+				tx.commit();
+			} catch (RuntimeException e) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+				return productlist;
+			}
+		
+		//for brandProductPage:呈現該細部分類的品牌產品並分頁-------------------------------------------
+				public List<ProductVO> getBrandProduct(int classdetail_no,String ordertype,String brand) {
+					List<ProductVO> productlist = null;
+					Transaction tx = null;
+					Query query=null;
+					try {
+						Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+						tx = session.beginTransaction();
+						if(ordertype.equals("asc")){
+							System.out.println("ordertype="+ordertype);
+							query = session.createQuery
+									("from ProductVO where classdetail_no="+classdetail_no + 
+											"and supplier_name='"+ brand + "'" +
+											"order by product_price ASC");
+						}
+						else if(ordertype.equals("desc")){
+							System.out.println("ordertype="+ordertype);
+							query = session.createQuery
+									("from ProductVO where classdetail_no="+classdetail_no + 
+											"and supplier_name='"+ brand + "'" +
+											"order by product_price DESC");
+						}else{
+							query = session.createQuery("from ProductVO where classdetail_no="+classdetail_no + 
+									"and supplier_name='"+ brand + "'");
+						}
+						productlist = query.list();
+						tx.commit();
+					} catch (RuntimeException e) {
+						tx.rollback();
+						e.printStackTrace();
+					}
+						return productlist;
+					}
+		
+		
+		//for brandProductPage:呈現該細部分類的品牌產品並分頁-------------------------------------------
+			public List<ProductVO> getBrandPage(int classdetail_no,int firstResult,int maxResult,String ordertype,String brand) {
+				List<ProductVO> productlist = null;
+				Transaction tx = null;
+				Query query=null;
+				try {
+					Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+					tx = session.beginTransaction();
+						if(ordertype.equals("asc")){
+							System.out.println("ordertype="+ordertype);
+							query = session.createQuery
+									("from ProductVO where classdetail_no="+classdetail_no + 
+											"and supplier_name='"+ brand + "'" +
+											"order by product_price ASC");
+						}
+						else if(ordertype.equals("desc")){
+							System.out.println("ordertype="+ordertype);
+							query = session.createQuery
+									("from ProductVO where classdetail_no="+classdetail_no + 
+											"and supplier_name='"+ brand + "'" +
+											"order by product_price DESC");
+						}else{
+							query = session.createQuery("from ProductVO where classdetail_no="+classdetail_no + 
+									"and supplier_name='"+ brand + "'");
+						}
+						query.setFirstResult(firstResult);
+						query.setMaxResults(maxResult);
+					productlist = query.list();
+					tx.commit();
+				} catch (RuntimeException e) {
+					tx.rollback();
+					e.printStackTrace();
+				}
+					return productlist;
+				}
 
 	public static void main(String args[]) {
 //		 ProductVO productvo = new ProductVO();

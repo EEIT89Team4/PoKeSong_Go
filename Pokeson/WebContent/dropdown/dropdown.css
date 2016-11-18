@@ -1,0 +1,98 @@
+.dropbtn { 
+	text-align:left;
+	background-color: #000000;
+	width:300px;
+	height:60px;
+    color: white;
+    padding: 16px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer; /*游標變成手 */
+	z-index:5;
+}  
+
+/* Dropdown Content (Hidden by Default) */
+ .dropdown-content { 
+     display:none;  
+     width:300px; 
+     height:310px; 
+     background-color:#DDDDDD; 
+/*   border:1px solid #000000; */
+     z-index:5;
+ 	 position:absolute;
+ } 
+
+/* Links inside the dropdown */
+.dropdown-content > a {
+	/*調整分類位置*/
+	margin-top:6px; 
+	margin-left:20px;
+	font-size: 20px;
+    padding: 6px 16px;
+    text-decoration: none;
+    display:block;
+    z-index:5;
+}
+
+.right-list { 
+ 	display: none;
+    width:600px;
+/*  height:310px; */
+    background-color: #DDDDDD;
+/*  border:1px solid #000000; */
+    z-index:6;
+    position:relative;
+	left:300px;
+	overflow:hidden;
+}
+
+.right-list > div { 
+/* 	display:inline-block; */
+	float:left;
+	maging:3px 5px;
+	padding:3px 5px;
+	z-index:6;
+	position:relative;
+}
+
+.right-list > li > a {
+/* 	display:inline-block; */
+	float:left;
+    color:black;
+    padding:12px 16px;
+    text-decoration:none;
+    z-index:6;
+ 	position:relative;
+}
+
+.right-ul {
+/* 	width:130px; */
+/* 	height:169px; */
+	padding:10px 15px;
+/* 	margin:8px 0px; */
+	display:inline-block;
+/* 	float:left; */
+	list-style-type:none; /*刪除list樣式*/
+	position:relative;
+	z-index:6;
+}
+
+.right-ul > li > h3{
+    margin:5px 0px;
+    padding:5px 0px;
+    z-index:6;
+    position:relative;
+}
+
+.right-ul > li{
+	margin-bottom:5px;
+	z-index:6;	
+	position:relative;
+}
+
+.right-ul > li > a{
+	color:#000000;
+	z-index:6;
+	position:relative;
+}
+

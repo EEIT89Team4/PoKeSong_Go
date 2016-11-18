@@ -2,9 +2,11 @@ package product;
 
 import java.util.List;
 
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 import hibernate.util.HibernateUtil;
 
@@ -52,6 +54,10 @@ public class ProductService {
 	public List<ProductVO> getNewProduct() {
 		ProductDAO productdao = new ProductDAO();
 		 return productdao.getNewProduct();
+	}
+	public List<ProductVO> getAllByClassNo(int class_no) {
+		ProductDAO productdao = new ProductDAO();
+		 return productdao.getAllByClassNo(class_no);
 	}
 	public static void main(String[] args){
 		//UPDATE

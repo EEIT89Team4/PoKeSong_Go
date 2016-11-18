@@ -1,6 +1,7 @@
 package com.order.controller;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -142,7 +143,7 @@ public class ProcessOrderServlet extends HttpServlet {
 		for (Integer k : set) {
 			List<ProductVO> oib = cart.get(k);
 			int product_no = oib.iterator().next().getProduct_no(); 
-			int class_no = oib.iterator().next().getClass_no();
+			int class_no = oib.iterator().next().getProductClassVO().getClass_no();
 			int orderproduct_quantity=oib.size();
 			orderDetailsService.addOrderDetails(product_no, order_no, orderproduct_quantity);
 			//將購物車內的商品數量取出 扣除庫存數量

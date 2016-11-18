@@ -1,16 +1,18 @@
 package product;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.notifymember.model.NotifyMemberVO;
+import com.productclass.model.ProductClassVO;
+
 import myfavorite.MyFavoriteVO;
 
-public class ProductVO implements Serializable{
+public class ProductVO implements Comparable,Serializable{
 private int product_no;
-private int class_no;
+private ProductClassVO productClassVO;
 private int classdetail_no;
 private int product_price;
 private String unit;
@@ -22,12 +24,22 @@ private int weight;
 private Date deadline;
 private Integer deadlineday;
 private byte[] pictrue;
+private byte[] bsizepic;
 private int product_alertquantity;
 private String product_description;
+private double product_discount;
 
-private Set<MyFavoriteVO> myfavorites=new HashSet<MyFavoriteVO>();
+private Set<MyFavoriteVO> myfavorites = new HashSet<MyFavoriteVO>();
+
+private Set<NotifyMemberVO> notifymembers = new HashSet<NotifyMemberVO>();
 
 
+public Set<NotifyMemberVO> getNotifymembers() {
+	return notifymembers;
+}
+public void setNotifymembers(Set<NotifyMemberVO> notifymembers) {
+	this.notifymembers = notifymembers;
+}
 
 public Set<MyFavoriteVO> getMyfavorites() {
 	return myfavorites;
@@ -41,15 +53,19 @@ public int getProduct_no() {
 public void setProduct_no(int product_no) {
 	this.product_no = product_no;
 }
-public int getClass_no() {
-	return class_no;
+
+public ProductClassVO getProductClassVO() {
+	return productClassVO;
 }
-public void setClass_no(int class_no) {
-	this.class_no = class_no;
+
+public void setProductClassVO(ProductClassVO productClassVO) {
+	this.productClassVO = productClassVO;
 }
+
 public int getClassdetail_no() {
 	return classdetail_no;
 }
+
 public void setClassdetail_no(int classdetail_no) {
 	this.classdetail_no = classdetail_no;
 }
@@ -113,6 +129,12 @@ public byte[] getPictrue() {
 public void setPictrue(byte[] pictrue) {
 	this.pictrue = pictrue;
 }
+public byte[] getBsizepic() {
+	return bsizepic;
+}
+public void setBsizepic(byte[] bsizepic) {
+	this.bsizepic = bsizepic;
+}
 public int getProduct_alertquantity() {
 	return product_alertquantity;
 }
@@ -125,5 +147,21 @@ public String getProduct_description() {
 public void setProduct_description(String product_description) {
 	this.product_description = product_description;
 }
+public double getProduct_discount() {
+	return product_discount;
+}
+public void setProduct_discount(double product_discount) {
+	this.product_discount = product_discount;
+}
+
+@Override
+public int compareTo(Object productvo) {
+	int compareprice=((ProductVO)productvo).getProduct_price();
+    /* For Ascending order*/
+    return this.product_price-compareprice;
+	
+}
+
+
 
 }

@@ -20,5 +20,6 @@
 	<p>&copy; PoKeSon股份有限公司 </p>
 </div>
 
+<script src="js/productindex.js"></script>
 
 </body>
