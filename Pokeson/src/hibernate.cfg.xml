@@ -39,7 +39,7 @@
 		<mapping resource="Adminster/adminster.hbm.xml" />
 		<mapping resource="order/orderlistVO.hbm.xml" />
 		<mapping resource="orderdetails/orderdetailsVO.hbm.xml" />
-        		<mapping resource="com/productclass/model/productclass.hbm.xml" />
+        <mapping resource="com/productclass/model/productclass.hbm.xml" />
 		<mapping resource="com/productclassdetail/model/productclassdetail.hbm.xml" />
 		<mapping resource="com/stock/model/stock.hbm.xml" />
 		<mapping resource="com/stockdetails/model/stockdetails.hbm.xml" />

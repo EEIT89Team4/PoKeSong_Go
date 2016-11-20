@@ -85,7 +85,8 @@
 									<c:if test="${product.product_quantity eq 0}">
 									<a id="${product.product_no}" class="addnotify btn btn-primary">貨到通知我</a>
 									</c:if>
-									<a href="#" class="btn btn-default">我的最愛</a>
+									<input type="button" style="width: 100px" name="INSERT"
+											class="btn" id="${product.product_no}" value="追蹤商品">
 								</p>
 							</div>
 						</div>
@@ -132,7 +133,8 @@
 						<c:if test="${product.product_quantity eq 0}">
 							<a class="btn btn-primary">貨到通知我</a>
 						</c:if>
-						<a href="#" class="btn btn-default">我的最愛</a>
+						<input type="button" style="width: 100px" name="INSERT"
+											class="btn" id="${product.product_no}" value="追蹤商品">
 					</div>
 				</div>
 
@@ -184,6 +186,20 @@
 					}
 					
 				})
+				</script>
+				
+				<script>
+					$(function() {
+						$("input[name=INSERT]").one('click',function() {
+							var member = ${MemberVO.member_no};
+							var product_no = $(this).attr("id");
+	// 						alert(product_no);
+							$(this).parents("tr").remove();
+							$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
+								alert('新增至我的最愛成功');
+							})
+						}
+					)});
 				</script>
 					
 				<script src="js/productindex.js"></script>		
