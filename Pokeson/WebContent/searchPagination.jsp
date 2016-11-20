@@ -201,7 +201,6 @@
 						}
 					)});
 				</script>
-				
 					
 				<script src="js/productindex.js"></script>		
 						
