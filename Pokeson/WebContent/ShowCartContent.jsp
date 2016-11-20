@@ -91,7 +91,7 @@ font-size:14px;
 
 
 							</select></td>
-							<td id="total">${eachproduct.product_price*productList.value.size()}</td>
+							<td  name="producttotal1" >${eachproduct.product_price*productList.value.size()}</td>
 							<td><a name="${eachproduct.product_no}" class="btn btn-primary cartbtn">刪除</a>
 <%-- 							<a name="${eachproduct.product_no}" class="btn btn-primary cartbtnUpdate">修改</a> --%>
 							</td>
@@ -228,6 +228,7 @@ $('.cartbtn').click(function(){
 <!--   ----------------------------------------結束-------------------------------------------------- 	 -->
 <!--   ------------------------------------修改購物車商品-------------------------------------------- 	 -->
 <jsp:useBean id="shoppingCart" class="ShoppingCart.ShoppingCart" scope="page" />
+
 <script>
 $(function(){
 	
@@ -235,27 +236,32 @@ $(function(){
 var count=null;
 var price=null;
 var mybons=$('#mybonus').text();
+var allCheckText=0;
 $('.CompareSel').change(function(){
-	var num = $(this).attr("name");
- var oldtotal=$(this).parent().next().html();//原數量X金錢
+	allCheckText=0;
+	var ppp=$('#carttable td[name="producttotal1"]').length;
+	  $('#carttable td[name="producttotal1"]').each(function(){
+          allCheckText+=new Number($(this).text());
+      });
+var num = $(this).attr("name");
+// var oldtotal=$(this).parent().next().html();//原數量X金錢
 	 count=$(this).val();	
 	 price=$(this).parent().prev().html();
 	$(this).parent().next().empty().html(new Number(count)*new Number(price));
 	$.get("getCartNumber",{"productno":num,"count":count,"status":"Update"},function(data){
 		if(data.match("0")){
 			alert("加入購物車失敗，超過庫存量");
-// 			sweetAlert("加入購物車失敗，超過庫存量", "", "error");
 		}
 		else{
 			$("#buycount_all_f").html(data);//購物車後數字
             subtotal=$('#subtotal').text();//總小計
-            var newtotal=new Number(count)*new Number(price);  //新數量x金錢
-            var total1=(newtotal-oldtotal);
-            var n = new Number(subtotal);
-            subtotal=(total1+n);
-            $('input[name="subtotal"]').empty().val(subtotal);
-            $('#subtotal').empty().text(subtotal);
-            $('#alltotal').empty().text(subtotal);
+//             var newtotal=new Number(count)*new Number(price);  //新數量x金錢
+//             var total1=(newtotal-oldtotal);
+//             var n = new Number(subtotal);
+//             subtotal=(total1+n);
+            $('input[name="subtotal"]').empty().val(allCheckText);
+            $('#subtotal').empty().text(allCheckText);
+            $('#alltotal').empty().text(allCheckText);
             $('#member_bonus').empty();
             if(mybons>subtotal){
             	for(var i=0;i<subtotal+1;i++){
@@ -273,10 +279,10 @@ $('.CompareSel').change(function(){
             }
 		}
         
+		});
+	});
 });
-	
-			});
-});
+
 // $(".cartbtnUpdate").click(function(){
 // 	var num = $(this).attr("name");
 // 	if(aa){

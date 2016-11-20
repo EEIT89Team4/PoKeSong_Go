@@ -306,7 +306,7 @@ $(function(){
 							<div class="form-group">
 								<!-- 輸入驗證碼欄位 -->
 								<label for="identity"><h3>信用卡背面最後三碼：</h3></label>
-								<input type="text" class="" id="" name="" placeholder="" size="3" maxlength="3">
+								<input type="password" class="" id="" name="" placeholder="" size="3" maxlength="3">
 <%-- 								<br><font color="red" size="-1">${errorMsgs.ErrIdentityEmpty} ${errorMsgs.ErrIdentity}</font> --%>
 							</div>
 							<button type="button"  data-dismiss="modal" class="btn btn-success btn-block">
