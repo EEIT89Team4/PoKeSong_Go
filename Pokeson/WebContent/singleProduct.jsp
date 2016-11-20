@@ -13,8 +13,8 @@
 <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
 
 <!-- <script src="js/productindex.js"></script> -->
-<script src="js/sweetalert.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+<!-- <script src="js/sweetalert.min.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="css/sweetalert.css"> -->
 
 </head>
 <body>
@@ -230,9 +230,11 @@
 				"status" : "Insert"
 			}, function(data) {
 				if (data == 0) {
-					sweetAlert("加入購物車失敗，超過庫存量", "", "error");
+// 					sweetAlert("加入購物車失敗，超過庫存量", "", "error");
+					alert("加入購物車失敗，超過庫存量");
 				} else {
-					sweetAlert("加入購物車成功", "", "success");
+// 					sweetAlert("加入購物車成功", "", "success");
+					alert("加入購物車成功");
 					$("#buycount_all_f").html(data);
 				} //購物車後數字
 

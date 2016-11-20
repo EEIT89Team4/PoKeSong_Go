@@ -40,6 +40,7 @@
 //				sweetAlert("加入購物車失敗，超過庫存量", "", "error");
 			}
 			else{
+				
 				$('img[src="/Pokeson/getImage?productid='+tempno+'"]').animate({
 					"opacity":"0.1"					
 				    },200).animate({
@@ -59,20 +60,20 @@
 			})
 
 	//單個產品頁面加入購物車
-			$(".addfavorite1").click(function(){
-				alert(1);
-		var tempno=$(this).attr("id");
-		var count=$('select[name="count"]').val();
-		alert(count);
-		$.get("getCartNumber",{"productno":tempno,"count":count},function(data){
-			if(data.match("0")){
-				alert("加入購物車失敗，超過庫存量");
-//				sweetAlert("加入購物車失敗，超過庫存量", "", "error");
-			}
-			else{$("#buycount_all_f").html(data);} //購物車後數字
-			
-		})
-	})		
+//			$(".addfavorite1").click(function(){
+////				alert(1);
+//		var tempno=$(this).attr("id");
+//		var count=$('select[name="count"]').val();
+////		alert(count);
+//		$.get("getCartNumber",{"productno":tempno,"count":count},function(data){
+//			if(data.match("0")){
+//				alert("加入購物車失敗，超過庫存量");
+////				sweetAlert("加入購物車失敗，超過庫存量", "", "error");
+//			}
+//			else{$("#buycount_all_f").html(data);} //購物車後數字
+//			
+//		})
+//	})		
 	//購物車改變數量
     $('.CompareSel').change(function(){
     	var count=$(this).val();	

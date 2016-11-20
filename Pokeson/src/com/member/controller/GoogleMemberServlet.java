@@ -48,7 +48,7 @@ public class GoogleMemberServlet extends HttpServlet {
 //			session.setAttribute("member_GoogleId", member_GoogleId);
 			session.setAttribute("mbr", list.iterator().next());
 			session.setAttribute("MemberVO", list.iterator().next());
-			RequestDispatcher rd = req.getRequestDispatcher("/productindex.jsp");
+			RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
 			rd.forward(req, resp);
 		}
 		else{
@@ -70,12 +70,12 @@ public class GoogleMemberServlet extends HttpServlet {
 				mbr.setMember_state(mbrVO.getMember_state());
 				session.setAttribute("MemberVO", mbr);
 				session.setAttribute("mbr", mbr);
-				RequestDispatcher rd = req.getRequestDispatcher("/productindex.jsp");
+				RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
 				rd.forward(req, resp);
 			}
 		}
 	}catch(Exception e){
-		RequestDispatcher rd = req.getRequestDispatcher("/productindex.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
 		rd.forward(req, resp);
 	}
                 }

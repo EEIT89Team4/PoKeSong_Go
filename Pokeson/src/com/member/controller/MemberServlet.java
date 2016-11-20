@@ -270,7 +270,7 @@ public class MemberServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) { // 如果有錯
 //					request.setAttribute("mbr", mbr);
-					RequestDispatcher errorView = request.getRequestDispatcher("/productindex.jsp");
+					RequestDispatcher errorView = request.getRequestDispatcher("/index.jsp");
 					errorView.forward(request, response);
 					return;
 				}
@@ -286,7 +286,7 @@ public class MemberServlet extends HttpServlet {
 				}
 			} catch (Exception e) {
 				errorMsgs.put("errOthers", e.getMessage());
-				RequestDispatcher errorView = request.getRequestDispatcher("/productindex.jsp");
+				RequestDispatcher errorView = request.getRequestDispatcher("/index.jsp");
 				errorView.forward(request, response);
 			}
 		}
@@ -579,6 +579,7 @@ public class MemberServlet extends HttpServlet {
 		//------------------------登出-------------------------------------
 		if ("signOut".equals(action)) {
 			session.invalidate();
+			out.print("signOutOK");
 //			session.removeAttribute("MemberVO");
 			}
 		}

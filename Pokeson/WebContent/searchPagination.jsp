@@ -48,7 +48,7 @@
 			
 			<div class="col-md-2 col-sm-2">
 
-				<span><strong>依品牌篩選</strong></span>
+				<span><strong><h4>依品牌篩選</h4></strong></span>
 				<ul class="list-group">
 					<c:forEach var="brand" items="${brandset}">
 						<li  style="cursor: pointer;" class="list-group-item advclass" value="false">${brand}</li>
@@ -188,19 +188,20 @@
 				})
 				</script>
 				
-				<script>
-					$(function() {
-						$("input[name=INSERT]").one('click',function() {
-							var member = ${MemberVO.member_no};
-							var product_no = $(this).attr("id");
-	// 						alert(product_no);
-							$(this).parents("tr").remove();
-							$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
-								alert('新增至我的最愛成功');
-							})
-						}
-					)});
-				</script>
+			<input type="hidden" id="member_no" value="${MemberVO.member_no}"/>
+			<script>
+				$(function() {
+					 
+					$("input[name=INSERT]").one('click',function() {
+						var member = $('member_no').val();
+						var product_no = $(this).attr("id");
+						$(this).parents("tr").remove();
+						$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
+							alert('新增至我的最愛成功');
+						})
+					}
+				)});
+			</script>		
 					
 				<script src="js/productindex.js"></script>		
 						

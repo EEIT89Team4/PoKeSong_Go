@@ -17,7 +17,7 @@
 	</ul>
 </div>
 <div id="footer">
-	<p>&copy; PoKeSon股份有限公司 </p>
+	<p>&copy; PoKeSonG股份有限公司 </p>
 </div>
 
 <script src="js/productindex.js"></script>

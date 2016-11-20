@@ -51,12 +51,13 @@
 			</div>
 		</div>
 <!---------------------------------新增我的最愛--------------------------->
+<input type="hidden" id="member_no" value="${MemberVO.member_no}"/>
 			<script>
 				$(function() {
+					 
 					$("input[name=INSERT]").one('click',function() {
-						var member = ${MemberVO.member_no};
+						var member = $('member_no').val();
 						var product_no = $(this).attr("id");
-// 						alert(product_no);
 						$(this).parents("tr").remove();
 						$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
 							alert('新增至我的最愛成功');

@@ -249,9 +249,9 @@ color:white;
 				<!-- Modal content -->
 				<div class="modal-content">
 					<div class="modal-header" style="padding: 35px 50px;">
-					<c:if test="${empty errorLogin}">
+<%-- 					<c:if test="${empty errorLogin}"> --%>
 						<button type="button" class="close" data-dismiss="modal" id="close">&times;</button>
-					</c:if>
+<%-- 					</c:if> --%>
 						<h4>
 							 會員登入
 						</h4>
@@ -311,8 +311,10 @@ color:white;
 	<script>
 	$(function(){
 		$('#signOut').click(function(){
-			$.get('MemberServlet',{action:"signOut"},function(){
-				document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8081/Pokeson/productindex.jsp";
+			$.get('MemberServlet',{action:"signOut"},function(data){
+				if(data==("signOutOK")){
+		        document.location.href = "https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8081/Pokeson/index.jsp";
+				}
 			})
 			
 		})

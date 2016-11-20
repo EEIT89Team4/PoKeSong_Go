@@ -12,7 +12,7 @@
 
 <style>
 	fieldset{
-		float:right;
+/* 		float:right; */
 		width:550px;
 		margin-top:50px;
 		margin:0px auto;
