@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.supplier.model.SupplierVO" table="supplier" >
+        
+        <id name="supplier_id" column="supplier_id">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="supplier_name" column="supplier_name" />
+        <property name="chargeperson" column="chargeperson" />
+        
+		<set name="stocks" table="stock" lazy="false" cascade="all"  inverse="true"  order-by="stock_id asc">			
+			<key>
+				<column name="supplier_id" />
+			</key>
+			<one-to-many class="com.stock.model.StockVO" />
+		</set>
+        
+    </class>
+</hibernate-mapping>
+
