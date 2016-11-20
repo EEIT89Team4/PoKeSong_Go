@@ -42,7 +42,7 @@ ul, ol {
 }
 
 a {
-/* 	text-decoration: none; */
+	text-decoration: none;
 /* 	color: #000000; */
 }
 
@@ -109,8 +109,9 @@ a:hover {
 
 #search {
 	float: right;
-	width: 300px;
+	width: 600px;
 	right:30px;
+	height:60px;
 	position:relative;
 /* 	overflow:hidden; */
 	
@@ -129,7 +130,7 @@ a:hover {
 }
 
 #search-text {
-	width: 225px;
+	width: 400px;
 	padding: 8px 5px 6px 5px;
 	margin-right:0px;
 	border: none;
@@ -149,6 +150,7 @@ a:hover {
 	float:right;
 	bottom:30px;
 	position:relative;
+	right:120px;
 	weight:25px;
 	height:25px;
 	border: none;

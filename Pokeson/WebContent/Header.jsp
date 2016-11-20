@@ -63,7 +63,7 @@
   font-family: 微軟正黑體;
 /*   text-align: center; */
   font-weight: bold;
-  width: 170px;
+  width: 230px;
   z-index:11;
 }
 .sub ul {
@@ -74,7 +74,7 @@
 
 .sub li {
   font-size: 20px;
-  width:150px;
+  width:200px;
   color:white;
   list-style-type: none;
   padding-right:80px;
@@ -114,15 +114,15 @@ color:white;
 <div id="menu1">
 		<table id="menuhead">
 			<tr>
-				<td><a href="index.jsp">首頁</a></td>
+				<td><a href="index.jsp" style="text-decoration:none;">首頁</a></td>
 				<c:if test="${empty mbr}">
-					<td><a href="#" id="myBtn">登入</a></td>
+					<td><a href="#" id="myBtn" style="text-decoration:none;">登入</a></td>
 					
 				</c:if>
 				<c:if test="${not empty mbr}">		 
-					<td><a href="#" id="signOut">登出</a></td>
+					<td><a href="#" id="signOut" style="text-decoration:none;">登出</a></td>
 				</c:if>
-					<td><a href="addMbr.jsp">註冊</a></td>
+					<td><a href="addMbr.jsp" style="text-decoration:none;">註冊</a></td>
 <!-- 					<td><a href="mbrZone.jsp">會員專區</a></td>	 -->
 						
 				<c:if test="${not empty mbr}">		 
@@ -382,9 +382,9 @@ color:white;
 		    	
 		    	<c:forEach var="proHistory" items="${proHistory}" varStatus='x'>
 		    		<c:if test='${x.first}'>
-		    			<div id="historyfirst" style="margin-top:20px;width:100%">
+		    			<div id="historyfirst" style="margin-top:20px;width:100%;">
 			    			<a href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${proHistory.product_no}">
-					    	<div class="thumbnail">
+					    	<div class="thumbnail style="height:252px" >
 							<img src="${pageContext.servletContext.contextPath}/getImage?productid=${proHistory.product_no}" />
 							<div class="caption">
 								<h6>${proHistory.product_name}</h6>
@@ -400,7 +400,7 @@ color:white;
 			    	<div style="margin:30px 0px;width:100%">
 			    	
 			    	<a href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${proHistory.product_no}">
-			    	<div class="thumbnail">
+			    	<div class="thumbnail style="height:252px"">
 					<img src="${pageContext.servletContext.contextPath}/getImage?productid=${proHistory.product_no}" />
 					<div class="caption">
 						<h6>${proHistory.product_name}</h6>

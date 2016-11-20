@@ -39,10 +39,10 @@
 		
 			<div class="col-md-2 col-sm-2">
 
-				<span><strong>依價格排序</strong></span>
+				<span><strong><h4>依價格排序</h4></strong></span>
 				<ul class="list-group">
-					<li class="list-group-item orderclass" value="asc">由低到高</li>
-					<li class="list-group-item orderclass" value="desc">由高到低</li>
+					<li  style="cursor: pointer;" class="list-group-item orderclass" value="asc">由低到高</li>
+					<li  style="cursor: pointer;" class="list-group-item orderclass" value="desc">由高到低</li>
 				</ul>
 
 			</div>
@@ -56,7 +56,7 @@
 		<div id="${product.supplier_name}"
 			class="col-md-4 col-sm-4 hero-feature">
 			<a
-				href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
+				href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} " style="text-decoration:none;">
 
 				<div class="thumbnail">
 					<img
@@ -93,7 +93,7 @@
 		<div class="col-md-12 col-sm-12 hero-feature well"
 			style="height: 200px; margin: 3px">
 			<a
-				href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
+				href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} " >
 
 				<div class="col-md-4 col-sm-4 col-md-4 col-lg4">
 					<div class="thumbnail" style="width: 180px">
@@ -105,7 +105,7 @@
 			<div class="col-md-8 col-sm-8 col-md-8 col-lg8">
 				<div class="caption">
 					<a
-						href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
+						href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} " style="text-decoration:none;">
 
 						<h2>商品名稱:${product.product_name}</h2>
 					</a>

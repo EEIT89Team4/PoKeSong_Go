@@ -77,6 +77,9 @@ $(function(){
 	position: relative;
 	overflow: hidden;
 	border: 1px solid #ccc;
+	-webkit-box-sizing: content-box; 
+      -moz-box-sizing: content-box; 
+           box-sizing: content-box; 
 }
 #abgneBlock ul.list {
 	padding: 0;

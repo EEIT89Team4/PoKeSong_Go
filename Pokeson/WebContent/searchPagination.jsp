@@ -51,13 +51,13 @@
 				<span><strong>依品牌篩選</strong></span>
 				<ul class="list-group">
 					<c:forEach var="brand" items="${brandset}">
-						<li class="list-group-item advclass" value="false">${brand}</li>
+						<li  style="cursor: pointer;" class="list-group-item advclass" value="false">${brand}</li>
 					</c:forEach>
 				</ul>
-				<span><strong>依價格排序</strong></span>
+				<span><strong><h4>依價格排序</h4></strong></span>
 				<ul class="list-group">
-					<li class="list-group-item orderclass" value="asc">由低到高</li>
-					<li class="list-group-item orderclass" value="desc">由高到低</li>
+					<li  style="cursor: pointer;" class="list-group-item orderclass" value="asc">由低到高</li>
+					<li  style="cursor: pointer;" class="list-group-item orderclass" value="desc">由高到低</li>
 				</ul>
 
 			</div>

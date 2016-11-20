@@ -104,6 +104,9 @@
 							.attr("value" , value).text(value)
 							.attr("href","/Pokeson/brandProduct?detailno=" + classdetail_no
 									+ "&brand=" + value);
+						
+					
+						
 						var supplierli = $("<li></li>").append(suppliera);
 						
 						ul.append(supplierli);

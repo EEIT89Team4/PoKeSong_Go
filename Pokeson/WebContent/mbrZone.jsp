@@ -39,7 +39,7 @@
       <div class="jumbotron">
 <!--         <h1>Jumbotron heading</h1> -->
 <!--         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p> -->
-        <p><a class="btn btn-lg btn-success" href="productindex.jsp" role="button">Go Shopping</a></p>
+        <p><a class="btn btn-lg btn-success" href="index.jsp" role="button">Go Shopping</a></p>
       </div>
 
     </div> <!-- /container -->
