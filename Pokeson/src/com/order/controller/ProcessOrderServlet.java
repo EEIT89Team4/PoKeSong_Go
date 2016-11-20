@@ -63,7 +63,7 @@ public class ProcessOrderServlet extends HttpServlet {
 		}
 		if  (finalDecision.equals("CANCEL")){
 			session.removeAttribute("mycart");;
-			resp.sendRedirect("productindex.jsp");
+			resp.sendRedirect("index.jsp");
 			return;  // 一定要記得 return 
 		}
 		else if(finalDecision.equals("ORDER")){
@@ -73,6 +73,7 @@ public class ProcessOrderServlet extends HttpServlet {
 		String member_address = mb.getMember_address();   //會員地址
 //        Date today = req.getParameter("today");	          //訂購時間
 		Date today = (Date)session.getAttribute("today");
+//		System.out.println(today);
 		//--------------------收貨人------------------
 		String shippingName = req.getParameter("ShippingName");
 		if (shippingName == null || shippingName.trim().length() == 0) {
@@ -164,7 +165,7 @@ public class ProcessOrderServlet extends HttpServlet {
 		session.removeAttribute("ShippingName");
 		session.removeAttribute("ShippingPhone");
 		session.removeAttribute("ShippingAddress");
-		resp.sendRedirect("productindex.jsp");
+		resp.sendRedirect("index.jsp");
 		}
                      } catch(Exception e) {
                     	 errorMsgs.put("ordererror", "訂購失敗");
