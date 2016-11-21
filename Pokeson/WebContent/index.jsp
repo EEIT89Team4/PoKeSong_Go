@@ -18,6 +18,14 @@
 <style>
 </style>
 </head>
+<c:if test="${not empty errorMsgs}">
+<script>
+$(function(){
+alert("會員狀態異常,無法登入");
+});
+</script>
+<% session.removeAttribute("errorMsgs"); %>
+</c:if>
 <jsp:include page="Header.jsp"/>
 <body>
 

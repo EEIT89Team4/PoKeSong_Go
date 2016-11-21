@@ -164,7 +164,7 @@
 						pageSize:${pageSize}
 					});
 					
-				})
+				});
 				
 </script>
 
