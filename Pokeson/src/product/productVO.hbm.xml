@@ -24,19 +24,26 @@
 		<property name="product_alertquantity" column="product_alertquantity" />
 		<property name="product_description" column="product_description" />
 		<property name="product_discount" column="product_discount" />
+		<property name="product_state" column="product_state" />
+		<many-to-one name="productClassVO" class="com.productclass.model.ProductClassVO"
+			lazy="false">
+			<column name="class_no" />
+		</many-to-one>
 
-<many-to-one name="productClassVO" class="com.productclass.model.ProductClassVO" lazy="false">
-            <column name="class_no" />
-        </many-to-one>
+		<set name="myfavorites" table="myfavorite" lazy="false" cascade="all"
+			inverse="true" order-by="product_no asc">
+			<key>
+				<column name="product_no"></column>
+			</key>
+			<one-to-many class="myfavorite.MyFavoriteVO" />
+		</set>
 
-<set name="myfavorites" table="myfavorite" lazy="false" cascade="all" inverse="true" order-by="product_no asc">
-<key><column name="product_no"></column></key>
-<one-to-many class="myfavorite.MyFavoriteVO"/>
-</set>
-
-<set name="notifymembers" table="notifymember" lazy="false" cascade="delete-orphan" inverse="true" order-by="product_no asc">
-		<key><column name="product_no"></column></key>
-		<one-to-many class="com.notifymember.model.NotifyMemberVO"/>
+		<set name="notifymembers" table="notifymember" lazy="false"
+			cascade="delete-orphan" inverse="true" order-by="product_no asc">
+			<key>
+				<column name="product_no"></column>
+			</key>
+			<one-to-many class="com.notifymember.model.NotifyMemberVO" />
 		</set>
 
 	</class>

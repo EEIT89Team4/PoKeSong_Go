@@ -95,7 +95,9 @@
 				 				<div class="prodetail2">
 			   					<img id="carreful"
 									src=" ${pageContext.servletContext.contextPath}/GetCarrefulImg" />
-									<span><b>家樂福原價:${requestScope.getdollar} 便宜  ${requestScope.getdollar-oneproduct.product_price} 元 </b></span>
+
+									<span style="font-size:20px"><b>家樂福原價:${requestScope.getdollar} 便宜  ${requestScope.getdollar-oneproduct.product_price} 元 </b></span>
+
 			  					</div>
 			  					</c:if>
 			    				</c:if>
