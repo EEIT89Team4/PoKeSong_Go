@@ -13,6 +13,15 @@
 
 <body>
 
+<c:if test="${empty ordertype}">
+<c:set var="target" value="/searchPage?search=${searchText}&searchPage=${pageNumber}&pageSize=${pageSize}${advRequst}" scope="session" />
+</c:if>
+
+
+<c:if test="${not empty ordertype}">
+<c:set var="target" value="/searchPage?search=${searchText}&searchPage=${pageNumber}&pageSize=${pageSize}&order=${ordertype}${advRequst}" scope="session" />
+</c:if>
+
 <jsp:include page="Header.jsp"/>
 
 <div id="page">
