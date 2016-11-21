@@ -120,6 +120,24 @@ public class ProductDAO {
 		return productlist;
 
 	}
+	
+	public List<ProductVO> getSeachAllProduct(String keyword) {
+		List<ProductVO> productlist = null;
+		Transaction tx = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from ProductVO where product_name like ?");
+			query.setParameter(0, "%"+keyword+"%");
+			productlist = query.list();
+			tx.commit();
+		} catch (RuntimeException e) {
+			tx.rollback();
+			e.printStackTrace();
+		}
+		return productlist;
+
+	}
 	public List<ProductVO> getHotProduct() {
 		List<ProductVO> productlist = null;
 		Transaction tx = null;
@@ -476,11 +494,19 @@ public class ProductDAO {
 //			System.out.println(abc);
 //		}
 		// getHotProduct
+//		ProductDAO productdao = new ProductDAO();
+//			List<ProductVO> list = productdao.getHotProduct();
+//			for (ProductVO productlist : list) {
+//				int abc = productlist.getProduct_no();
+//				System.out.println(abc);
+//			}
 		ProductDAO productdao = new ProductDAO();
-			List<ProductVO> list = productdao.getHotProduct();
-			for (ProductVO productlist : list) {
-				int abc = productlist.getProduct_no();
-				System.out.println(abc);
-			}
+		String  aa="統一";
+		List<ProductVO> list=productdao.getSeachAllProduct(aa);
+		for (ProductVO productlist : list) {
+			String abc = productlist.getProduct_name();
+			System.out.println(abc);
+		}
+		
 	}
 }
