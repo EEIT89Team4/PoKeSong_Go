@@ -31,28 +31,12 @@ public class UpdatePicServlet2 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	}
-/*
- ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//�w��
-byte buffer[] = new byte[512];
-//����Ū�i�Ӫ���
-int length = 0;
-//���p����-1�N��S����ƤF
-while( (length = is.read(buffer)) != -1){
-//�q�w�İ�Ū��buffer�̭�0~length-1����m
-baos.write(buffer, 0, length);
-<div id="pix-detect-at-80-precent" style="width: 0px; height: 0px;"></div>    }
-//ByteArrayOutputStream�ন�줸�}�C
-byte data [] = baos.toByteArray();
-is.close();
-baos.close();
- */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     Collection<Part> part=request.getParts();
     Integer cmno;
     String imageName = request.getParameter("image");
 	int i = Integer.parseInt(imageName);
-	System.out.println(i+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     InputStream is=null;
     for(Part mypart: part){
     	    String fileName=mypart.getName();

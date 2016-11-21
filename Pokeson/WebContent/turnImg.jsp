@@ -124,10 +124,22 @@ $(function(){
 <body>
 	<div id="abgneBlock">
 		<ul class="list">
-			<li><a target="_blank" href="#"><img src="images/cola.jpg"></a></li>
-			<li><a target="_blank" href="#"><img src="images/img10.jpg"></a></li>
-			<li><a target="_blank" href="#"><img src="images/img11.jpg"></a></li>
-			<li><a target="_blank" href="#"><img src="images/img12.jpg"></a></li>
+			<li><a href="#">
+			<img src="${pageContext.servletContext.contextPath}/getindexImage?cm_no=1" />
+			</a></li>
+			<li><a href="#">
+			<img src="${pageContext.servletContext.contextPath}/getindexImage?cm_no=2" />
+			</a></li>
+			<li><a href="#">
+			<img src="${pageContext.servletContext.contextPath}/getindexImage?cm_no=3" />
+			</a></li>
+			<li><a href="#">
+			<img src="${pageContext.servletContext.contextPath}/getindexImage?cm_no=4" />
+			</a></li>
+<!-- 			<li><a target="_blank" href="#"><img src="images/cola.jpg"></a></li> -->
+<!-- 			<li><a target="_blank" href="#"><img src="images/img10.jpg"></a></li> -->
+<!-- 			<li><a target="_blank" href="#"><img src="images/img11.jpg"></a></li> -->
+<!-- 			<li><a target="_blank" href="#"><img src="images/img12.jpg"></a></li> -->
 		</ul>
 	</div>
 </body>

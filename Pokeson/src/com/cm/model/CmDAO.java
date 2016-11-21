@@ -150,12 +150,12 @@ public class CmDAO implements CmDAO_interface {
 //		System.out.println("---------------------");
 
 		// �d�߳���
-		List<CmVO> list = dao1.getAllCm();
-		for (CmVO aShipments : list) {
-			System.out.print(aShipments.getCm_no() + ",");
-			System.out.print(aShipments.getPicture() + ",");
-			System.out.println();
-		}
+//		List<CmVO> list = dao1.getAllCm();
+//		for (CmVO aShipments : list) {
+//			System.out.print(aShipments.getCm_no() + ",");
+//			System.out.print(aShipments.getPicture() + ",");
+//			System.out.println();
+//		}
 		
 		// �d�߬Y���������u
 //		Set<EmpVO> set = dao.getEmpsByDeptno(10);
