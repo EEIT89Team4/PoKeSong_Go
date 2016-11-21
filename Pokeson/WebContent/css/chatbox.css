@@ -24,10 +24,12 @@
 
  #chatBox
  {
- right:-2px;
- top:880px;
+
+ top:480px;
+ right:30px;
  display:none;
- position:absolute;
+ position:fixed;
+
  width:250px;
  height:200px;
  padding:15px;
