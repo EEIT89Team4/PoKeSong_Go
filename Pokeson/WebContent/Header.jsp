@@ -27,9 +27,6 @@
 <link rel="stylesheet" type="text/css" href="history/history.css">
 
 
-
-
-
 <style>
 #membermenu {
    margin: auto; 

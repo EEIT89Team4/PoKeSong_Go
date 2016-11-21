@@ -21,7 +21,4 @@ $('.cartbtn').click(function(){
 })
 
 
-	$('.addnotify').click(function(){
-		alert(123);
-	})
 

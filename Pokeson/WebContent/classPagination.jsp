@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!------------------------------------商品陳列----------------------------->
 <input type="hidden" id="member_no" value="${MemberVO.member_no}"/>
+
 <div>
 
 	<div class="row">
@@ -64,7 +65,7 @@
 							<div class="thumbnail">
 								<img
 									src="${pageContext.servletContext.contextPath}/getImage?productid=${product.product_no}" />
-								<div class="caption">
+								<div class="caption" id="div5">
 									<!-- 							商品名稱:$ -->
 									<h6>${product.product_name}</h6>
 									<p>售價:${product.product_price}</p>
@@ -163,8 +164,7 @@
 						pageNumber:${pageNumber},
 						pageSize:${pageSize}
 					});
-					
-				})
+				});
 				
 </script>
 
@@ -188,5 +188,24 @@
 						})
 					}
 				)});
+			</script>
+			<script type="text/javascript" src="js/notify.js"></script>
+			<script>
+// 			$('#div1 p a[class="addnotify btn btn-primary"]').click(function(){
+// 				alert("1023");
+//				var productid = $(this).attr("id");
+////			 	alert(productid);
+//				$.post("notifyMember",{"p_id":productid},function(data){
+//					if(data==0){
+////			 			sweetAlert("22","success");
+//					}
+//					if(data==1){
+//						sweetAlert("註冊成功", "", "success");
+//					}
+//					if(data==2){
+//						
+//					}
+//				})
+// 			});
 			</script>		
 <script src="js/productindex.js"></script>

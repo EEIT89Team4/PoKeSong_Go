@@ -27,7 +27,7 @@
  <div id="chat" onClick="open_chatbox();">線上客服</div> 
  <div id="chatBox"> 
  <div class="msg_head">"${mbr.member_name}"</div>
- <div onclick="closeChat()" id="close">x</div><br> 
+ <div onclick="closeChat()" id="close"><span class="glyphicon glyphicon-minus"></span></div><br> 
  <div >
  <input type="hidden" value="${mbr.member_name}" id="clientName"> 
  

@@ -1,7 +1,9 @@
 package com.member.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,6 +28,8 @@ public class GoogleMemberServlet extends HttpServlet {
                 req.setCharacterEncoding("UTF-8");
                 
                 HttpSession session=req.getSession();
+                Map<String, String> errorMsgs = new HashMap<String, String>();// 用Map在jsp比較好取出來用
+    			req.setAttribute("errorMsgs", errorMsgs);
                 String action=req.getParameter("action");
                 String action1=(String) req.getAttribute("action");
                 String member_GoogleId=(String) req.getAttribute("id");
@@ -68,6 +72,12 @@ public class GoogleMemberServlet extends HttpServlet {
 				mbr.setMember_bonus(mbrVO.getMember_bonus());
 				mbr.setMember_GoogleId(member_GoogleId);
 				mbr.setMember_state(mbrVO.getMember_state());
+				if(mbrVO.getMember_state().equals("黑名單")){
+					errorMsgs.put("googleerror", "googleerror");
+					session.setAttribute("errorMsgs",errorMsgs);
+					resp.sendRedirect("https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://localhost:8081/Pokeson/index.jsp");
+					return;
+				}
 				session.setAttribute("MemberVO", mbr);
 				session.setAttribute("mbr", mbr);
 				RequestDispatcher rd = req.getRequestDispatcher("/index.jsp");
