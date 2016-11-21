@@ -13,6 +13,17 @@
 
 <body>
 
+<c:if test="${empty ordertype}">
+<c:set var="target" value="/detailProduct?detailno=${classdetailno}&detail=${detailname}&pageNumber${pageNumber}&pageSize=${pageSize}" scope="session" />
+</c:if>
+
+
+<c:if test="${not empty ordertype}">
+<c:set var="target" value="/detailProduct?detailno=${classdetailno}&detail=${detailname}&pageNumber=${pageNumber}&pageSize=${pageSize}&order=${ordertype}" scope="session" />
+</c:if>
+
+
+
 <jsp:include page="Header.jsp"/>
 
 <div id="page">

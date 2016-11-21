@@ -12,7 +12,17 @@
 <link href="css/heroic-features.css" rel="stylesheet">
 
 <body>
-<c:set var="target" value="${pageContext.request.servletPath}" scope="session" />
+
+<c:if test="${empty ordertype}">
+<c:set var="target" value="/classProduct?classno=${classno}&class=${classname}&pageNumber=${pageNumber}&pageSize=${pageSize}" scope="session" />
+</c:if>
+
+
+<c:if test="${not empty ordertype}">
+<c:set var="target" value="/classProduct?classno=${classno}&class=${classname}&pageNumber=${pageNumber}&pageSize=${pageSize}&order=${ordertype}" scope="session" />
+</c:if>
+
+
 <jsp:include page="Header.jsp"/>
 
 <div id="page">

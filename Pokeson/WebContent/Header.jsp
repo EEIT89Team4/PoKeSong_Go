@@ -109,14 +109,14 @@ color:white;
 		}
   	}catch(NullPointerException e){}
 	%> 
-<c:set var="target" value="${pageContext.request.servletPath}" scope="session"/>
+
 <div id="headcolor">
 <div id="menu1">
 		<table id="menuhead">
 			<tr>
 				<td><a href="index.jsp" style="text-decoration:none;">首頁</a></td>
 				<c:if test="${empty mbr}">
-					<td><a href="#" id="myBtn" style="text-decoration:none;">登入</a></td>
+					<td><a  id="myBtn" style="text-decoration:none;">登入</a></td>
 					
 				</c:if>
 				<c:if test="${not empty mbr}">		 

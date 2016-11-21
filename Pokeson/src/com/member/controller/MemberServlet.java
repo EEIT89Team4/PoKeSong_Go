@@ -179,10 +179,10 @@ public class MemberServlet extends HttpServlet {
 
 		if ("login".equals(action)) { // 接收來自login.jsp的
 			String servletPath = (String) session.getAttribute("target");
-            System.out.println(servletPath);
+			String newServletPath = new String (servletPath.getBytes("UTF-8"),"ISO-8859-1");
 			String contextPath = request.getContextPath();
 
-			String uri = contextPath + servletPath;
+			String uri = contextPath + newServletPath;
 			Map<String, String> errorMsgs = new HashMap<String, String>();
 			request.setAttribute("errorLogin", errorMsgs);
 
@@ -281,7 +281,7 @@ public class MemberServlet extends HttpServlet {
                 if (servletPath != null) {
 					session.removeAttribute("target");
 					response.sendRedirect(uri);
-				} else {
+				} else {	
 					response.sendRedirect(uri);
 				}
 			} catch (Exception e) {

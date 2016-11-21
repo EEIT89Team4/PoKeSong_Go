@@ -13,6 +13,17 @@
 
 <body>
 
+<c:if test="${empty ordertype}">
+<c:set var="target" value="/brandProduct?detailno=${classdetailno}&brand=${brand}&pageNumber=${pageNumber}&pageSize=${pageSize}" scope="session" />
+</c:if>
+
+
+<c:if test="${not empty ordertype}">
+<c:set var="target" value="/brandProduct?detailno=${classdetailno}&brand=${brand}&pageNumber=${pageNumber}&pageSize=${pageSize}&order=${ordertype}" scope="session" />
+</c:if>
+
+
+
 <jsp:include page="Header.jsp"/>
 
 <div id="page">
@@ -67,15 +78,15 @@
 				    onSelectPage:function(pageNumber,changeSize){
 				    	if(url.includes("&order=")){
 				    		if(pageSize != changeSize){
-						    	window.location.assign("${pageContext.servletContext.contextPath}/brandData?detailno=${classdetailno}&brand=${brand}&pageNumber=1&pageSize="+ changeSize +"&order=${ordertype}");
+						    	window.location.assign("${pageContext.servletContext.contextPath}/brandProduct?detailno=${classdetailno}&brand=${brand}&pageNumber=1&pageSize="+ changeSize +"&order=${ordertype}");
 						    	}else{
-						    		window.location.assign("${pageContext.servletContext.contextPath}/brandData?detailno=${classdetailno}&brand=${brand}&pageNumber="+pageNumber+"&pageSize="+pageSize+"&order=${ordertype}");	
+						    		window.location.assign("${pageContext.servletContext.contextPath}/brandProduct?detailno=${classdetailno}&brand=${brand}&pageNumber="+pageNumber+"&pageSize="+pageSize+"&order=${ordertype}");	
 						    	}
 				    	}else{
 					    	if(pageSize != changeSize){
-					    	window.location.assign("${pageContext.servletContext.contextPath}/brandData?detailno=${classdetailno}&brand=${brand}&pageNumber=1&pageSize="+ changeSize);
+					    	window.location.assign("${pageContext.servletContext.contextPath}/brandProduct?detailno=${classdetailno}&brand=${brand}&pageNumber=1&pageSize="+ changeSize);
 					    	}else{
-					    		window.location.assign("${pageContext.servletContext.contextPath}/brandData?detailno=${classdetailno}&brand=${brand}&pageNumber="+pageNumber+"&pageSize="+pageSize);	
+					    		window.location.assign("${pageContext.servletContext.contextPath}/brandProduct?detailno=${classdetailno}&brand=${brand}&pageNumber="+pageNumber+"&pageSize="+pageSize);	
 					    	}
 				    	}
 				    },
