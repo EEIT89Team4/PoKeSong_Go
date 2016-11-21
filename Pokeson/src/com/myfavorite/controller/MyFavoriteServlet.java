@@ -52,6 +52,7 @@ public class MyFavoriteServlet extends HttpServlet {
 					errorMsgs.put("product", "找不到產品編號");
 				}
 			} catch (IllegalArgumentException e) {
+				out.print("新增失敗");
 				errorMsgs.put("Error", "新增失敗");
 			}
 			try {
@@ -69,6 +70,7 @@ public class MyFavoriteServlet extends HttpServlet {
 					myfavoriteVO.setProductVO(productVO);
 					myfavoriteVO.setMemberVO(memberVO);
 					myFavoriteDAO.insert(myfavoriteVO);
+					out.print("新增成功");
 					System.out.println("新增成功一筆我的最愛,產品編號："+product+"會員編號："+member);
 					// HttpSession session=req.getSession();
 					// session.setAttribute("myfavorite_success", "success");
@@ -76,6 +78,7 @@ public class MyFavoriteServlet extends HttpServlet {
 					return;
 				}
 			} catch (SQLException e) { // <---需修改
+				out.print("新增失敗");
 				// errorMsgs.put("Error","新增失敗");
 				// System.out.println("新增失敗");
 				if (e.getMessage().indexOf("重複的索引鍵") != -1 || e.getMessage().indexOf("Duplicate entry") != -1) {
@@ -101,7 +104,9 @@ public class MyFavoriteServlet extends HttpServlet {
 					errorMsgs.put("product", "找不到產品編號");
 				}
 			  } catch (IllegalArgumentException e) {
+				  
 				errorMsgs.put("Error", "查詢失敗");
+				out.print("刪除失敗");
 			}
 			try {
 				if (errorMsgs.isEmpty()) {
@@ -119,6 +124,7 @@ public class MyFavoriteServlet extends HttpServlet {
 					myfavoriteVO.setProductVO(productVO);
 					myFavoriteDAO.delete(myfavoriteVO);
 					System.out.println("刪除我的最愛成功,產品編號："+product+"會員編號："+member);
+					
 					String deleteOK="deleteOK";
 					
 					out.println(deleteOK);
@@ -132,6 +138,7 @@ public class MyFavoriteServlet extends HttpServlet {
 					return;
 				}
 			} catch (Exception e) { //<--需修改
+				out.print("刪除失敗");
 				System.out.println("我的最愛刪除失敗");
 				// if (e.getMessage().indexOf("重複的索引鍵") != -1 ||
 				// e.getMessage().indexOf("Duplicate entry") != -1) {

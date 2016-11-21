@@ -179,7 +179,7 @@ public class MemberServlet extends HttpServlet {
 
 		if ("login".equals(action)) { // 接收來自login.jsp的
 			String servletPath = (String) session.getAttribute("target");
-
+            System.out.println(servletPath);
 			String contextPath = request.getContextPath();
 
 			String uri = contextPath + servletPath;

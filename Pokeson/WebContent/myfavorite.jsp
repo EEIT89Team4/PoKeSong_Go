@@ -56,6 +56,9 @@ height:100px
 				</script>
 				
 				</table>
+				<center>
+				<h4><a href="${header['referer']}">回上一頁</a>&nbsp;&nbsp;|<a href="index.jsp">&nbsp;&nbsp;  回首頁</a></h4>
+			</center>
 			</div>
 		
 		

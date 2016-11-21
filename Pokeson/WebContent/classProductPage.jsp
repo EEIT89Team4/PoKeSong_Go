@@ -12,7 +12,7 @@
 <link href="css/heroic-features.css" rel="stylesheet">
 
 <body>
-
+<c:set var="target" value="${pageContext.request.servletPath}" scope="session" />
 <jsp:include page="Header.jsp"/>
 
 <div id="page">
@@ -56,6 +56,7 @@
 				
 				var pageSize = ${pageSize};
 				var url = window.location.toString();
+				
 				
 				$('#pptest').pagination({
 					displayMsg:'顯示{from}到{to}筆,共{total}筆商品',

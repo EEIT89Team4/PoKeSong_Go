@@ -4,7 +4,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!------------------------------------商品陳列----------------------------->
-
+<input type="hidden" id="member_no" value="${MemberVO.member_no}"/>
 <div>
 
 	<div class="row">
@@ -168,16 +168,23 @@
 				
 </script>
 
-<input type="hidden" id="member_no" value="${MemberVO.member_no}"/>
+
 			<script>
 				$(function() {
 					 
 					$("input[name=INSERT]").one('click',function() {
-						var member = $('member_no').val();
+						
+						var member = $('input[id="member_no"]').val();
+						alert(member);
 						var product_no = $(this).attr("id");
 						$(this).parents("tr").remove();
 						$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
-							alert('新增至我的最愛成功');
+							if(data==("新增成功")){
+								alert('新增至我的最愛成功');
+								}else {
+									alert('請先登入會員');
+								}rt('新增至我的最愛成功');
+								
 						})
 					}
 				)});

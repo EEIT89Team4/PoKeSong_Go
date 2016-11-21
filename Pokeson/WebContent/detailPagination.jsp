@@ -178,11 +178,15 @@
 				$(function() {
 					 
 					$("input[name=INSERT]").one('click',function() {
-						var member = $('member_no').val();
+						var member = $('input[id="member_no"]').val();
 						var product_no = $(this).attr("id");
 						$(this).parents("tr").remove();
 						$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
-							alert('新增至我的最愛成功');
+							if(data==("新增成功")){
+								alert('新增至我的最愛成功');
+								}else {
+									alert('請先登入會員');
+								}
 						})
 					}
 				)});

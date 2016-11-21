@@ -18,6 +18,7 @@
 
 </head>
 <body>
+<input type="hidden" id="member_no" value="${MemberVO.member_no}"/>
 	<jsp:include page="Header.jsp" />
 	<div id="page">
 
@@ -123,7 +124,7 @@
 											<a id="${oneproduct.product_no}"
 												class="addfavorite1 btn btn-primary">加入購物車</a> <input
 												type="button" style="width: 100px" name="INSERT" class="btn"
-												id="${productitem.product_no}" value="追蹤商品" />
+												id="${oneproduct.product_no}" value="追蹤商品" />
 
 										</div>
 							</div>
@@ -252,6 +253,26 @@
 			});
 		});
 	</script>
+	
+			<script>
+				$(function() {
+					 
+					$("input[name=INSERT]").one('click',function() {
+						var member = $('input[id="member_no"]').val();
+// 						alert(member);
+						var product_no = $(this).attr("id");
+// 						alert(product_no);
+						$(this).parents("tr").remove();
+						$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
+							if(data==("新增成功")){
+								alert('新增至我的最愛成功');
+								}else {
+									alert('請先登入會員');
+								}
+						})
+					}
+				)});
+			</script>	
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

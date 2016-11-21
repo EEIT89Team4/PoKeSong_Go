@@ -136,6 +136,9 @@ font-size:14px;
 		</c:if>
 		</div>
 	</div>
+	<center>
+				<h4><c:if test="${not empty mycart}"><a href="${header['referer']}">回上一頁</a>&nbsp;&nbsp;|</c:if><a href="index.jsp">&nbsp;&nbsp;  回首頁</a></h4>
+			</center>
 <!--   ------------------------------------小計扣除紅利加總金額-------------------------------------------- 	 -->
 		<script>
 	$(function(){
