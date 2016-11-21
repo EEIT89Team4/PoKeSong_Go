@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="Adminster.AdminsterVO" table="adminster" >
+        
+        <id name="adminster_id" column="adminster_id">
+        
+        </id>
+        <property name="adminster_password" column="adminster_password"/>
+        <property name="adminster_name" column="adminster_name"/>
+        <property name="job_title" column="job_title"/>
+        
+        
+    </class>
+</hibernate-mapping>

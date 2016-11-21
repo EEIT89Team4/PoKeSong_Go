@@ -1,0 +1,10 @@
+#popicon{
+	position:absolute;
+	float:left;
+	top:0px;
+	left:20px;
+	width:70px;
+	height:70px;
+	z-index:2;
+	margin:5px;
+}
