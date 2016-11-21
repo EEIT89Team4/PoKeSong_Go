@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.productclass.model.ProductClassVO" table="productclass" >
+        
+        <id name="class_no" column="class_no">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="class_name" column="class_name" />
+        
+        <property name="class_pic" column="class_pic" />
+        
+        
+		<set name="products" table="product" lazy="false" cascade="all"  inverse="true"  order-by="product_no asc">			
+			<key>
+				<column name="class_no" />
+			</key>
+			<one-to-many class="product.ProductVO" />
+		</set>
+		
+		<set name="productClassdetails" table="productclassdetail" lazy="false" cascade="all"  inverse="true"  order-by="classdetail_no asc">					
+			<key>
+				<column name="class_no" />
+			</key>
+			<one-to-many class="com.productclassdetail.model.ProductClassdetailVO" />
+		</set>
+		
+        
+    </class>
+</hibernate-mapping>
+

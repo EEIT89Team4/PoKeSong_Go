@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="order.OrderlistVO" table="orderlist">
+
+		<id name="order_no" column="order_no">
+			<generator class="identity" />
+		</id>
+
+		<property name="member_no" column="member_no" />
+		<property name="order_name" column="order_name" />
+		<property name="order_phone" column="order_phone" />
+		<property name="order_address" column="order_address" />
+		<property name="order_date" column="order_date" />
+		<property name="receipt_name" column="receipt_name" />
+		<property name="receipt_phone" column="receipt_phone" />
+		<property name="receipt_address" column="receipt_address" />
+		<property name="subtotal" column="subtotal" />
+		<property name="usebonus" column="usebonus" />
+		<property name="total" column="total" />
+		<property name="freight" column="freight" />
+		<property name="orderState" column="orderState" />
+		
+<!-- 		<set name="orderdetails1" table="orderdetails" lazy="false" cascade="all" inverse="true" > -->
+<!-- <key><column name="order_no"></column></key> -->
+<!-- <one-to-many class="orderdetails.OrderDetailsVO"/> -->
+<!-- </set> -->
+<set name="orderdetails1" table="orderdetails" lazy="false" cascade="all" inverse="true" order-by="order_no asc">
+<key><column name="order_no"></column></key>
+<one-to-many class="orderdetails.OrderDetailsVO"/>
+</set>
+	</class>
+</hibernate-mapping>

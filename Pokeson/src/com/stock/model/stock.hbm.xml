@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.stock.model.StockVO" table="stock" >
+        
+        <id name="stock_id" column="stock_id">
+            <generator class="identity"/>
+        </id>
+        
+        <property name="stock_date" column="stock_date" />
+        <property name="adminster_name" column="adminster_name" />
+        
+        <many-to-one name="supplierVO" class="com.supplier.model.SupplierVO" lazy="false">
+            <column name="supplier_id" />
+        </many-to-one>
+        
+        <set name="stockdetails" table="stockdetails" lazy="false" cascade="all"  inverse="true"  order-by="stock_id asc">			
+			<key>
+				<column name="stock_id" />
+			</key>
+			<one-to-many class="com.stockdetails.model.StockdetailsVO" />
+		</set>
+        
+        
+        
+    </class>
+</hibernate-mapping>
+

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="product.ProductVO" table="product">
+
+		<id name="product_no" column="product_no">
+			<generator class="identity" />
+		</id>
+
+		<property name="classdetail_no" column="classdetail_no" />
+		<property name="product_price" column="product_price" />
+		<property name="unit" column="unit" />
+		<property name="supplier_name" column="supplier_name" />
+		<property name="product_name" column="product_name" />
+		<property name="product_quantity" column="product_quantity" />
+		<property name="saleaccount_quantity" column="saleaccount_quantity" />
+		<property name="weight" column="weight" />
+		<property name="deadline" column="deadline" />
+		<property name="deadlineday" column="deadlineday" />
+		<property name="pictrue" column="pictrue" />
+		<property name="bsizepic" column="bsizepic" />
+		<property name="product_alertquantity" column="product_alertquantity" />
+		<property name="product_description" column="product_description" />
+		<property name="product_discount" column="product_discount" />
+		<property name="product_state" column="product_state" />
+		<many-to-one name="productClassVO" class="com.productclass.model.ProductClassVO"
+			lazy="false">
+			<column name="class_no" />
+		</many-to-one>
+
+		<set name="myfavorites" table="myfavorite" lazy="false" cascade="all"
+			inverse="true" order-by="product_no asc">
+			<key>
+				<column name="product_no"></column>
+			</key>
+			<one-to-many class="myfavorite.MyFavoriteVO" />
+		</set>
+
+		<set name="notifymembers" table="notifymember" lazy="false"
+			cascade="delete-orphan" inverse="true" order-by="product_no asc">
+			<key>
+				<column name="product_no"></column>
+			</key>
+			<one-to-many class="com.notifymember.model.NotifyMemberVO" />
+		</set>
+
+	</class>
+</hibernate-mapping>

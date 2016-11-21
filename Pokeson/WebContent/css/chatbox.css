@@ -1,0 +1,85 @@
+@CHARSET "UTF-8";
+
+#chat
+ {
+ position:fixed;
+ top:600px;
+ right:45px;
+ width:150px;
+ z-index:9999;
+ font-size:30pt;
+ height:150px;
+/*  padding:15px 0px 0px 0px; */
+ background:url(images/server1.jpg);
+ background-repeat: no-repeat; 
+ color:#EDEDED;
+ text-align:center;
+ font-family:微軟正黑體;
+ bottom:-100px;
+ 
+ cursor:pointer;
+ overflow-x:hidden;
+ }
+
+
+ #chatBox
+ {
+
+ top:480px;
+ right:30px;
+ display:none;
+ position:fixed;
+
+ width:250px;
+ height:200px;
+ padding:15px;
+ background:white;
+ color:black;
+border-radius:5px 5px 0px 0px;
+ text-align:center;
+ font-family:微軟正黑體;
+ font-size:5px;
+ bottom:-200px;
+ cursor:pointer;
+
+/*  background-color: #6d84b4; */
+/*                 padding: 5px; */
+/*                 color: white; */
+/*                 font-weight: bold; */
+/*                 font-size: 14px; */
+/*                 clear: both; */
+/*  width:200px; */
+/*  height:100px; */
+
+ }
+ 
+ #close
+ {
+ position:absolute;
+ width:10px;
+ height:15px;
+/*  padding:6px 5px 10px 5px; */
+ text-align:center;
+/*  background:rgba(0,0,0,0.8); */
+ color:black;
+ font-family:Cambria;
+ right:10px;top:0px;
+ }
+  
+  .msg_head{
+  background:#0072E3;
+  padding:5px;
+  color:white;
+  border-radius:5px 5px 0px 0px;
+}
+
+ .close{
+	float:right;
+	cursor:pointer;
+}
+ textarea {
+  background:wihte;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  max-width:100%;
+}
