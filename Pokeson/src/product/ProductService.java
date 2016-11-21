@@ -59,6 +59,10 @@ public class ProductService {
 		ProductDAO productdao = new ProductDAO();
 		 return productdao.getAllByClassNo(class_no);
 	}
+	public List<ProductVO> getSeachAllProduct(String keyword){
+		ProductDAO productdao = new ProductDAO();
+		return productdao.getSeachAllProduct(keyword);
+	}
 	public static void main(String[] args){
 		//UPDATE
 //		ProductVO aa = new ProductVO();

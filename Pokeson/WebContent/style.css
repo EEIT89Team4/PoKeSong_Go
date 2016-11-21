@@ -148,13 +148,14 @@ a:hover {
 
 #search-submit {
 	float:right;
-	bottom:30px;
-	position:relative;
+	bottom:20px;
+	position:absolute;
 	right:120px;
 	weight:25px;
 	height:25px;
 	border: none;
 	background: #FFFFFF;
+	z-index:0;
 /* 	color: #000000; */
 }
 

@@ -90,6 +90,11 @@ color:white;
 /*   line-height: 100px; */
 /*    height: 70px */
 }
+#div1{
+position:relative;
+z-index:9999;
+width:400px;
+}
 </style>
 </head>
 <body>
@@ -173,13 +178,14 @@ color:white;
 	<div id="search">
 		<form method="get" action="searchPage">
 			<div>
-				<input type="text" name="search" placeholder="請輸入商品關鍵字" id="search-text" value="">
+				<input type="text" name="search" placeholder="請輸入商品關鍵字" id="search-text" value="" autocomplete="off">
 				<span>
 					<button id="vocalsearch" type="button">
 					<span class="glyphicon glyphicon-bullhorn">
 					</span>
 					</button>
 				</span>
+				<div id="div1"></div>
 			</div>
 			
 			<div id="search-submit">
@@ -192,6 +198,67 @@ color:white;
 			
 		</form>
 	</div>
+	
+	
+	<script>
+		var show;
+		var xhr=null;
+		var datas;
+		var txt ;
+		window.addEventListener("load", init, false);
+		
+		function init() {
+			 txt = document.getElementById("search-text");
+			txt.addEventListener("keyup", getData, false);
+			show = document.getElementById("div1");
+			
+		}
+		function getData() {
+// 			alert("....");
+			xhr=new XMLHttpRequest();
+			if(xhr!=null){
+				var url="JsonSimpleDemo?keyword="+txt.value;
+				
+				xhr.open('GET',url);
+				xhr.addEventListener("readystatechange",callback);
+				xhr.send();
+			}else{
+		 		alert("您的瀏覽器不支援Ajax功能!!");
+		 	}
+			show.style.display = "block";
+			if (show.childNodes.length > 0) {
+				show.removeChild(show.childNodes[0]);
+			}
+		}
+		function callback(){
+			if (xhr.readyState == 4){
+		 		if(xhr.status == 200){
+		 			 datas=JSON.parse(xhr.responseText);
+		 			var eleDiv = document.createElement("div");
+					eleDiv.className = "list-group";
+                    if(txt.value!=""){
+					for (var j = 0, max = datas.length; j < max; j++) {
+						var txtBtn = document.createTextNode(datas[j]);
+						var eleBtn = document.createElement("button");
+						eleBtn.className = "list-group-item";
+						eleBtn.setAttribute("type", "button");
+						eleBtn.appendChild(txtBtn);
+
+						eleBtn.addEventListener("click", function() {
+							document.myData.keyword.value = this.firstChild.nodeValue;
+							show.style.display = "none";
+						}, false)
+						eleDiv.appendChild(eleBtn);
+					}
+					show.appendChild(eleDiv);
+                     }
+		 			 
+		 		}
+			}
+		 		}
+		
+	</script>
+	
 
 	<!--搜尋  -->
 	<!--分類選單  -->
