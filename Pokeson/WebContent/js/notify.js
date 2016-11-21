@@ -1,4 +1,4 @@
-$('.addnotify').click(function(){
+$('#div5 p a[class="addnotify btn btn-primary"]').click(function(){
 	var productid = $(this).attr("id");
 // 	alert(productid);
 	$.post("notifyMember",{"p_id":productid},function(data){
@@ -12,4 +12,4 @@ $('.addnotify').click(function(){
 			
 		}
 	})
-})
+});
