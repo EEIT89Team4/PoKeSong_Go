@@ -19,3 +19,9 @@ $('.cartbtn').click(function(){
 	location.replace("ShowCartContent.jsp");
 	$(this).parent().parent().remove();
 })
+
+
+	$('.addnotify').click(function(){
+		alert(123);
+	})
+

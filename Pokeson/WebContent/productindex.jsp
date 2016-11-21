@@ -74,7 +74,7 @@
 	</div>
 </div>
 	<jsp:include page="footer.jsp"/>
-	<
+	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/productindex.js"></script>
 </body>

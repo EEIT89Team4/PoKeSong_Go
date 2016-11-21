@@ -4,160 +4,189 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!------------------------------------商品陳列----------------------------->
-		
-		<c:if test="${total>0}">
-		
-		<div>
-			<div class="row">
-				<div class="col-md-10">
-					<div><h4> 您搜尋了:"${searchText}"   共    ${total}  筆商品</h4></div>
-				
+
+<c:if test="${total>0}">
+
+	<div>
+		<div class="row">
+			<div class="col-md-10">
+				<div>
+					<h4>您搜尋了:"${searchText}" 共 ${total} 筆商品</h4>
 				</div>
-				<div class="col-md-1">
-					<button id="gridlayout" type="button" class="btn btn-default btn-lg"
+
+			</div>
+			<div class="col-md-1">
+				<button id="gridlayout" type="button" class="btn btn-default btn-lg"
 					aria-label="Left Align">
 					<span class="glyphicon glyphicon-th-large"></span>
-					</button>
-				</div>
-				<div class="col-md-1">
-					<button id="linelayout" type="button" class="btn btn-default btn-lg"
+				</button>
+			</div>
+			<div class="col-md-1">
+				<button id="linelayout" type="button" class="btn btn-default btn-lg"
 					aria-label="Left Align">
 					<span class="glyphicon glyphicon-th-list"></span>
 				</button>
-			
-			
+
+
 			</div>
-			</div>
-		
 		</div>
-		
+
+	</div>
+
+</c:if>
+
+<div>
+
+	<div class="row">
+
+		<c:if test="${total==0}">
+			<div>
+				<h2 style="color: red">很抱歉，我們查不到"${searchText}"的相關的商品及資訊</h2>
+				<br> <br> <br> <br> <br>
+			</div>
 		</c:if>
-		
-		<div>
-		
-		<div class="row">
-			
-			<c:if test="${total==0}">
-				<div><h2 style="color:red"> 很抱歉，我們查不到"${searchText}"的相關的商品及資訊
-				
-				</h2><br><br><br><br><br></div>
-			</c:if>
-			
-			
-			<c:if test="${total>0}">
-			
+
+
+		<c:if test="${total>0}">
+
 			<div class="col-md-2 col-sm-2">
 
 				<span><strong><h4>依品牌篩選</h4></strong></span>
 				<ul class="list-group">
 					<c:forEach var="brand" items="${brandset}">
-						<li  style="cursor: pointer;" class="list-group-item advclass" value="false">${brand}</li>
+						<li style="cursor: pointer;" class="list-group-item advclass"
+							value="false">${brand}</li>
 					</c:forEach>
 				</ul>
 				<span><strong><h4>依價格排序</h4></strong></span>
 				<ul class="list-group">
-					<li  style="cursor: pointer;" class="list-group-item orderclass" value="asc">由低到高</li>
-					<li  style="cursor: pointer;" class="list-group-item orderclass" value="desc">由高到低</li>
+					<li style="cursor: pointer;" class="list-group-item orderclass"
+						value="asc">由低到高</li>
+					<li style="cursor: pointer;" class="list-group-item orderclass"
+						value="desc">由高到低</li>
 				</ul>
 
 			</div>
-				
+
 			<!-- 		productlayout2		 -->
 			<div id="productlayout2" class="col-md-10 col-sm-10">
 				<c:forEach var="product" items="${products}">
 
-				<div id="${product.supplier_name}"
-					class="col-md-4 col-sm-4 hero-feature">
-					<a
-						href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
+					<div id="${product.supplier_name}"
+						class="col-md-4 col-sm-4 hero-feature">
+						<a
+							href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
 
-						<div class="thumbnail">
-							<img
-								src="${pageContext.servletContext.contextPath}/getImage?productid=${product.product_no}" />
-							<div class="caption">
-								<!-- 							商品名稱:$ -->
-								<h6>${product.product_name}</h6>
-								<p>售價:${product.product_price}</p>
-								<p>
-									<c:if test="${product.product_quantity gt 0}">
-									<a id="${product.product_no}" class="addfavorite btn btn-primary">加入購物車</a>
-									</c:if>
-									<c:if test="${product.product_quantity eq 0}">
-									<a id="${product.product_no}" class="addnotify btn btn-primary">貨到通知我</a>
-									</c:if>
-									<input type="button" style="width: 100px" name="INSERT"
+							<div class="thumbnail">
+								<img
+									src="${pageContext.servletContext.contextPath}/getImage?productid=${product.product_no}" />
+								<div class="caption">
+									<!-- 							商品名稱:$ -->
+									<h6>${product.product_name}</h6>
+									<p>售價:${product.product_price}</p>
+									<p>
+										<c:if test="${product.product_quantity gt 0}">
+											<a id="${product.product_no}"
+												class="addfavorite btn btn-primary">加入購物車</a>
+										</c:if>
+										<c:if test="${product.product_quantity eq 0}">
+											<a id="${product.product_no}" name="addnotify"
+												class="addnotify btn btn-primary">貨到通知我</a>
+										</c:if>
+										
+
+										<input type="button" style="width: 100px" name="INSERT"
 											class="btn" id="${product.product_no}" value="追蹤商品">
-								</p>
+									</p>
+								</div>
 							</div>
-						</div>
-					</a>
-				</div>
+						</a>
+					</div>
 				</c:forEach>
-		</div>
-		<!--productlayout2-->
-		<c:if test="${layout eq 1}">
+			</div>
 			<script>
+// 									$('.addnotify').click(function(){
+// 										alert(123);
+// 									})
+	$("#div1 p a[name='addnotify']").click(function(){
+		alert("123");
+// 		var productid = $(this).attr("id");
+// 	 	alert(productid);
+// 		$.post("notifyMember",{"p_id":productid},function(data){
+// 			if(data==0){
+// 	 			alert("22");
+// 			}
+// 			if(data==1){
+// 				alert("註冊成功");
+// 			}
+// 		})
+	})
+									</script>
+			<!--productlayout2-->
+			<c:if test="${layout eq 1}">
+				<script>
 				$("#productlayout2").css("display", "none");
 			</script>
-		</c:if>
-			
-		<!--productlayout1-->
-		<div id="productlayout1" class="col-md-10 col-sm-10 text-center">
-			<c:forEach var="product" items="${products}">
-				<div class="col-md-12 col-sm-12 hero-feature well"
-					style="height: 200px; margin:3px">
-					<a
-						href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
+			</c:if>
 
-						<div class="col-md-4 col-sm-4 col-md-4 col-lg4">
-							<div class="thumbnail" style="width:180px">
-								<img style="height: 150px ;width:150px"
-									src="${pageContext.servletContext.contextPath}/getImage?productid=${product.product_no}" />
+			<!--productlayout1-->
+			<div id="productlayout1" class="col-md-10 col-sm-10 text-center">
+				<c:forEach var="product" items="${products}">
+					<div class="col-md-12 col-sm-12 hero-feature well"
+						style="height: 200px; margin: 3px">
+						<a
+							href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
+
+							<div class="col-md-4 col-sm-4 col-md-4 col-lg4">
+								<div class="thumbnail" style="width: 180px">
+									<img style="height: 150px; width: 150px"
+										src="${pageContext.servletContext.contextPath}/getImage?productid=${product.product_no}" />
+								</div>
 							</div>
-						</div>
-					</a>
-					<div class="col-md-8 col-sm-8 col-md-8 col-lg8">
-						<div class="caption">
-							<a
-								href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
+						</a>
+						<div class="col-md-8 col-sm-8 col-md-8 col-lg8">
+							<div class="caption">
+								<a
+									href="${pageContext.servletContext.contextPath}/getOneProduct?productid=${product.product_no} ">
 
-								<h2>商品名稱:${product.product_name}</h2>
-							</a>
-							<h2>
-								售價:${product.product_price}
+									<h2>商品名稱:${product.product_name}</h2>
+								</a>
 								<h2>
+									售價:${product.product_price}
+									<h2>
+							</div>
+							<c:if test="${product.product_quantity gt 0}">
+								<a id="${product.product_no}"
+									class="addfavorite btn btn-primary">加入購物車</a>
+							</c:if>
+							<c:if test="${product.product_quantity eq 0}">
+								<a class="btn btn-primary">貨到通知我</a>
+							</c:if>
+							<input type="button" style="width: 100px" name="INSERT"
+								class="btn" id="${product.product_no}" value="追蹤商品">
 						</div>
-						<c:if test="${product.product_quantity gt 0}">
-							<a id="${product.product_no}" class="addfavorite btn btn-primary">加入購物車</a>
-						</c:if>
-						<c:if test="${product.product_quantity eq 0}">
-							<a class="btn btn-primary">貨到通知我</a>
-						</c:if>
-						<input type="button" style="width: 100px" name="INSERT"
-											class="btn" id="${product.product_no}" value="追蹤商品">
 					</div>
-				</div>
 
 
-			</c:forEach>
-		</div>
-		<!--productlayout1-->
-		</div>
-		
-		</c:if>
-		
+				</c:forEach>
+			</div>
+			<!--productlayout1-->
 	</div>
-				
-	<c:if test="${layout eq 1}">
+
+	</c:if>
+
+</div>
+
+<c:if test="${layout eq 1}">
 	<script>
 		$("#productlayout1").css("display", "block");
 	</script>
-	</c:if>
-	<!------------------------------------商品陳列(二)----------------------------->
-	<script src="pagination/select.js"></script>
-	<script src="pagination/layout.js"></script>
-				
-			   <script>
+</c:if>
+<!------------------------------------商品陳列(二)----------------------------->
+<script src="pagination/select.js"></script>
+<script src="pagination/layout.js"></script>
+
+<script>
 				
 				$(function(){
 					var num = ${total};
@@ -187,9 +216,9 @@
 					
 				})
 				</script>
-				
-			<input type="hidden" id="member_no" value="${MemberVO.member_no}"/>
-			<script>
+
+<input type="hidden" id="member_no" value="${MemberVO.member_no}" />
+<script>
 				$(function() {
 					 
 					$("input[name=INSERT]").one('click',function() {
@@ -205,7 +234,7 @@
 						})
 					}
 				)});
-			</script>		
-					
-				<script src="js/productindex.js"></script>		
-						
+			</script>
+
+<script src="js/productindex.js"></script>
+<script type="text/javascript" src="js/notify.js"></script>

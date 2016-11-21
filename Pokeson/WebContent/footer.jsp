@@ -17,6 +17,7 @@
 <div id="footer">
 	<p>&copy; PoKeSong股份有限公司 </p>
 </div>
+
  <c:if test="${not empty mbr}"> 
  <script src="js/mqttws31.js" type="text/javascript"></script>
  <script src="js/config.js" type="text/javascript"></script>

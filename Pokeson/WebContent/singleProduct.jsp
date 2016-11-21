@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:useBean id="productdao" class="product.ProductDAO"
-	scope="page" />
+<jsp:useBean id="productdao" class="product.ProductDAO" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -18,7 +17,7 @@
 
 </head>
 <body>
-<input type="hidden" id="member_no" value="${MemberVO.member_no}"/>
+	<input type="hidden" id="member_no" value="${MemberVO.member_no}" />
 	<jsp:include page="Header.jsp" />
 	<div id="page">
 
@@ -30,13 +29,14 @@
 				<p>
 					<h5>
 						<a href="${pageContext.servletContext.contextPath}/index.jsp"
-							style="color:#0F5DAC">首頁</a>/ <a
+							style="color: #0F5DAC">首頁</a>/ <a
 							href="${pageContext.servletContext.contextPath}/classProduct?classno=${oneproduct.productClassVO.class_no}&class=${oneproduct.productClassVO.class_name}"
-							value="${oneproduct.productClassVO.class_no}" style="color:#0F5DAC">${oneproduct.productClassVO.class_name}</a>/
+							value="${oneproduct.productClassVO.class_no}"
+							style="color: #0F5DAC">${oneproduct.productClassVO.class_name}</a>/
 						<a
 							href="${pageContext.servletContext.contextPath}/detailProduct?detailno=${onedetail.classdetail_no}&detail=${onedetail.classdetail_name}"
-							value="${onedetail.classdetail_no}" style="color:#0F5DAC">${onedetail.classdetail_name}</a>
-				</h5>
+							value="${onedetail.classdetail_no}" style="color: #0F5DAC">${onedetail.classdetail_name}</a>
+					</h5>
 				</p>
 			</div>
 
@@ -91,16 +91,17 @@
 								<h2>${oneproduct.product_name}</h2>
 								<h3>售價${oneproduct.product_price}元</h3>
 								<c:if test="${not empty requestScope.getdollar}">
-								<c:if test="${oneproduct.product_price<requestScope.getdollar}">
-				 				<div class="prodetail2">
-			   					<img id="carreful"
-									src=" ${pageContext.servletContext.contextPath}/GetCarrefulImg" />
+									<c:if test="${oneproduct.product_price<requestScope.getdollar}">
+										<div class="prodetail2">
+											<img id="carreful"
+												src=" ${pageContext.servletContext.contextPath}/GetCarrefulImg" />
 
-									<span style="font-size:20px"><b>家樂福原價:${requestScope.getdollar} 便宜  ${requestScope.getdollar-oneproduct.product_price} 元 </b></span>
+											<span style="font-size: 20px"><b>家樂福原價:${requestScope.getdollar}
+													便宜 ${requestScope.getdollar-oneproduct.product_price} 元 </b></span>
 
-			  					</div>
-			  					</c:if>
-			    				</c:if>
+										</div>
+									</c:if>
+								</c:if>
 								<h5>結帳方式:</h5>
 								<h5>
 									<span>信用卡 </span><span> 貨到付款</span><span> ATM</span>
@@ -123,10 +124,16 @@
 										</c:if>
 										<!-- --------------------------------商品存貨讀取結束---------------------------------- -->
 										<div style="margin: 15px 0px" class="oneProductbtn">
-											<a id="${oneproduct.product_no}"
-												class="addfavorite1 btn btn-primary">加入購物車</a> <input
-												type="button" style="width: 100px" name="INSERT" class="btn"
-												id="${oneproduct.product_no}" value="追蹤商品" />
+											<c:if test="${oneproduct.product_quantity gt 0}">
+												<a id="${oneproduct.product_no}"
+													class="addfavorite1 btn btn-primary">加入購物車</a>
+											</c:if>
+											<c:if test="${oneproduct.product_quantity eq 0}">
+												<a id="${oneproduct.product_no}"
+													class="addnotify btn btn-primary">貨到通知我</a>
+											</c:if>
+											<input type="button" style="width: 100px" name="INSERT"
+												class="btn" id="${oneproduct.product_no}" value="追蹤商品" />
 
 										</div>
 							</div>
@@ -181,11 +188,11 @@
 			<!-- RECOMMENDED PRODUCTS -->
 			<!-- Head Line -->
 			<div
-					style="font-weight: bold; font-size: 25px; margin: 10px 0; color: #0F5DAC; font-weight: 300">
-					<h4>推薦商品</h4>
-				</div>
-			<div class="container" style="width:100%">
-				
+				style="font-weight: bold; font-size: 25px; margin: 10px 0; color: #0F5DAC; font-weight: 300">
+				<h4>推薦商品</h4>
+			</div>
+			<div class="container" style="width: 100%">
+
 				<div class="row">
 
 
@@ -233,10 +240,10 @@
 				"status" : "Insert"
 			}, function(data) {
 				if (data == 0) {
-// 					sweetAlert("加入購物車失敗，超過庫存量", "", "error");
+					// 					sweetAlert("加入購物車失敗，超過庫存量", "", "error");
 					alert("加入購物車失敗，超過庫存量");
 				} else {
-// 					sweetAlert("加入購物車成功", "", "success");
+					// 					sweetAlert("加入購物車成功", "", "success");
 					alert("加入購物車成功");
 					$("#buycount_all_f").html(data);
 				} //購物車後數字
@@ -255,26 +262,31 @@
 			});
 		});
 	</script>
-	
-			<script>
-				$(function() {
-					 
-					$("input[name=INSERT]").one('click',function() {
-						var member = $('input[id="member_no"]').val();
-// 						alert(member);
-						var product_no = $(this).attr("id");
-// 						alert(product_no);
-						$(this).parents("tr").remove();
-						$.get("MyFavoriteServlet", {product_no : product_no,member_no : member,myfavoriteaction:"insert"}, function(data) {
-							if(data==("新增成功")){
-								alert('新增至我的最愛成功');
-								}else {
-									alert('請先登入會員');
-								}
-						})
+
+	<script>
+		$(function() {
+
+			$("input[name=INSERT]").one('click', function() {
+				var member = $('input[id="member_no"]').val();
+				// 						alert(member);
+				var product_no = $(this).attr("id");
+				// 						alert(product_no);
+				$(this).parents("tr").remove();
+				$.get("MyFavoriteServlet", {
+					product_no : product_no,
+					member_no : member,
+					myfavoriteaction : "insert"
+				}, function(data) {
+					if (data == ("新增成功")) {
+						alert('新增至我的最愛成功');
+					} else {
+						alert('請先登入會員');
 					}
-				)});
-			</script>	
+				})
+			})
+		});
+	</script>
 	<jsp:include page="footer.jsp" />
+	<script type="text/javascript" src="js/notify.js"></script>
 </body>
 </html>
