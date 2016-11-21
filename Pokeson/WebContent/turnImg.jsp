@@ -124,6 +124,7 @@ $(function(){
 <body>
 	<div id="abgneBlock">
 		<ul class="list">
+
 			<li><a href="#">
 			<img src="${pageContext.servletContext.contextPath}/getindexImage?cm_no=1" />
 			</a></li>
@@ -140,6 +141,7 @@ $(function(){
 <!-- 			<li><a target="_blank" href="#"><img src="images/img10.jpg"></a></li> -->
 <!-- 			<li><a target="_blank" href="#"><img src="images/img11.jpg"></a></li> -->
 <!-- 			<li><a target="_blank" href="#"><img src="images/img12.jpg"></a></li> -->
+
 		</ul>
 	</div>
 </body>

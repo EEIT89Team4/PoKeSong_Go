@@ -46,6 +46,7 @@
 		<mapping resource="com/supplier/model/supplier.hbm.xml" />
 		<mapping resource="com/notifymember/model/notifymember.hbm.xml" />
 		<mapping resource="com/cm/model/cm.hbm.xml" />
+
 	</session-factory>
 	
 </hibernate-configuration>
