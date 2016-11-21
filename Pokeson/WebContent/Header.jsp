@@ -129,9 +129,8 @@ width:400px;
 				</c:if>
 					<td><a href="addMbr.jsp" style="text-decoration:none;">註冊</a></td>
 <!-- 					<td><a href="mbrZone.jsp">會員專區</a></td>	 -->
-						
 				<c:if test="${not empty mbr}">		 
-					<td><h4 style="color:#00BBFF">${mbr.member_name}  你好</a></h4></td>
+					<td><h4 style="color:#00BBFF;marign:20px">${mbr.member_name}  你好</a></h4></td>
 				</c:if>
 			</tr>
 		</table>

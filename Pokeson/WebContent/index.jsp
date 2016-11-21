@@ -54,7 +54,7 @@
 <!-- 	<script type="text/javascript" src="js/jquery.min.js"></script> -->
 		<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 		<!-- the jScrollPane script -->
-		<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+<!-- 		<script type="text/javascript" src="js/jquery.mousewheel.js"></script> -->
 		<script type="text/javascript" src="js/jquery.contentcarousel.js"></script>
 		<script type="text/javascript">
 			$('#ca-container').contentcarousel();
