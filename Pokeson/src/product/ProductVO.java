@@ -28,6 +28,7 @@ private byte[] bsizepic;
 private int product_alertquantity;
 private String product_description;
 private double product_discount;
+private int product_state;
 
 private Set<MyFavoriteVO> myfavorites = new HashSet<MyFavoriteVO>();
 
@@ -154,6 +155,12 @@ public void setProduct_discount(double product_discount) {
 	this.product_discount = product_discount;
 }
 
+public int getProduct_state() {
+	return product_state;
+}
+public void setProduct_state(int product_state) {
+	this.product_state = product_state;
+}
 @Override
 public int compareTo(Object productvo) {
 	int compareprice=((ProductVO)productvo).getProduct_price();
