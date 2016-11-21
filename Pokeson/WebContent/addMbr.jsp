@@ -132,7 +132,9 @@
 					
 					<div align="center">
 						<p><input  type="button" id="add" class="btn btn-lg btn-success" value="加入會員"></p>
+
 							<input type="checkbox" id="box" name="demo" value="demo">demo</input>
+
 <!-- 						<input type="hidden" name="action" value="insert"> -->
 						<input type="hidden" name="member_bonus" value="0">
 					</div>
@@ -267,6 +269,8 @@
  			}else{
  				if(!$("#pwd").val().match(regex)){
  					$("#spanPwd").text("請輸入英文大小寫、數字，共6-20碼");
+ 				}else if(!($("#pwd2").val().match($("#pwd").val()))){
+ 					$("#spanPwd2").text("請確認密碼");
  				}else{
  					$("#spanPwd").text("");
  				}

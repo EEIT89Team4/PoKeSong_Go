@@ -26,10 +26,6 @@
 <!-- 最近流覽商品 -->
 <link rel="stylesheet" type="text/css" href="history/history.css">
 
-<!-- 貨到通知 coding -->
-<script type="text/javascript" src="js/notify.js"></script>
-
-
 
 <style>
 #membermenu {
