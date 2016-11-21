@@ -1,12 +1,13 @@
 
 $('.addnotify').click(function() {
-	alert("123");
+//	alert("123");
 	var productid = $(this).attr("id");
 
 	$.post("notifyMember", {
 		"p_id" : productid
 	}, function(data) {
 		if (data == 0) {
+			$("#myModal").modal({backdrop : false});
 			$("#myModal").modal('show');
 		}
 		if (data == 1) {
