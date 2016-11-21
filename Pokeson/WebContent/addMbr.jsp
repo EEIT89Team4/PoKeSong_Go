@@ -132,6 +132,7 @@
 					
 					<div align="center">
 						<p><input  type="button" id="add" class="btn btn-lg btn-success" value="加入會員"></p>
+							<input type="checkbox" id="box" name="demo" value="demo">demo</input>
 <!-- 						<input type="hidden" name="action" value="insert"> -->
 						<input type="hidden" name="member_bonus" value="0">
 					</div>
@@ -183,7 +184,23 @@
  <script> 
  	
  	$(document).ready(function(){
-
+ 		//一鍵輸入
+ 		$("#box").change(function(){
+ 			var b = $(this).prop('checked');
+ 			if(b){
+ 				//alert("1234567");
+ 				$("#name").val("跳跳虎");
+ 				$("#account").val("tiger");
+ 				$("#pwd").val("a1234567");
+ 				$("#pwd2").val("a1234567");
+ 				$("#bday").val("1991-01-01");
+ 				$("#phone").val("0912345678");
+ 				$("#email").val("yifang828@gmail.com");
+ 				$("option:eq(2)").prop("selected", b);
+ 				$("#address").val("大安區復興南路319號");
+ 				$('input[name="member_gender"]:eq(1)').prop("checked", b);
+ 			}
+ 		})
  		//註冊成功modal	
  		$("#add").click(function() {
  			var member_name = $("#name").val();
@@ -197,7 +214,7 @@
  			var address = $("#address").val();
  			var member_gender = $('input[name="member_gender"]').val();
  			
- 			$.get("MemberServlet",{"action":"insert", "member_name":member_name, "member_id":member_id, 
+ 			$.post("MemberServlet",{"action":"insert", "member_name":member_name, "member_id":member_id, 
  				"member_password1":member_password1, "member_password2":member_password2, "member_birthday":member_birthday,
  				"member_gender":member_gender, "member_phone":member_phone, "member_Email":member_Email, "city":city, 
  				"address":address, "member_bonus":0}, function(data){
@@ -262,24 +279,26 @@
  			}else{
  				if(!$("#pwd2").val().match(regex)){
  					$("#spanPwd2").text("請輸入英文大小寫、數字共6-20碼");
+ 				}else if(!($("#pwd2").val().match($("#pwd").val()))){
+ 					$("#spanPwd2").text("請確認密碼");
  				}else{
  					$("#spanPwd2").text("");
  				}
  			}
  		});
  		//驗證生日
-//  		$("#bday").blur(function(){
-//  			var regex = /^([1-2]{1}[\d]{3})[-]([0-1]{1}\d)[-]([0-3]{1}\d)$/;
-//  			if($("#bday").val()==""){
-// 				$("#spanBday").text("請填生日");
-//  			}else{
-//  				if(!$("#bday").val().match(regex)){
-//  					$("#spanBday").text("請輸入數字");
-//  				}else{
-//  					$("#spanBday").text("");
-//  				}
-//  			}
-//  		});
+ 		$("#bday").blur(function(){
+ 			var regex = /^([1-2]{1}[\d]{3})[-]([0-1]{1}\d)[-]([0-3]{1}\d)$/;
+ 			if($("#bday").val()==""){
+				$("#spanBday").text("請填生日");
+ 			}else{
+ 				if(!$("#bday").val().match(regex)){
+ 					$("#spanBday").text("請輸入數字");
+ 				}else{
+ 					$("#spanBday").text("");
+ 				}
+ 			}
+ 		});
  		//驗證性別
  		//驗證電話
  		$("#phone").blur(function(){

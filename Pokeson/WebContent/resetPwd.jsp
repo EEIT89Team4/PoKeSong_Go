@@ -153,6 +153,8 @@
 		}else{
 			if(!$("#pwd2").val().match(regex)){
 				$("#spanPwd2").text("請輸入英文大小寫、數字共6-20碼");
+			}else if(!($("#pwd2").val().match($("#pwd").val()))){
+				$("#spanPwd2").text("請確認密碼");
 			}else{
 				$("#spanPwd2").text("");
 			}

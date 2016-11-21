@@ -30,8 +30,9 @@
 	})
 
 	//子分類跳出
-	$(function(){
+$(function(){
 		
+
 	var classno = $('.dropdown-content > a').attr('value');	
 	
 	var timer;

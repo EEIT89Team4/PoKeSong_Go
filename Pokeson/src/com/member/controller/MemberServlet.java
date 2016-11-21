@@ -73,15 +73,9 @@ public class MemberServlet extends HttpServlet {
 				}
 				// 驗證帳號是否已經存在
 				mbrSvc = new MemberService();
-				// if (mbrSvc.exist(member_id)) {
-				// errorMsgs.put("ErrId", "此帳號已經有人使用");
-				// System.out.println("2");
-				// String str1 = "帳號已存在";
-				// out.write(str1);
-				// } else {
-				// String str1 = "帳號不存在";
-				// out.write(str1);
-				// }
+				 if (mbrSvc.exist(member_id)) {
+				 errorMsgs.put("ErrId", "此帳號已經有人使用");
+				 }
 
 				// 密碼欄不可空白，只能是英(大小寫)數_，varchar20
 				String member_password = request.getParameter("member_password1");
@@ -191,10 +185,11 @@ public class MemberServlet extends HttpServlet {
 				String member_id = request.getParameter("member_id");
 				if (member_id == null || member_id.trim().length() == 0) {
 					errorMsgs.put("ErrIdEmpty", "請輸入帳號");
-				}
-				String userIdReg = "^[a-zA-Z0-9_]{1,20}$";
-				if (!member_id.trim().matches(userIdReg)) {
-					errorMsgs.put("ErrIdFormat", "帳號格式錯誤");
+				}else{
+					String userIdReg = "^[a-zA-Z0-9_]{1,20}$";
+					if (!member_id.trim().matches(userIdReg)) {
+						errorMsgs.put("ErrIdFormat", "帳號格式錯誤");
+					}
 				}
 				// 驗證驗證碼
 				String randomWords = (String) request.getSession().getAttribute("randomWords");
@@ -203,21 +198,22 @@ public class MemberServlet extends HttpServlet {
 //				System.out.print(identity);
 				if (identity == null || identity.trim().length() == 0) {
 					errorMsgs.put("ErrIdentityEmpty", "請輸入驗證碼");
+				}else{
+					if (!identity.equals(randomWords)) {
+						errorMsgs.put("ErrIdentity", "驗證碼錯誤");
+					}
 				}
-				if (!identity.equals(randomWords)) {
-					errorMsgs.put("ErrIdentity", "驗證碼錯誤");
-				}
-
 				MemberService mbrSvc = new MemberService();
 
 				// 密碼欄不可空白，只能是英(大小寫)數_，varchar20
 				String member_password = request.getParameter("member_password1");
 				if (member_password == null || member_password.trim().length() == 0) {
 					errorMsgs.put("ErrPasswordEmpty", "請輸入密碼");
-				}
-				String userPswdReg = "^[A-Za-z0-9]{6,20}$";
-				if (!member_password.trim().matches(userPswdReg)) {
-					errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
+				}else{
+					String userPswdReg = "^[A-Za-z0-9]{6,20}$";
+					if (!member_password.trim().matches(userPswdReg)) {
+						errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
+					}
 				}
 				//驗證會員是否為黑名單並登入
 				if(!mbrSvc.blacklist(member_id)){
