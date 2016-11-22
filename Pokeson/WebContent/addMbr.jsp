@@ -15,7 +15,7 @@
 <style>
 	fieldset{
 /* 		float:right; */
-		width:550px;
+		width:600px;
 		margin-top:50px;
 		margin:0px auto;
 		border-radius:10px;		
@@ -127,7 +127,7 @@
 					</select>
 					<input type="text" id="address" name="address" class="fieldWidth" Style="width:300px;">
 					<span id="spanAddress" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrCityEmpty}  ${errorMsgs.ErrAdderssEmpty}  ${errorMsgs.ErrAddressFormat}</font>				
+					<br><font color="red" size="-1">${errorMsgs.ErrCityEmpty}  ${errorMsgs.ErrAdderssEmpty}</font>				
 					<hr>
 					
 					<div align="center">
@@ -224,6 +224,26 @@
 	 					$("#addModal").modal({backdrop : false});	
 	 					$("#addModal").modal('show');
  					}
+	 				else{
+						var e = JSON.parse(data);//因為用get不會得到json物件
+						$("#spanName").text(e.ErrNameEmpty);
+						$("#spanName").text(e.ErrNameFormat);
+						$("#spanId").text(e.ErrIdEmpty);
+						$("#spanId").text(e.ErrIdFormat);
+						$("#spanId").text(e.ErrId);
+						$("#spanPwd").text(e.ErrPasswordEmpty);
+						$("#spanPwd").text(e.ErrPasswordFormat);
+						$("#spanPwd2").text(e.ErrPassword2Empty);
+						$("#spanPwd2").text(e.ErrPassword);
+						$("#spanBday").text(e.ErrDateEmpty);
+						$("#spanBday").text(e.ErrGenderEmpty);
+						$("#spanPhone").text(e.ErrPhoneEmpty);
+						$("#spanPhone").text(e.ErrPhoneFormat);
+						$("#spanEmail").text(e.ErrEmailEmpty);
+						$("#spanEmail").text(e.ErrEmailFormat);
+						$("#spanAddress").text(e.ErrCityEmpty);
+						$("#spanAddress").text(e.ErrAdderssEmpty);
+					}
  				});
 		});
  		
@@ -269,8 +289,6 @@
  			}else{
  				if(!$("#pwd").val().match(regex)){
  					$("#spanPwd").text("請輸入英文大小寫、數字，共6-20碼");
- 				}else if(!($("#pwd2").val().match($("#pwd").val()))){
- 					$("#spanPwd2").text("請確認密碼");
  				}else{
  					$("#spanPwd").text("");
  				}

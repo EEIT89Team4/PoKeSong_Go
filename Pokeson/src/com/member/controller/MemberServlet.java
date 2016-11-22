@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONValue;
+
 import member.MailService;
 import member.MemberService;
 import member.MemberVO;
@@ -46,6 +48,7 @@ public class MemberServlet extends HttpServlet {
 			
 			Map<String, String> errorMsgs = new HashMap<String, String>();// 用Map在jsp比較好取出來用
 			request.setAttribute("errorMsgs", errorMsgs);
+
 			String member_id = null;
 			MemberService mbrSvc = null;
 
@@ -56,20 +59,21 @@ public class MemberServlet extends HttpServlet {
 				// System.out.println(member_name); //測試用
 				if (member_name == null || member_name.trim().length() == 0) {
 					errorMsgs.put("ErrNameEmpty", "請輸入姓名");
+				}else{
+					String userNameReg = "^[(\\u4E00-\\u9FA5)(a-zA-Z)]{2,10}$"; // 倒斜線要兩條
+					if (!(member_name.trim().matches(userNameReg))) { // matches專門用在regex
+						errorMsgs.put("ErrNameFormat", "姓名格式錯誤");
+					}
 				}
-				String userNameReg = "^[\\u4E00-\\u9FA5]{2,10}$"; // 倒斜線要兩條
-				if (!(member_name.trim().matches(userNameReg))) { // matches專門用在regex
-					errorMsgs.put("ErrNameFormat", "姓名格式錯誤");
-				}
-
 				// 帳號欄不可空白不可重複，只能是英數_，varchar20
 				member_id = request.getParameter("member_id");
 				if (member_id == null || member_id.trim().length() == 0) {
 					errorMsgs.put("ErrIdEmpty", "請輸入帳號");
-				}
-				String userIdReg = "^[a-zA-Z0-9_]{1,20}$";
-				if (!member_id.trim().matches(userIdReg)) {
-					errorMsgs.put("ErrIdFormat", "帳號格式錯誤");
+				}else{
+					String userIdReg = "^[a-zA-Z0-9_]{1,20}$";
+					if (!member_id.trim().matches(userIdReg)) {
+						errorMsgs.put("ErrIdFormat", "帳號格式錯誤");
+					}
 				}
 				// 驗證帳號是否已經存在
 				mbrSvc = new MemberService();
@@ -81,18 +85,21 @@ public class MemberServlet extends HttpServlet {
 				String member_password = request.getParameter("member_password1");
 				if (member_password == null || member_password.trim().length() == 0) {
 					errorMsgs.put("ErrPasswordEmpty", "請輸入密碼");
+				}else{
+					String userPswdReg = "^[A-Za-z0-9]{6,20}$";
+					if (!member_password.trim().matches(userPswdReg)) {
+						errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
+					}
 				}
-				String userPswdReg = "^[A-Za-z0-9]{6,20}$";
-				if (!member_password.trim().matches(userPswdReg)) {
-					errorMsgs.put("ErrPasswordFormat", "密碼格式錯誤");
-				}
-
 				// 密碼欄2用來驗證是否有輸入錯誤
 				String member_password2 = request.getParameter("member_password2");
-				if (!member_password.equals(member_password2)) {
-					errorMsgs.put("ErrPassword", "請確認密碼");
+				if (member_password2 == null || member_password2.trim().length() == 0) {
+					errorMsgs.put("ErrPassword2Empty", "請輸入密碼");
+				}else{
+					if (!member_password.equals(member_password2)) {
+						errorMsgs.put("ErrPassword", "請確認密碼");
+					}
 				}
-
 				// 生日不可空白
 				java.sql.Date member_birthday = null;
 				try {
@@ -110,18 +117,22 @@ public class MemberServlet extends HttpServlet {
 				String member_phone = request.getParameter("member_phone");
 				if (member_phone == null || member_phone.trim().length() == 0) {
 					errorMsgs.put("ErrPhoneEmpty", "請輸入電話");
+				}else{
+					String userPhoneReg = "^[0-9]{8,10}$";
+					if (!member_phone.trim().matches(userPhoneReg)) {
+						errorMsgs.put("ErrPhoneFormat", "電話格式錯誤");
+					}
 				}
-				String userPhoneReg = "^[0-9]{8,10}$";
-				if (!member_phone.trim().matches(userPhoneReg)) {
-					errorMsgs.put("ErrPhoneFormat", "電話格式錯誤");
-				}
-
 				// Email欄不可空白，varchar50
 				String member_Email = request.getParameter("member_Email");
 				if (member_Email == null || member_Email.trim().length() == 0) {
 					errorMsgs.put("ErrEmailEmpty", "請輸入Email");
+				}else{
+					String userEamilReg = "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})*$";
+					if (!member_Email.trim().matches(userEamilReg)) {
+						errorMsgs.put("ErrEmailFormat", "email格式錯誤");
+					}
 				}
-				String userEamilReg = "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})*$";
 				// 地址欄不可空白，只能中文數字 varchar100
 				String city = request.getParameter("city");
 				String address = request.getParameter("address");
@@ -130,10 +141,6 @@ public class MemberServlet extends HttpServlet {
 				}
 				if (address == null || address.trim().length() == 0) {
 					errorMsgs.put("ErrAdderssEmpty", "請輸入地址");
-				}
-				String userAddressReg = "^[(0-9)(\\u4e00-\\u9fa5)]+$";
-				if (!address.trim().matches(userAddressReg)) {
-					errorMsgs.put("ErrAddressFormat", "地址格式錯誤");
 				}
 				String member_address = city + address;
 
@@ -145,10 +152,12 @@ public class MemberServlet extends HttpServlet {
                 
 				// 如果有錯誤，回到原頁
 				if (!errorMsgs.isEmpty()) {
-					
-						RequestDispatcher errorView = request.getRequestDispatcher("/addMbr.jsp");
-						errorView.forward(request, response);
-						return;
+					String str = JSONValue.toJSONString(errorMsgs);
+					out.print(str);
+//					response.sendRedirect("/Pokeson/index.jsp");
+//					RequestDispatcher errorView = request.getRequestDispatcher("/addMbr.jsp");
+//					errorView.forward(request, response);
+					return;
 				}
 					/******************* 2.永續層存取(開始新增) *****************/
 					mbr = mbrSvc.addMbr(member_name, member_id, member_password2, member_phone, member_address,
@@ -329,7 +338,7 @@ public class MemberServlet extends HttpServlet {
 				if (member_name == null || member_name.trim().length() == 0) {
 					errorMsgs.put("ErrNameEmpty", "請輸入姓名");
 				} else {
-					String userNameReg = "^[\\u4E00-\\u9FA5]{2,10}$"; // 倒斜線要兩條
+					String userNameReg = "^[(\\u4E00-\\u9FA5)(a-zA-Z)]{2,10}$"; // 倒斜線要兩條
 					if (!(member_name.trim().matches(userNameReg))) { // matches專門用在regex
 						errorMsgs.put("ErrNameFormat", "姓名格式錯誤");
 					}
