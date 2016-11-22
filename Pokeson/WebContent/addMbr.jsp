@@ -50,19 +50,16 @@
 					<label for="name">姓名:</label>
 					<input type="text" id="name" name="member_name" class="fieldWidth">
 					<span id="spanName" style="color:red"></span>
-					<br><font color="red" size="-1" >${errorMsgs.ErrNameEmpty}  ${errorMsgs.ErrNameFormat}</font>
 					<hr>
 					
 					<label for="account">帳號:</label>
 					<input type="text" id="account" name="member_id" class="fieldWidth">
 					<span id="spanId" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrIdEmpty}  ${errorMsgs.ErrIdFormat}  ${errorMsgs.ErrId}</font>				
 					<hr>
 					
 					<label for="pwd">密碼:</label>
 					<input type="password" id="pwd" name="member_password1" class="fieldWidth">
 					<span id="spanPwd" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrPasswordEmpty}  ${errorMsgs.ErrPasswordFormat} </font>
 					<hr>	
 					
 					<label id="span1" for="pwd" size="-3"></label>
@@ -76,7 +73,6 @@
 					<label for="pwd2">再次確認密碼:</label>
 					<input type="password" id="pwd2" name="member_password2" class="fieldWidth">
 					<span id="spanPwd2" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrPassword}</font>
 					<hr>
 					
 					<label for="bdayNgender">生日與性別:</label>
@@ -84,19 +80,16 @@
 					<input type="radio" name="member_gender" value="女">女
 					<input type="radio" name="member_gender" value="男">男
 					<span id="spanBday" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrDateEmpty}  ${errorMsgs.ErrGenderEmpty}</font>
 					<hr>
 					
 					<label for="phone">電話:</label>
 					<input type="text" id="phone" name="member_phone" placeholder="格式:0912345678" class="fieldWidth">
 					<span id="spanPhone" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrPhoneEmpty}  ${errorMsgs.ErrPhoneFormat}</font>				
 					<hr>
 					
 					<label for="email">E-mail:</label>
 					<input type= "text" id="email" name="member_Email" class="fieldWidth">
 					<span id="spanEmail" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrEmailEmpty} ${errorMsgs.ErrEmailFormat}</font>
 					<hr>
 					
 					<label for="address">地址:</label>
@@ -125,9 +118,9 @@
 						<option value="金門縣" >金門縣</option>
 						<option value="連江縣" >連江縣</option>
 					</select>
+					<br>
 					<input type="text" id="address" name="address" class="fieldWidth" Style="width:300px;">
 					<span id="spanAddress" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrCityEmpty}  ${errorMsgs.ErrAdderssEmpty}</font>				
 					<hr>
 					
 					<div align="center">
@@ -272,7 +265,7 @@
  				}else{
 		 			$.get("IdCheckServlet", {check:"member_id",member_id:id}, function(data){
 		 				if(data=="帳號已存在"){
-		 					$("#spanId").text("帳號已存在");
+		 					$("#spanId").text("帳號已經有人使用");
 		 				}else{
 		 					$("#spanId").text("");
 		 				}
@@ -342,7 +335,7 @@
 				$("#spanEmail").text("請填email");
  			}else{
  				if(!$("#email").val().match(regex)){
- 					$("#spanEmail").text("請輸入正確email格式");
+ 					$("#spanEmail").text("email格式錯誤");
  				}else{
  					$("#spanEmail").text("");
  				}

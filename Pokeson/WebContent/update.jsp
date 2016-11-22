@@ -16,7 +16,7 @@
 		<style >
 			fieldset{
 /* 				float:right; */
-				width:550px;
+				width:600px;
 				margin-top:50px;
 				margin:0px auto;
 				border:2px solid #ACD6FF;
@@ -76,7 +76,6 @@
 					<label for="name">姓名:</label>
 					<input type="text" id="name" name="member_name" value="${mbr.member_name}" class="fieldWidth">
 					<span id="spanName" style="color:red"></span>
-					<br><font color="red" size="-1" >${errorMsgs.ErrNameEmpty}  ${errorMsgs.ErrNameFormat}</font>
 					<hr>
 					
 					<c:if test="${empty mbr.member_GoogleId}">
@@ -91,20 +90,17 @@
 						<font>${mbr.member_gender}</font>	
 					</c:if>
 					<span id="spanBday" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrDateEmpty} </font>
 					<hr>
 					
 					<label for="phone">電話:</label>
 					<input type="text" id="phone" name="member_phone" value="${mbr.member_phone}" class="fieldWidth">
 					<span id="spanPhone" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrPhoneEmpty}  ${errorMsgs.ErrPhoneFormat}</font>				
 					<hr>
 					
 					<c:if test="${empty mbr.member_GoogleId}">
 						<label for="email">E-mail:</label>
 						<input type= "text" id="email" name="member_Email" value="${mbr.member_Email}" class="fieldWidth">
 						<span id="spanEmail" style="color:red"></span>
-						<br><font color="red" size="-1">${errorMsgs.ErrEmailEmpty} ${errorMsgs.ErrEmailFormat}</font>
 						<hr>
 					</c:if>
 					
@@ -163,6 +159,7 @@
 						<option value="金門縣" >金門縣</option>
 						<option value="連江縣" >連江縣</option>
 					</select>
+					<br>
 					</c:if>
 					<c:if  test="${not empty mbr.member_address}">
 						<input type="text" id="address" name="address" value="${fn:substring(road, 3, 20)}" class="fieldWidth">
@@ -171,7 +168,6 @@
 						<input type="text" id="address" name="address" value="" class="fieldWidth">					
 					</c:if>
 					<span id="spanAddress" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrCityEmpty}  ${errorMsgs.ErrAdderssEmpty}  ${errorMsgs.ErrAddressFormat}</font>				
 					<hr>
 					
 					<div align="center">
@@ -263,6 +259,19 @@
 		 					$("#updateModal").modal({backdrop : false});	
 		 					$("#updateModal").modal('show');
 	 					}
+	 					else{
+							var e = JSON.parse(data);//因為用get不會得到json物件
+							$("#spanName").text(e.ErrNameEmpty);
+							$("#spanName").text(e.ErrNameFormat);
+							$("#spanBday").text(e.ErrDateEmpty);
+							$("#spanBday").text(e.ErrGenderEmpty);
+							$("#spanPhone").text(e.ErrPhoneEmpty);
+							$("#spanPhone").text(e.ErrPhoneFormat);
+							$("#spanEmail").text(e.ErrEmailEmpty);
+							$("#spanEmail").text(e.ErrEmailFormat);
+							$("#spanAddress").text(e.ErrCityEmpty);
+							$("#spanAddress").text(e.ErrAdderssEmpty);
+						}
 	 				});
 			});
 	 		
@@ -300,7 +309,7 @@
 					$("#spanEmail").text("請填email");
 	 			}else{
 	 				if(!$("#email").val().match(regex)){
-	 					$("#spanEmail").text("請輸入正確email格式");
+	 					$("#spanEmail").text("email格式錯誤");
 	 				}else{
 	 					$("#spanEmail").text("");
 	 				}

@@ -131,6 +131,11 @@
 					$("#reModal").modal({backdrop : false});	
 					$("#reModal").modal('show');
 				}
+				var e = JSON.parse(data);//因為用get不會得到json物件
+				$("#spanPwd").text(e.ErrPasswordEmpty);
+				$("#spanPwd").text(e.ErrPasswordFormat);
+				$("#spanPwd2").text(e.ErrPassword2Empty);
+				$("#spanPwd2").text(e.ErrPassword);
 			});
 	});
 	//驗證密碼

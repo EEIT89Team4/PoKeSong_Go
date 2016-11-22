@@ -109,6 +109,14 @@
 		 					$("#forgetModal").modal({backdrop : false});	
 		 					$("#forgetModal").modal('show');
 	 					}
+	 					else{
+							var e = JSON.parse(data);//因為用get不會得到json物件
+							$("#spanEmail2").text(e.ErrEmailEmpty);
+							$("#spanEmail2").text(e.ErrEmailFormat);
+							$("#spanEmail2").text(e.ErrEmail);
+							$("#spanIdentity2").text(e.ErrIdentityEmpty);
+							$("#spanIdentity2").text(e.ErrIdentity);
+						}
 	 			})
 	 		})
 		//驗證碼換張圖
