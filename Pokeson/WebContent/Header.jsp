@@ -117,7 +117,7 @@ width:400px;
 			<tr>
 				<td><a href="index.jsp" style="text-decoration:none;">首頁</a></td>
 				<c:if test="${empty mbr}">
-					<td><a  id="myBtn" style="text-decoration:none;">登入</a></td>
+					<td><a  id="myBtn" style="text-decoration:none;cursor:pointer">登入</a></td>
 					
 				</c:if>
 				<c:if test="${not empty mbr}">		 
