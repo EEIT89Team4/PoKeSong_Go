@@ -3,6 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
+<!-- snowflakes @ http://blog.roodo.com/esabear/ -->
+<div id="flashContainer" style="position:fixed; left:0; top:0; z-index:90">
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="10" height="10" id="FlashExternalInterface" align="middle">
+<param name="wmode" value="transparent" />
+<param name="allowScriptAccess" value="always" />
+<param name="allowFullScreen" value="false" />
+<param name="movie" value="http://esabear.appspot.com/blogSnowflakes/blogSnowflakesLite.swf?count=20" />
+<param name="quality" value="high" />
+<embed name="FlashExternalInterface" src="http://esabear.appspot.com/blogSnowflakes/blogSnowflakesLite.swf?count=100" wmode="transparent" width="600" height="600" allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"  />
+</object>
+</div>
+<script src="http://esabear.appspot.com/blogSnowflakes/blogSnowflakesLite.js" language="javascript"></script>
+
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta name="keywords" content="" />
