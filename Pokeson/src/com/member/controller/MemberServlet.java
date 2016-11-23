@@ -372,13 +372,13 @@ public class MemberServlet extends HttpServlet {
 				String city = request.getParameter("city");
 
 				String address = request.getParameter("address");
-				
+				System.out.println(address);
 				String member_address = city + address;
 				
 				Integer member_bonus = new Integer(request.getParameter("member_bonus"));
 
 				//如果沒有google帳號，以下值不可為空值
-				if(member_GoogleId==""){
+				if(member_GoogleId==null || member_GoogleId==""){
 					// 密碼欄不可空白，只能是英(大小寫)數_，varchar20
 					if (member_password == null || member_password.trim().length() == 0) {
 						errorMsgs.put("ErrPasswordEmpty", "請填密碼");
@@ -420,9 +420,10 @@ public class MemberServlet extends HttpServlet {
 						errorMsgs.put("ErrCityEmpty", "請選擇縣市");
 					}
 					if (address == null || address.trim().length() == 0) {
+						System.out.println("1111111111111111");
 						errorMsgs.put("ErrAdderssEmpty", "請填地址");
+						System.out.println("222222222222222");
 					}
-
 					//如果有google帳號，以下值可為空值
 				}else{	
 					// 生日不可空白
