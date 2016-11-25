@@ -30,18 +30,21 @@
 	})
 
 	//子分類跳出
-	$(function(){
+$(function(){
 		
+
+	var classno = $('.dropdown-content > a').attr('value');	
+	
 	var timer;
 	
-	$(".dropdown-content").on("mouseover",showRList);
+	$(".dropdown-content > a").on("mouseover",showRList);
 	
 	$(".right-list").on("mouseover",function(){
 		if(timer){clearTimeout(timer);}
 	    $(".right-list").show();	
 	});
 	
-	$(".dropdown-content").on("mouseout",hideRList);
+	$(".dropdown-content > a").on("mouseout",hideRList);
 	
 	$(".right-list").on("mouseout",function(){
 		timer=setTimeout(function(){
@@ -52,7 +55,7 @@
 	
 	function showRList(){
 	    if(timer){clearTimeout(timer);}
-	    $(".right-list").fadeIn(250);
+	    	$(".right-list").fadeIn(250);    	
 	}
 	function hideRList(){
 		if(timer){clearTimeout(timer);}
@@ -71,8 +74,10 @@
 		$('.dropdown-content > a').mouseover(function(){
 			class_no = $(this).attr('value');
 			
-			$('#rl').empty();
+		$('#rl').empty();
+		
 			
+			if(class_no!=4){
 			$.getJSON("rightList?classno=" + class_no, {} , function(data){
 				$.each(data,function(){
 //					console.log("子分類each");
@@ -118,7 +123,8 @@
 					
 					$('#rl').append(row);
 				});
-			})			
+			})	
+			}
 		})		
 	})
 	

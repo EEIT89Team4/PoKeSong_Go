@@ -47,7 +47,9 @@
 	
 	<!--分類圖-->
 	<div style="margin:auto">
-		<img style="width:100%" src="${pageContext.servletContext.contextPath}/classImg?classno=${detailvo.productClassVO.class_no}"/>
+
+		<img style="width:100%;height:190px" src="${pageContext.servletContext.contextPath}/classImg?classno=${detailvo.productClassVO.class_no}"/>
+
 	</div>
 		
 		

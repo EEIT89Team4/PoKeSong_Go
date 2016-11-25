@@ -131,6 +131,11 @@
 					$("#reModal").modal({backdrop : false});	
 					$("#reModal").modal('show');
 				}
+				var e = JSON.parse(data);//因為用get不會得到json物件
+				$("#spanPwd").text(e.ErrPasswordEmpty);
+				$("#spanPwd").text(e.ErrPasswordFormat);
+				$("#spanPwd2").text(e.ErrPassword2Empty);
+				$("#spanPwd2").text(e.ErrPassword);
 			});
 	});
 	//驗證密碼
@@ -154,7 +159,7 @@
 			if(!$("#pwd2").val().match(regex)){
 				$("#spanPwd2").text("請輸入英文大小寫、數字共6-20碼");
 			}else if(!($("#pwd2").val().match($("#pwd").val()))){
-					$("#spanPwd2").text("請確認密碼");
+				$("#spanPwd2").text("請確認密碼");
 			}else{
 				$("#spanPwd2").text("");
 			}

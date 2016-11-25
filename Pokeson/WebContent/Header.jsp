@@ -27,10 +27,6 @@
 <!-- 最近流覽商品 -->
 <link rel="stylesheet" type="text/css" href="history/history.css">
 
-<!-- 貨到通知 coding -->
-<script type="text/javascript" src="js/notify.js"></script>
-
-
 
 <style>
 #membermenu {
@@ -122,18 +118,21 @@ width:400px;
 			<tr>
 				<td><a href="index.jsp" style="text-decoration:none;">首頁</a></td>
 				<c:if test="${empty mbr}">
-					<td><a  id="myBtn" style="text-decoration:none;">登入</a></td>
+					<td><a  id="myBtn" style="text-decoration:none;cursor:pointer">登入</a></td>
+					<td><a href="addMbr.jsp" style="text-decoration:none;">註冊</a></td>
 					
 				</c:if>
 				<c:if test="${not empty mbr}">		 
 					<td><a href="#" id="signOut" style="text-decoration:none;">登出</a></td>
 				</c:if>
+
 				<c:if test="${empty mbr}">
 					<td><a href="addMbr.jsp" style="text-decoration:none;">註冊</a></td>
 					</c:if>
 						<c:if test="${not empty mbr}">
 					<td></td>
 					</c:if>
+
 				<c:if test="${not empty mbr}">		 
 					<td><h4 style="color:#00BBFF;marign:20px">${mbr.member_name}  你好</a></h4></td>
 				</c:if>
@@ -413,10 +412,18 @@ width:400px;
 		                <li><a href="#" name="myBtn">查詢歷史訂單</a></li>
                     </c:if>
 	                <c:if test="${not empty mbr}">
-<%-- 		                <li><a href="${pageContext.servletContext.contextPath}/mbrZone.jsp">會員專區</a></li> --%>
-                             <li role="presentation"><a href="MemberServlet?action=getMbr&member_no=${mbr.member_no}">修改會員資料</a></li>
-		                <li role="presentation"><a href="updatePwd.jsp">修改密碼</a></li>
-		                <li><a href="OrderList.jsp">查詢歷史訂單</a></li>
+	                <c:choose>
+	                	<c:when test="${not empty mbr.member_GoogleId}">
+	                        <li role="presentation"><a href="MemberServlet?action=getMbr&member_no=${mbr.member_no}">修改會員資料</a></li>
+<!-- 			                <li role="presentation"><a href="updatePwd.jsp">修改密碼</a></li> -->
+			                <li><a href="OrderList.jsp">查詢歷史訂單</a></li>
+		                </c:when>
+		                <c:otherwise>
+		                	<li role="presentation"><a href="MemberServlet?action=getMbr&member_no=${mbr.member_no}">修改會員資料</a></li>
+			                <li role="presentation"><a href="updatePwd.jsp">修改密碼</a></li>
+			                <li><a href="OrderList.jsp">查詢歷史訂單</a></li>
+		                </c:otherwise>
+		            </c:choose>
 	                </c:if>
 <!--                   <li></li> -->
                     </ul></div></div>

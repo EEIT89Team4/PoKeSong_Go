@@ -73,13 +73,11 @@
 					<label for="pwd">請輸入新密碼:</label>
 					<input type="password" id="pwd" name="member_password1" class="fieldWidth">
 					<span id="spanPwd" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrPasswordEmpty}  ${errorMsgs.ErrPasswordFormat} </font>
 					<hr>
 					
 					<label for="pwd2">再次確認新密碼:</label>
 					<input type="password" id="pwd2" name="member_password2" class="fieldWidth">
 					<span id="spanPwd2" style="color:red"></span>
-					<br><font color="red" size="-1">${errorMsgs.ErrPassword}</font>
 					<hr>
 					
 					<div align="center">
@@ -149,6 +147,13 @@
 							$("#pwdModal").modal({backdrop : false});	
 							$("#pwdModal").modal('show');
 						}
+						else{
+							var e = JSON.parse(data);//因為用get不會得到json物件
+							$("#spanPwd").text(e.ErrPasswordEmpty);
+							$("#spanPwd").text(e.ErrPasswordFormat);
+							$("#spanPwd2").text(e.ErrPassword2Empty);
+							$("#spanPwd2").text(e.ErrPassword);
+						}
 					});
 		});
   		//驗證密碼
@@ -172,7 +177,7 @@
 				if(!$("#pwd2").val().match(regex)){
 					$("#spanPwd2").text("請輸入英文大小寫、數字共6-20碼");
 				}else if(!($("#pwd2").val().match($("#pwd").val()))){
- 					$("#spanPwd2").text("請確認密碼");
+ 					$("#spanPwd2").text("請確認密碼");	
 				}else{
 					$("#spanPwd2").text("");
 				}

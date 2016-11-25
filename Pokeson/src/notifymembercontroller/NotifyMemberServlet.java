@@ -31,13 +31,14 @@ public class NotifyMemberServlet extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	  HttpSession session = request.getSession();
-	  MemberVO membervo = (MemberVO) session.getAttribute("MemberVO");
+	  MemberVO membervo = (MemberVO) session.getAttribute("mbr");
 	  PrintWriter out = response.getWriter();	
 	  if(membervo==null){	  
-		  out.write("0");
+		  out.write("0");//需要登入
 	  }
 	  else{
 		  String productid = request.getParameter("p_id");
+		  System.out.println(productid);
 //		  System.out.println(Integer.valueOf(productid));
 		  ProductService ps = new ProductService();
 		  ProductVO product = ps.getProductById(Integer.valueOf(productid));

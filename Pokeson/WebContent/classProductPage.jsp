@@ -42,7 +42,9 @@
 	<!--分類圖-->
 	
 	<div style="margin:auto">
-		<img style="width:100%" src="${pageContext.servletContext.contextPath}/classImg?classno=${classno}"/>
+
+		<img style="width:100%;height:190px" src="${pageContext.servletContext.contextPath}/classImg?classno=${classno}"/>
+
 	</div>
 	
 		
