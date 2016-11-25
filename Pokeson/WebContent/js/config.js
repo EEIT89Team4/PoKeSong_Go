@@ -1,14 +1,14 @@
 // host = '172.16.153.122';	// hostname or IP address
-host = 'broker.mqttdashboard.com';	// hostname or IP address
+host = 'test.mosquitto.org';	// hostname or IP address
 // host = '172.16.153.110';	// hostname or IP address
-port = 8000;
+port = 8080;
 
 //function test(y){
 //topic = y;		// topic to subscribe to
 //
 //}
 
-topic = "pokemongo";
+topic = "EEIT8904";
 useTLS = false;
 username = null;
 password = null;

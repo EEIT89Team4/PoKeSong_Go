@@ -38,9 +38,10 @@ public class GoogleMemberServlet extends HttpServlet {
                 String member_Email=(String) req.getAttribute("email");
                 String member_name=(String) req.getAttribute("name");
                 String member_state="一般會員";
+                int member_bonus=0;
 		MemberService mbrSvc = new MemberService();
 		if(mbrSvc.googleExist(member_GoogleId)){
-			mbrSvc.addGoogleMbr(member_name, member_Email, member_GoogleId,member_state);
+			mbrSvc.addGoogleMbr(member_name, member_Email, member_GoogleId,member_bonus,member_state);
 			System.out.println("INSRT OK");
 			List<MemberVO> list=mbrSvc.getGoogleOneByNo(member_GoogleId);
 //			for(MemberVO memberVO:list){

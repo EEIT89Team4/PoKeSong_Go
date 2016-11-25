@@ -241,13 +241,14 @@ var price=null;
 var mybons=$('#mybonus').text();
 var allCheckText=0;
 $('.CompareSel').change(function(){
-	allCheckText=0;
-	var ppp=$('#carttable td[name="producttotal1"]').length;
-	  $('#carttable td[name="producttotal1"]').each(function(){
-          allCheckText+=new Number($(this).text());
-      });
+// 	allCheckText=0;
+// 	var ppp=$('#carttable td[name="producttotal1"]').length;
+// 	  $('#carttable td[name="producttotal1"]').each(function(){
+//           allCheckText+=new Number($(this).text());
+//       });
+// 	  alert(allCheckText);
 var num = $(this).attr("name");
-// var oldtotal=$(this).parent().next().html();//原數量X金錢
+var oldtotal=$(this).parent().next().html();//原數量X金錢
 	 count=$(this).val();	
 	 price=$(this).parent().prev().html();
 	$(this).parent().next().empty().html(new Number(count)*new Number(price));
@@ -258,13 +259,17 @@ var num = $(this).attr("name");
 		else{
 			$("#buycount_all_f").html(data);//購物車後數字
             subtotal=$('#subtotal').text();//總小計
-//             var newtotal=new Number(count)*new Number(price);  //新數量x金錢
-//             var total1=(newtotal-oldtotal);
-//             var n = new Number(subtotal);
-//             subtotal=(total1+n);
-            $('input[name="subtotal"]').empty().val(allCheckText);
-            $('#subtotal').empty().text(allCheckText);
-            $('#alltotal').empty().text(allCheckText);
+            var newtotal=new Number(count)*new Number(price);  //新數量x金錢
+            var total1=(newtotal-oldtotal);
+            var n = new Number(subtotal);
+            subtotal=(total1+n);
+            $('input[name="subtotal"]').empty().val(subtotal);
+            $('input[name="alltotal"]').empty().val(subtotal);
+            $('#subtotal').empty().text(subtotal);
+            $('#alltotal').empty().text(subtotal);
+//             $('input[name="subtotal"]').empty().val(allCheckText);
+//             $('#subtotal').empty().text(allCheckText);
+//             $('#alltotal').empty().text(allCheckText);
             $('#member_bonus').empty();
             if(mybons>subtotal){
             	for(var i=0;i<subtotal+1;i++){

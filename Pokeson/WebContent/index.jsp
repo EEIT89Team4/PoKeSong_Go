@@ -8,7 +8,7 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>PoKeSon</title>
+
 <script src="js/jquery-1.9.1.js"></script>
 <!-- <script src="js/productindex.js"></script> -->
 <!-- <link href="css/bootstrap.css" rel="stylesheet"> -->
@@ -42,14 +42,14 @@ alert("會員狀態異常,無法登入");
 		</div>
 <!-- 		<hr> -->
 		<div class="post">
-			<h2 class="title">熱門商品<span><img src="images/hot.jpg" style="width:70px;height:50px"/></span></h2>
+			<h1 class="title">熱門商品<span><img src="images/hot.jpg" style="width:70px;height:50px"/></span></h1>
 			<div class="hotproduct">
 			<jsp:include page="HotProduct.jsp"/>
 			</div>
 		</div>
 <!-- 		<hr> -->
 		<div class="post">
-			<h2 class="title">新進商品<span><img src="images/new.jpg" style="width:50px;height:50px"/></span></h2>
+			<h1 class="title">新進商品<span><img src="images/new.jpg" style="width:50px;height:50px"/></span></h1>
 			<div class="newproduct">
 			<jsp:include page="NewProduct.jsp"/>
 			</div>

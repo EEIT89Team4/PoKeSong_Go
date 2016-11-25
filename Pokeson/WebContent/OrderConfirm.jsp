@@ -193,7 +193,7 @@ function reconfirmOrder() {
           <TD style="text-align:right;font-size: 11pt;" colspan='5' >運費：</TD>
           <TD style="text-align:right;font-size: 11pt;" >${freight}元</TD>
           <TD style="text-align:right;font-size: 11pt;color:red" >消費滿888, 免運費</TD>
-          <TD style="text-align:right;font-size: 11pt;" ><a href="productindex.jsp">繼續購物</TD>
+          <TD style="text-align:right;font-size: 11pt;" ><a href="index.jsp">回首頁繼續購物</TD>
                   
         </TR>
         <TR  >
@@ -213,7 +213,7 @@ function reconfirmOrder() {
 		<p>
 		訂購聲明 : <br>
 1. 我已確認訂單內的所有商品及數量並提供收貨人相關資料。<br>
-2. 收貨人的各項資料同時依據PoKeson「隱私權聲明 (最近更新日: 2016年11月01日)」及「會員權益個人資料保護聲明 (最近更新日: 2016年11月01日)」進行與商品配送相關的蒐集、處理及利用。
+2. 收貨人的各項資料同時依據PoKeSong「隱私權聲明 (最近更新日: 2016年11月01日)」及「會員權益個人資料保護聲明 (最近更新日: 2016年11月01日)」進行與商品配送相關的蒐集、處理及利用。
 若您所填寫之送貨地址、收件人、聯絡人、聯絡方式等非您本人之個人資料，您同意已取得各該當事人之同意提供予本公司，並已代本公司就前開法定告知事項予以告知。<br>
 <br>
 <!-- 付款方式：<br> -->
