@@ -126,12 +126,7 @@ width:400px;
 					<td><a href="#" id="signOut" style="text-decoration:none;">登出</a></td>
 				</c:if>
 
-				<c:if test="${empty mbr}">
-					<td><a href="addMbr.jsp" style="text-decoration:none;">註冊</a></td>
-					</c:if>
-						<c:if test="${not empty mbr}">
-					<td></td>
-					</c:if>
+
 
 				<c:if test="${not empty mbr}">		 
 					<td><h4 style="color:#00BBFF;marign:20px">${mbr.member_name}  你好</a></h4></td>
