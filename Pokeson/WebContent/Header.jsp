@@ -29,9 +29,9 @@
 
 
 <style>
-#membermenu {
-   margin: auto; 
-}
+/* #membermenu { */
+/*    margin: auto;  */
+/* } */
 .main {
 /*   margin-right: 30px; */
   position:absolute;
@@ -60,8 +60,8 @@
   font-family: 微軟正黑體;
 /*   text-align: center; */
   font-weight: bold;
-  width: 230px;
-  z-index:11;
+  width: 190px;
+  z-index:9999;
 }
 .sub ul {
   width:200px;
@@ -398,8 +398,8 @@ width:400px;
 		});
     </script>
 	
-<div id="membermenu" style="position:fixed;top:260px;right:20px;font-size:9pt;"><div class="main"><div style="padding:0px 0px 0px 0px;font-size:11pt;font-family:微軟正黑體;color:white;z-index:20"><div style="width:100px;height:100px;cursor:pointer;background:url(images/membermenu1.png);background-repeat:no-repeat;text-align:center;"">會員專區</div></div></div>
-					<div class="sub" style="left:-70px;top:100px">
+<div id="membermenu" style="position:fixed;top:260px;right:15px;font-size:9pt;width:100px"><div class="main"><div style="padding:0px 0px 0px 0px;font-size:11pt;font-family:微軟正黑體;color:white;z-index:20"><div style="width:100px;height:100px;cursor:pointer;background:url(images/membermenu1.png);background-repeat:no-repeat;text-align:center;"">會員專區</div></div></div>
+					<div class="sub" style="right:1px;top:100px;display:none" >
                     <ul id="memberzone">
                     <c:if test="${empty mbr}">
                     	<li><a href="#" name="myBtn">修改會員資料</a></li>
