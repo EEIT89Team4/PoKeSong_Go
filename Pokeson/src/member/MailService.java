@@ -1,5 +1,6 @@
 package member;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.Properties;
 
@@ -57,8 +58,14 @@ public class MailService {
 		javax.mail.Message msg = new MimeMessage(Session.getDefaultInstance(props, new SmtpAuthenticator()));
 		// Message mailMessage = new MimeMessage(session);
 		try {
+			String sender = "寶可送";
 			// Set from email address
-			msg.setFrom(new InternetAddress(from));
+			try {
+				msg.setFrom(new InternetAddress(from, sender));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// Set to mail address
 			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			// 設定標題
@@ -106,8 +113,9 @@ public class MailService {
 		javax.mail.Message msg = new MimeMessage(Session.getDefaultInstance(props, new SmtpAuthenticator()));
 		// Message mailMessage = new MimeMessage(session);
 		try {
+			String sender = "寶可送";
 			// Set from email address
-			msg.setFrom(new InternetAddress(from));
+			msg.setFrom(new InternetAddress(from, sender));
 			// Set to mail address
 			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			// 設定標題
@@ -124,6 +132,9 @@ public class MailService {
 		} catch (AddressException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
