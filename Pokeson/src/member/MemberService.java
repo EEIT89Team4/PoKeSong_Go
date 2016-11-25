@@ -141,15 +141,15 @@ public class MemberService {
 		return mbr;
 	}
 	
-	public MemberVO addGoogleMbr(String member_name,String member_Email,String member_GoogleId,String member_state ){
+	public MemberVO addGoogleMbr(String member_name,String member_Email,String member_GoogleId,int member_bonus,String member_state ){
 		
 		MemberVO mbr = new MemberVO();
 		
 		mbr.setMember_name(member_name);
 		mbr.setMember_Email(member_Email);
 		System.out.println(member_GoogleId);
+		mbr.setMember_bonus(member_bonus);;
 		mbr.setMember_GoogleId(member_GoogleId);
-	    mbr.setMember_state(member_state);
 		dao.insert(mbr);
 		
 		return mbr;

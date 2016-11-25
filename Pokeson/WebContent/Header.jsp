@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:useBean id="productclassdao" class="com.productclass.model.ProductClassDAO" scope="page" />
 <head>
+<title>PoKeSong</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/productindex.js"></script>
@@ -124,6 +125,9 @@ width:400px;
 				<c:if test="${not empty mbr}">		 
 					<td><a href="#" id="signOut" style="text-decoration:none;">登出</a></td>
 				</c:if>
+
+
+
 				<c:if test="${not empty mbr}">		 
 					<td><h4 style="color:#00BBFF;marign:20px">${mbr.member_name}  你好</a></h4></td>
 				</c:if>
@@ -156,7 +160,7 @@ width:400px;
 	</div>
 <div id="header">
 	<div id="logo">
-		<h1><a href="#">PokeSong </a></h1>
+		<h1><a href="index.jsp"  style="text-transform:capitalize;">PokeSong</a></h1>
 	</div>
 </div>
 <!-- end #header -->
@@ -195,7 +199,7 @@ width:400px;
 	
 	
 	<script>
-		var show;
+		var showSeach;
 		var xhr=null;
 		var datas;
 		var txt ;
@@ -204,7 +208,7 @@ width:400px;
 		function init() {
 			 txt = document.getElementById("search-text");
 			txt.addEventListener("keyup", getData, false);
-			show = document.getElementById("div1");
+			showSeach = document.getElementById("div1");
 			
 		}
 		function getData() {
@@ -219,9 +223,9 @@ width:400px;
 			}else{
 		 		alert("您的瀏覽器不支援Ajax功能!!");
 		 	}
-			show.style.display = "block";
-			if (show.childNodes.length > 0) {
-				show.removeChild(show.childNodes[0]);
+			showSeach.style.display = "block";
+			if (showSeach.childNodes.length > 0) {
+				showSeach.removeChild(showSeach.childNodes[0]);
 			}
 		}
 		function callback(){
@@ -239,12 +243,12 @@ width:400px;
 						eleBtn.appendChild(txtBtn);
 
 						eleBtn.addEventListener("click", function() {
-							document.myData.keyword.value = this.firstChild.nodeValue;
-							show.style.display = "none";
+							document.getElementById("search-text").value = this.firstChild.nodeValue;
+							showSeach.style.display = "none";
 						}, false)
 						eleDiv.appendChild(eleBtn);
 					}
-					show.appendChild(eleDiv);
+					showSeach.appendChild(eleDiv);
                      }
 		 			 
 		 		}
